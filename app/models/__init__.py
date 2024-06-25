@@ -6,5 +6,5 @@ from .answer import Answer
 from .follow import Follow
 from .comment import Comment
 from .question import Question
-from .up_down_vote import Up_down_vote
+from .up_down_vote import UpDownVote
 from .db import environment, SCHEMA

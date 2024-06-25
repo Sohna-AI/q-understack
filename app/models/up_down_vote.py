@@ -2,7 +2,7 @@ from .db import db, environment, SCHEMA
 from sqlalchemy.sql import func
 
 
-class Up_down_vote(db.Model):
+class UpDownVote(db.Model):
     __tablename__ = 'up_down_votes'
 
     if environment == "production":
