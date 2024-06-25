@@ -9,7 +9,7 @@ class Comment(db.Model):
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     type_id = db.Column(db.Integer, nullable=False)
     _type = db.Column('type', db.String(20), nullable=False)
     comment = db.Column(db.String(255), nullable=False)
@@ -18,12 +18,13 @@ class Comment(db.Model):
 
     question = db.relationship("Question",
             back_populates='comments',
-            primaryjoin='and_(Comment.type_id==Question.id, Comment.type=="question")',
+            primaryjoin='and_(foreign(Comment.type_id)==Question.id, Comment._type=="question")',
             )
     answer = db.relationship("Answer",
             back_populates='comments',
-            primaryjoin='and_(Comment.type_id==Answer.id, Comment.type=="answer")',
+            primaryjoin='and_(foreign(Comment.type_id)==Answer.id, Comment._type=="answer")',
             )
+    user = db.relationship('User', back_populates='comments')
 
     def __init__(self, user_id, type_id, type, comment):
         self.user_id = user_id

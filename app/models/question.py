@@ -25,7 +25,7 @@ class Question(db.Model):
     answers = db.relationship("Answer", back_populates='question', cascade="all, delete-orphan")
     comments = db.relationship("Comment",
             back_populates='question',
-            primaryjoin='and_(Comment.type_id==Question.id, Comment.type=="question")',
+            primaryjoin='and_(foreign(Comment.type_id)==Question.id, Comment._type=="question")',
             cascade="all, delete-orphan"
             )
     user = db.relationship('User', back_populates='questions')

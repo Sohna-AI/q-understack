@@ -10,7 +10,7 @@ class Answer(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    question_id = db.Column(db.Integer, nullable=False)
+    question_id = db.Column(db.Integer, db.ForeignKey('questions.id'), nullable=False)
     text = db.Column(db.String(255), nullable=False)
     created_at = db.Column(db.DateTime, default=func.now())
     updated_at = db.Column(db.DateTime, default=func.now())
@@ -18,7 +18,7 @@ class Answer(db.Model):
     question = db.relationship("Question", back_populates="answers")
     comments = db.relationship("Comment",
             back_populates='answer',
-            primaryjoin='and_(Comment.type_id==Answer.id, Comment.type=="answer")',
+            primaryjoin='and_(foreign(Comment.type_id)==Answer.id, Comment._type=="answer")',
             cascade="all, delete-orphan"
             )
     user = db.relationship('User', back_populates="answers")
