@@ -16,6 +16,15 @@ class Comment(db.Model):
     created_at = db.Column(db.DateTime, default=func.now())
     updated_at = db.Column(db.DateTime, default=func.now())
 
+    question = db.relationship("Question",
+            back_populates='comments',
+            primaryjoin='and_(Comment.type_id==Question.id, Comment.type=="question")',
+            )
+    answer = db.relationship("Answer",
+            back_populates='comments',
+            primaryjoin='and_(Comment.type_id==Answer.id, Comment.type=="answer")',
+            )
+
     def __init__(self, user_id, type_id, type, comment):
         self.user_id = user_id
         self.type_id = type_id

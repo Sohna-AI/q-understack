@@ -14,16 +14,37 @@ class Question(db.Model):
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     title = db.Column(db.String(50), nullable=False)
     details = db.Column(db.String(255), nullable=False)
     expectation = db.Column(db.String(255), nullable=False)
-    tags = db.relationship('Tag', secondary=question_tag, backref=db.backref('questions', lazy='dynamic'))
     created_at = db.Column(db.DateTime, default=func.now())
     updated_at = db.Column(db.DateTime, default=func.now())
 
+    tags = db.relationship('Tag', secondary=question_tag, backref=db.backref('questions', lazy='dynamic'))
+    answers = db.relationship("Answer", back_populates='question', cascade="all, delete-orphan")
+    comments = db.relationship("Comment",
+            back_populates='question',
+            primaryjoin='and_(Comment.type_id==Question.id, Comment.type=="question")',
+            cascade="all, delete-orphan"
+            )
+    user = db.relationship('User', back_populates='questions')
 
     def to_dict(self):
+        return {
+            'id': self.id,
+            'user': self.user.to_dict(),
+            'title': self.title,
+            'details': self.details,
+            'expectation': self.expectation,
+            'tags': [tag.to_dict() for tag in self.tags],
+            'answers': [answer.to_dict_no_question() for answer in self.answers],
+            'comments': [comment.to_dict() for comment in self.comments],
+            'created_at': self.created_at,
+            'updated_at': self.updated_at
+        }
+
+    def to_dict_no_answers(self):
         return {
             'id': self.id,
             'user_id': self.user_id,
