@@ -1,4 +1,8 @@
 from flask.cli import AppGroup
+
+from app.seeds.answers import seed_answers, undo_answers
+from app.seeds.follows import seed_follows, undo_follows
+from app.seeds.questions import seed_questions, undo_questions
 from .users import seed_users, undo_users
 
 from app.models.db import db, environment, SCHEMA
@@ -18,6 +22,9 @@ def seed():
         # Make sure to add all your other model's undo functions below
         undo_users()
     seed_users()
+    seed_questions()
+    seed_answers()
+    seed_follows()
     # Add other seed functions here
 
 
@@ -25,4 +32,7 @@ def seed():
 @seed_commands.command('undo')
 def undo():
     undo_users()
+    undo_questions()
+    undo_answers()
+    undo_follows()
     # Add other undo functions here
