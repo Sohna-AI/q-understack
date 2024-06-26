@@ -31,8 +31,12 @@ class Question(db.Model):
     user = db.relationship('User', back_populates='questions')
     follows = db.relationship('Follow',
                               back_populates='question',
-                             primaryjoin='and_(foreign(Follow.type_id) == Question.id, Follow._type=="question")',
+                             primaryjoin='and_(foreign(Save.type_id) == Question.id, Save._type=="question")',
                              cascade='all, delete-orphan')
+    saves = db.relationship('Save',
+                               back_populates='question',
+                               primaryjoin='and_(foreign(Save.type_id) == Question.id, Save._type=="question")')
+    
 
     def to_dict(self):
         return {

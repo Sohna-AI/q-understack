@@ -26,6 +26,9 @@ class Answer(db.Model):
             back_populates='answers',
              primaryjoin='and_(foreign(Follow.type_id) == Answer.id, Follow._type=="answer")',
              cascade='all, delete-orphan')
+    saves = db.relationship('Save',
+                               back_populates='answer',
+                               primaryjoin='and_(foreign(Save.type_id) == Question.id, Save._type=="question")')
 
     def to_dict(self):
         return {
