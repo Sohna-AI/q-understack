@@ -15,11 +15,16 @@ class User(db.Model, UserMixin):
     hashed_password = db.Column(db.String(255), nullable=False)
 
     questions = db.relationship('Question', back_populates='user', cascade="all, delete-orphan")
+
     answers = db.relationship('Answer', back_populates='user', cascade="all, delete-orphan")
+
     comments = db.relationship('Comment', back_populates='user', cascade="all, delete-orphan")
+
     follows = db.relationship('Follow', back_populates='user', cascade='all, delete-orphan')
-    save = db.relationship('Save', back_populates='user', cascade='all, delete-orphan')
-    up_down_vote = db.relationship('UpDownVote', back_populates='user', cascade='all, delete-orphan')
+
+    saves = db.relationship('Save', back_populates='user', cascade='all, delete-orphan')
+    
+    up_down_votes = db.relationship('UpDownVote', back_populates='user', cascade='all, delete-orphan')
 
     @property
     def password(self):
