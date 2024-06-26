@@ -29,6 +29,10 @@ class Question(db.Model):
             cascade="all, delete-orphan"
             )
     user = db.relationship('User', back_populates='questions')
+    follows = db.relationship('Follow',
+                              back_populates='question',
+                             primaryjoin='and_(foreign(Follow.type_id) == Question.id, Follow._type=="question")',
+                             cascade='all, delete-orphan')
 
     def to_dict(self):
         return {
