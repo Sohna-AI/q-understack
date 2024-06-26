@@ -1,5 +1,8 @@
 from .db import db, environment, SCHEMA
+from .question import Question
+from .answer import Answer
 from sqlalchemy.sql import func
+from sqlalchemy.orm import validates
 
 
 class Comment(db.Model):
@@ -11,36 +14,35 @@ class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     type_id = db.Column(db.Integer, nullable=False)
-    _type = db.Column('type', db.String(20), nullable=False)
+    type = db.Column('type', db.String(20), nullable=False)
     comment = db.Column(db.String(255), nullable=False)
     created_at = db.Column(db.DateTime, default=func.now())
     updated_at = db.Column(db.DateTime, default=func.now())
 
     question = db.relationship("Question",
             back_populates='comments',
-            primaryjoin='and_(foreign(Comment.type_id)==Question.id, Comment._type=="question")',
-            )
+            primaryjoin='and_(foreign(Comment.type_id)==Question.id, Comment.type=="question")')
+    
     answer = db.relationship("Answer",
             back_populates='comments',
-            primaryjoin='and_(foreign(Comment.type_id)==Answer.id, Comment._type=="answer")',
-            )
+            primaryjoin='and_(foreign(Comment.type_id)==Answer.id, Comment.type=="answer")')
+    
     user = db.relationship('User', back_populates='comments')
 
-    def __init__(self, user_id, type_id, type, comment):
-        self.user_id = user_id
-        self.type_id = type_id
-        self.type = type
-        self.comment = comment
-
     @property
-    def type(self):
-        return self._type
-
-    @type.setter
-    def type(self, value):
-        if value not in ('answer', 'question'):
-            raise ValueError("Type must be 'answer' or 'question'")
-        self._type = value
+    def content(self):
+        if self.type == 'question':
+            return Question.query.filter(id=self.type_id).first()
+        elif self.type == 'answer':
+            return Answer.query.filter(id=self.type_id).first()
+        else:
+            raise Exception("Unknown type")
+    
+    @validates('type')
+    def validate_type(self, key, type):
+        if type != 'question' and type != 'answer':
+            raise AssertionError("type must be 'question' or 'answer'")
+        return type
 
     def to_dict(self):
         return {

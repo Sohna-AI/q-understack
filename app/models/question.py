@@ -21,22 +21,31 @@ class Question(db.Model):
     created_at = db.Column(db.DateTime, default=func.now())
     updated_at = db.Column(db.DateTime, default=func.now())
 
-    tags = db.relationship('Tag', secondary=question_tag, backref=db.backref('questions', lazy='dynamic'))
+    tags = db.relationship('Tag', secondary=question_tag, back_populates='questions')
+    
     answers = db.relationship("Answer", back_populates='question', cascade="all, delete-orphan")
+
     comments = db.relationship("Comment",
             back_populates='question',
-            primaryjoin='and_(foreign(Comment.type_id)==Question.id, Comment._type=="question")',
-            cascade="all, delete-orphan"
-            )
-    user = db.relationship('User', back_populates='questions')
-    follows = db.relationship('Follow',
-                              back_populates='question',
-                             primaryjoin='and_(foreign(Save.type_id) == Question.id, Save._type=="question")',
-                             cascade='all, delete-orphan')
-    saves = db.relationship('Save',
-                               back_populates='question',
-                               primaryjoin='and_(foreign(Save.type_id) == Question.id, Save._type=="question")')
+            primaryjoin='and_(foreign(Comment.type_id)==Question.id, Comment.type=="question")',
+            cascade="all, delete-orphan")
     
+    user = db.relationship('User', back_populates='questions')
+    
+    follows = db.relationship('Follow',
+            back_populates='question',
+            primaryjoin='and_(foreign(Follow.type_id) == Question.id, Follow.type=="question")',
+            cascade='all, delete-orphan')
+    
+    saves = db.relationship('Save',
+            back_populates='question',
+            primaryjoin='and_(foreign(Save.type_id) == Question.id, Save.type=="question")',
+            cascade='all, delete-orphan')
+    
+    up_down_votes = db.relationship('UpDownVote',
+            back_populates='question',
+            primaryjoin='and_(foreign(UpDownVote.type_id) == Question.id, UpDownVote.type=="question")',
+            cascade='all, delete-orphan')
 
     def to_dict(self):
         return {

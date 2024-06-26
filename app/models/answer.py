@@ -16,19 +16,28 @@ class Answer(db.Model):
     updated_at = db.Column(db.DateTime, default=func.now())
 
     question = db.relationship("Question", back_populates="answers")
+
     comments = db.relationship("Comment",
             back_populates='answer',
-            primaryjoin='and_(foreign(Comment.type_id)==Answer.id, Comment._type=="answer")',
-            cascade="all, delete-orphan"
-            )
+            primaryjoin='and_(foreign(Comment.type_id)==Answer.id, Comment.type=="answer")',
+            cascade="all, delete-orphan")
+    
     user = db.relationship('User', back_populates="answers")
+    
     follows = db.relationship('Follow',
-            back_populates='answers',
-             primaryjoin='and_(foreign(Follow.type_id) == Answer.id, Follow._type=="answer")',
-             cascade='all, delete-orphan')
+            back_populates='answer',
+            primaryjoin='and_(foreign(Follow.type_id) == Answer.id, Follow.type=="answer")',
+            cascade='all, delete-orphan')
+    
     saves = db.relationship('Save',
-                               back_populates='answer',
-                               primaryjoin='and_(foreign(Save.type_id) == Question.id, Save._type=="question")')
+            back_populates='answer',
+            primaryjoin='and_(foreign(Save.type_id) == Answer.id, Save.type=="answer")',
+            cascade='all, delete-orphan')
+
+    up_down_votes = db.relationship('UpDownVote',
+            back_populates='answer',
+            primaryjoin='and_(foreign(UpDownVote.type_id) == Answer.id, UpDownVote.type=="answer")',
+            cascade='all, delete-orphan')
 
     def to_dict(self):
         return {

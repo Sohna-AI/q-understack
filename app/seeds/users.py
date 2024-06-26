@@ -14,12 +14,15 @@ def seed_users():
         username='Hdub', email='hdub-bb@hotmail.com', password='password')
     singh = User(
         username='Singh', email='Singh@icloud.com', password='password')
+    forest = User(
+        username='Forest', email='forestbriggs14@gmail.com', password='password')
 
     db.session.add(demo)
     db.session.add(marnie)
     db.session.add(bobbie)
     db.session.add(harry)
     db.session.add(singh)
+    db.session.add(forest)
     db.session.commit()
 
 
