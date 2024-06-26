@@ -9,11 +9,20 @@ class Save(db.Model):
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     type_id = db.Column(db.Integer, nullable=False)
     _type = db.Column('type', db.String(20), nullable=False)
     created_at = db.Column(db.DateTime, default=func.now())
     updated_at = db.Column(db.DateTime, default=func.now())
+    
+    user = db.relationship('user', back_populates='saves')
+    question = db.relationship('Question',
+                               back_populates='follows',
+                               primaryjoin='and_(foreign(Save.type_id) == Question.id, Save._type=="question")'
+                               )
+    answer = db.relationship('Answer',
+                             back_populates='follows',
+                             primaryjoin='and_(foreign(Save.type_id) == Answer.id, Save._type=="answer")')
 
     def __init__(self, user_id, type_id, type):
         self.user_id = user_id
