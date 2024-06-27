@@ -24,7 +24,7 @@ class Question(db.Model):
     created_at = db.Column(db.DateTime, default=func.now())
     updated_at = db.Column(db.DateTime, default=func.now())
 
-    tags = db.relationship('Tag', secondary='question_tag', back_populates='questions')
+    tags = db.relationship('Tag', secondary=question_tag, back_populates='questions')
 
     answers = db.relationship("Answer", back_populates='question', cascade="all, delete-orphan")
 

@@ -122,7 +122,7 @@ def upgrade():
     if environment == 'production':
         op.execute(f"ALTER TABLE answers SET SCHEMA {SCHEMA};")    
     
-    op.create_table('question_tag',
+    op.create_table('question_tags',
     sa.Column('question_id', sa.Integer(), nullable=False),
     sa.Column('tag_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['question_id'], ['questions.id'], ),
