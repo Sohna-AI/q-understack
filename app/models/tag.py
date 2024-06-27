@@ -1,4 +1,5 @@
 from .db import db, environment, SCHEMA
+from .question import question_tag
 from sqlalchemy.sql import func
 
 
@@ -14,11 +15,7 @@ class Tag(db.Model):
     created_at = db.Column(db.DateTime, default=func.now())
     updated_at = db.Column(db.DateTime, default=func.now())
 
-    questions = db.relationship('Question',
-            secondary='question_tags',
-            primaryjoin='and_(QuestionTag.tag_id==Tag.id)',
-            secondaryjoin='and_(QuestionTag.question_id==Question.id)',
-            back_populates='tags')
+    questions = db.relationship('Question', secondary=question_tag, back_populates='tags')
 
 
     def to_dict(self):
