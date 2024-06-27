@@ -43,3 +43,10 @@ class User(db.Model, UserMixin):
             'username': self.username,
             'email': self.email
         }
+
+    def to_dict_with_questions(self):
+        return {'id': self.id,
+                'username': self.username,
+                'email': self.email,
+                'questions': [question.to_dict() for question in self.questions]
+                }
