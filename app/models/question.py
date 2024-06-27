@@ -12,6 +12,9 @@ if environment == 'production':
 if environment == 'production':
     question_tag.schema = SCHEMA
 
+if environment == 'production':
+    question_tag.schema = SCHEMA
+
 
 class Question(db.Model):
     __tablename__ = 'questions'
