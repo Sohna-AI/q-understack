@@ -1,4 +1,4 @@
-from .db import db, environment, SCHEMA
+from .db import db, environment, SCHEMA, add_prefix_for_prod
 from .question import Question
 from .answer import Answer
 from .db import db, environment, SCHEMA, add_prefix_for_prod
