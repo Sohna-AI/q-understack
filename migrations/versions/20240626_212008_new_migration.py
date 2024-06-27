@@ -8,6 +8,10 @@ Create Date: 2024-06-26 21:20:08.929525
 from alembic import op
 import sqlalchemy as sa
 
+import os
+environment = os.getenv("FLASK_ENV")
+SCHEMA = os.environ.get("SCHEMA")
+
 
 # revision identifiers, used by Alembic.
 revision = '759cba8b91ab'
@@ -25,6 +29,10 @@ def upgrade():
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
+    
+    if environment == 'production':
+        op.execute(f"ALTER TABLE tags SET SCHEMA {SCHEMA};")
+    
     op.create_table('comments',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
@@ -36,6 +44,10 @@ def upgrade():
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+
+    if environment == 'production':
+        op.execute(f"ALTER TABLE comments SET SCHEMA {SCHEMA};")
+    
     op.create_table('follows',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
@@ -46,6 +58,10 @@ def upgrade():
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+
+    if environment == 'production':
+        op.execute(f"ALTER TABLE follows SET SCHEMA {SCHEMA};")
+    
     op.create_table('questions',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
@@ -57,6 +73,10 @@ def upgrade():
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    
+    if environment == 'production':
+        op.execute(f"ALTER TABLE questions SET SCHEMA {SCHEMA};")
+    
     op.create_table('saves',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
@@ -67,6 +87,10 @@ def upgrade():
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    
+    if environment == 'production':
+        op.execute(f"ALTER TABLE saves SET SCHEMA {SCHEMA};")
+    
     op.create_table('up_down_votes',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
@@ -78,6 +102,10 @@ def upgrade():
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    
+    if environment == 'production':
+        op.execute(f"ALTER TABLE up_down_votes SET SCHEMA {SCHEMA};")
+    
     op.create_table('answers',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
@@ -89,7 +117,11 @@ def upgrade():
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
-    op.create_table('question_tags',
+    
+    if environment == 'production':
+        op.execute(f"ALTER TABLE answers SET SCHEMA {SCHEMA};")    
+    
+    op.create_table('question_tag',
     sa.Column('question_id', sa.Integer(), nullable=False),
     sa.Column('tag_id', sa.Integer(), nullable=False),
     sa.Column('created_at', sa.DateTime(), nullable=True),
@@ -98,6 +130,9 @@ def upgrade():
     sa.ForeignKeyConstraint(['tag_id'], ['tags.id'], ),
     sa.PrimaryKeyConstraint('question_id', 'tag_id')
     )
+    
+    if environment == 'production':
+        op.execute(f"ALTER TABLE question_tags SET SCHEMA {SCHEMA};")
     # ### end Alembic commands ###
 
 
