@@ -6,11 +6,6 @@ question_tag = db.Table('question_tags',
     db.Column('tag_id', db.Integer, db.ForeignKey(add_prefix_for_prod('tags.id')), primary_key=True),
     )
 
-if environment == 'production':
-    question_tag.schema = SCHEMA
-
-if environment == 'production':
-    question_tag.schema = SCHEMA
 
 if environment == 'production':
     question_tag.schema = SCHEMA
