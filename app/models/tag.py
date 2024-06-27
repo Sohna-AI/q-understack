@@ -14,7 +14,7 @@ class Tag(db.Model):
     created_at = db.Column(db.DateTime, default=func.now())
     updated_at = db.Column(db.DateTime, default=func.now())
 
-    questions = db.relationship('Question', secondary=question_tag, back_populates='tags')
+    questions = db.relationship('Question', secondary='question_tag', back_populates='tags')
 
 
     def to_dict(self):
