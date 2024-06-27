@@ -1,7 +1,7 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from sqlalchemy.sql import func
 
-question_tag = db.Table('question_tag',
+question_tag = db.Table('question_tags',
     db.Column('question_id', db.Integer, db.ForeignKey('questions.id'), primary_key=True),
     db.Column('tag_id', db.Integer, db.ForeignKey('tags.id'), primary_key=True),
     )
