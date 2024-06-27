@@ -1,10 +1,18 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from sqlalchemy.sql import func
 
-question_tag = db.Table('question_tag',
-    db.Column('question_id', db.Integer, db.ForeignKey(SCHEMA+'questions.id'), primary_key=True),
-    db.Column('tag_id', db.Integer, db.ForeignKey(SCHEMA+'tags.id'), primary_key=True),
-    )
+
+class QuestionTag(db.Model):
+    __tablename__ = 'question_tags'
+
+    if environment == "production":
+        __table_args__ = {'schema': SCHEMA}
+
+    question_id = db.Column(db.Integer, db.ForeignKey('questions.id'), primary_key=True)
+    tag_id = db.Column(db.Integer, db.ForeignKey('tags.id'), primary_key=True)
+    created_at = db.Column(db.DateTime, default=func.now())
+    updated_at = db.Column(db.DateTime, default=func.now())
+
 
 if environment == 'production':
     question_tag.schema = SCHEMA
