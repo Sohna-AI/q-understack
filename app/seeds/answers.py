@@ -9,18 +9,6 @@ question_answers = [
             {
                 'username': 'marnie',
                 'answer': {
-                        'text': 'Si',
-                        'created_at': datetime.now()
-                    }
-            }
-        ]
-    },
-    {
-        'title': 'Is HTML a programming language?',
-        'user_answers': [
-            {
-                'username': 'marnie',
-                'answer': {
                     'text': 'Yes, if you close your eyes and believe hard enough.',
                     'created_at': datetime.now()
                 }
@@ -304,22 +292,6 @@ question_answers = [
         ]
     }
 ]
-from datetime import datetime
-
-question_answers = [
-    {
-        'title': 'Is HTML a programming language?',
-        'user_answers': [
-            {
-                'username': 'marnie', 
-                'answer': {
-                        'text': 'Si',
-                        'created_at': datetime.now()
-                    }
-            }
-        ]
-    }
-]
 
 def seed_answers():
     for info in question_answers:
@@ -338,13 +310,6 @@ def seed_answers():
             )
             question.answers.append(new_answer)
     
-    # demo = Answer(
-    #     user_id = 2,
-    #     question_id = 1,
-    #     text = 'learn more languages to get a job'
-    # )
-    
-    # db.session.add(demo)
     db.session.commit()
 
 def undo_answers():
