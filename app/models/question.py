@@ -20,7 +20,7 @@ class Question(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
     title = db.Column(db.String(50), nullable=False)
     details = db.Column(db.String(255), nullable=False)
-    expectation = db.Column(db.String(255), nullable=False)
+    expectation = db.Column(db.String(1500), nullable=False)
     created_at = db.Column(db.DateTime, default=func.now())
     updated_at = db.Column(db.DateTime, default=func.now())
 
