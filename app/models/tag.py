@@ -1,4 +1,5 @@
 from .db import db, environment, SCHEMA
+from .question import question_tag
 from sqlalchemy.sql import func
 
 
