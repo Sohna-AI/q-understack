@@ -2,7 +2,7 @@ from flask import Blueprint, redirect, render_template, url_for, jsonify, reques
 from datetime import datetime
 from flask_login import current_user, login_required
 from app.models import Question, User, db
-from app.forms.create_question import QuestionForm
+from app.forms.create_question_form import QuestionForm
 
 question_routes = Blueprint('questions', __name__)
 
@@ -57,7 +57,7 @@ def create_question():
         return redirect(url_for('questions.questions'))
     return render_template('create_question.html', form=form)
 
-@question_routes.route('/int:question_id', methods=['PATCH'])
+@question_routes.route('/int:question_id', methods=['PATCH', 'PUT'])
 @login_required
 def update_question(question_id):
     """
