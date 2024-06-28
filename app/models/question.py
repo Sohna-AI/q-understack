@@ -2,8 +2,8 @@ from .db import db, environment, SCHEMA, add_prefix_for_prod
 from sqlalchemy.sql import func
 
 question_tag = db.Table('question_tags',
-    db.Column('question_id', db.Integer, db.ForeignKey('questions.id'), primary_key=True),
-    db.Column('tag_id', db.Integer, db.ForeignKey('tags.id'), primary_key=True),
+    db.Column('question_id', db.Integer, db.ForeignKey(add_prefix_for_prod('questions.id')), primary_key=True),
+    db.Column('tag_id', db.Integer, db.ForeignKey(add_prefix_for_prod('tags.id')), primary_key=True),
     )
 
 if environment == 'production':
@@ -25,26 +25,26 @@ class Question(db.Model):
     updated_at = db.Column(db.DateTime, default=func.now())
 
     tags = db.relationship('Tag', secondary=question_tag, back_populates='questions')
-    
+
     answers = db.relationship("Answer", back_populates='question', cascade="all, delete-orphan")
 
     comments = db.relationship("Comment",
             back_populates='question',
             primaryjoin='and_(foreign(Comment.type_id)==Question.id, Comment.type=="question")',
             cascade="all, delete-orphan")
-    
+
     user = db.relationship('User', back_populates='questions')
-    
+
     follows = db.relationship('Follow',
             back_populates='question',
             primaryjoin='and_(foreign(Follow.type_id) == Question.id, Follow.type=="question")',
             cascade='all, delete-orphan')
-    
+
     saves = db.relationship('Save',
             back_populates='question',
             primaryjoin='and_(foreign(Save.type_id) == Question.id, Save.type=="question")',
             cascade='all, delete-orphan')
-    
+
     up_down_votes = db.relationship('UpDownVote',
             back_populates='question',
             primaryjoin='and_(foreign(UpDownVote.type_id) == Question.id, UpDownVote.type=="question")',
