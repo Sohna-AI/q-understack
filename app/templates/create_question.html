@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Create Question</title>
+  </head>
+  <body>
+    <h1>Create a New Question</h1>
+    <form method="POST" action="questions.create_question">
+      {{ form.hidden_tag() }}
+      <div>
+        {{ form.title.label }} {{ form.title(size=50) }} {% if form.title.errors %}
+        <ul>
+          {% for error in form.title.errors %}
+          <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </div>
+      <div>
+        {{ form.details.label }} {{ form.details(rows=4) }} {% if form.details.errors %}
+        <ul>
+          {% for error in form.details.errors %}
+          <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </div>
+      <div>
+        {{ form.expectation.label }} {{ form.expectation(rows=4) }} {% if form.expectation.errors %}
+        <ul>
+          {% for error in form.expectation.errors %}
+          <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </div>
+      <div>{{ form.submit() }}</div>
+    </form>
+  </body>
+</html>
