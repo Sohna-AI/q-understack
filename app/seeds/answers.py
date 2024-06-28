@@ -9,18 +9,6 @@ question_answers = [
             {
                 'username': 'marnie',
                 'answer': {
-                        'text': 'Si',
-                        'created_at': datetime.now()
-                    }
-            }
-        ]
-    },
-    {
-        'title': 'Is HTML a programming language?',
-        'user_answers': [
-            {
-                'username': 'marnie',
-                'answer': {
                     'text': 'Yes, if you close your eyes and believe hard enough.',
                     'created_at': datetime.now()
                 }
