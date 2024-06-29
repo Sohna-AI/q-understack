@@ -1,7 +1,7 @@
-from flask import Blueprint, redirect, render_template, url_for, jsonify, request
+from flask import Blueprint, redirect, url_for, jsonify, request
 from datetime import datetime
 from flask_login import current_user, login_required
-from app.models import Question, User, db, Save
+from app.models import Question, db, Save
 from app.forms.create_question_form import QuestionForm
 
 question_routes = Blueprint('questions', __name__)
@@ -13,7 +13,7 @@ def questions():
     Query for all questions and returns them in a list of question dictionaries
     """
     questions = Question.query.all()
-    return {'questions': [question.to_dict() for question in questions]}
+    return {'questions': [question.to_dict_list_page() for question in questions]}
 
 
 @question_routes.route('/current')
@@ -25,7 +25,7 @@ def user_questions():
     """
     user_id = current_user.get_id()
     questions = Question.query.filter(Question.user_id==user_id)
-    return {'questions': [question.to_dict() for question in questions]}
+    return {'questions': [question.to_dict_list_page() for question in questions]}
 
 
 
@@ -38,7 +38,7 @@ def user_saves():
     """
     user_id = current_user.get_id()
     questions = Question.query.join(Question.saves).filter(Save.user_id == user_id)
-    return {'questions': [question.to_dict() for question in questions]}
+    return {'questions': [question.to_dict_list_page() for question in questions]}
 
 
 @question_routes.route('/<int:question_id>')
@@ -51,7 +51,7 @@ def question_details(question_id):
     return question.to_dict()
     
     
-@question_routes.route('/new', methods=['GET', 'POST'])
+@question_routes.route('/new', methods=['POST'])
 @login_required
 def create_question():
     """
@@ -64,31 +64,30 @@ def create_question():
             user_id = current_user.id,
             title = form.title.data,
             details = form.details.data,
-            expectation = form.expectation.data,
-            created_at = datetime.now(),
-            updated_at = datetime.now()
+            expectation = form.expectation.data
         )
         
         db.session.add(new_question)
         db.session.commit()
-        return redirect(url_for('questions.questions'))
-    return render_template('create_question.html', form=form)
+        return new_question.to_dict(), 201
+    return form.errors, 400
 
 
 @question_routes.route('/<int:question_id>', methods=['PATCH', 'PUT'])
 @login_required
 def update_question(question_id):
     """
-    Update a question created by the current user
+    Update a question by question_id
     """
+    
+    if question.user_id != current_user.id:
+        return {'error': {'message': 'Unauthorized'}}, 401
     
     question = Question.query.get(question_id)
     
     if not question:
         return {'errors': {'message': 'Question could not be found'}}, 404
 
-    if question.user_id != current_user.id:
-        return {'error': {'message': 'Unauthorized'}}, 403
 
     data = request.get_json()
 
@@ -102,3 +101,32 @@ def update_question(question_id):
 
     db.session.commit()
     return question.to_dict()
+
+
+@question_routes.route('/<int:question_id>', methods=['DELETE'])
+@login_required
+def delete_question(question_id):
+    """
+    Delete a question by question_id
+    """
+    
+    if question_id != current_user.id:
+        return {'error': {'message': 'Unauthorized'}}, 401
+    
+    question = Question.query.get(question_id)
+    
+    if not question:
+        return {'errors': {'message': 'Question could not be found'}}, 404
+    
+    db.session.delete(question)
+    return {'message': 'Successfully deleted'}
+
+
+#* Answer related question routes ------------------------------------------------------------------
+@question_routes.route('/<int:question_id>/answers', methods=['POST'])
+@login_required
+def create_answer(question_id):
+    """
+    Create an answer for a question by question_id
+    """
+    pass
