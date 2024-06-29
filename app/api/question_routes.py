@@ -6,7 +6,7 @@ from app.forms.create_question_form import QuestionForm
 
 question_routes = Blueprint('questions', __name__)
 
-
+# TODO add pagination and limits
 @question_routes.route('/')
 def questions():
     """
