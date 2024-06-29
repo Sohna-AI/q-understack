@@ -35,8 +35,7 @@ function QuestionListPage({ homePage }) {
                                             key={question.id}
                                             title={question.title}
                                             details={question.details}
-                                            // tags={question.tags}
-                                            tags={[{ tag_name: 'hugging-face-transformers' }, { tag_name: 'machine-learning' }, { tag_name: 'large-language-model' }, { tag_name: 'virtual-machines' }, { tag_name: 'react-redux' }]}
+                                            tags={question.tags}
                                             upVotes={question.up_votes}
                                             downVotes={question.down_votes}
                                             numAnswers={question.num_answers}

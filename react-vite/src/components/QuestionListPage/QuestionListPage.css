@@ -1,6 +1,5 @@
 #question-card__container {
-    /* TODO Fix question card width */
-    width: 50vw;
+    width: var(--group-card-width);
     margin: 0 auto;
 }
 
@@ -11,7 +10,7 @@
 }
 
 #question-list__header button {
-    background-color: rgb(2, 79, 2);
+    background-color: var(--button-color);
     border: none;
     border-radius: .25rem;
     color: white;
@@ -21,17 +20,18 @@
 }
 
 #question-list__header button:hover {
-    background-color: rgb(0, 100, 0);
+    background-color: var(--button-color-hover);
 }
 
+
 .question-card {
-    border-top: 1px solid black;
+    border-top: 1px solid var(--border-color);
     display: flex;
     align-items: center;
 }
 
 .question-card:last-of-type {
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid var(--border-color);
 }
 
 .question-card .votes-answers__container {
@@ -41,8 +41,9 @@
 }
 
 .question-card .votes-answers__container * {
-    margin: 0 15px;
+    margin: 2px 15px;
     font-weight: bold;
+    font-size: 12px;
     white-space: nowrap;
     /**^ Prevents Answer tag from wrapping when title is 2 lines */
 }
@@ -70,4 +71,5 @@
 
 .question-card .author {
     text-align: end;
+    width: calc(var(--group-card-width) - 150px);
 }

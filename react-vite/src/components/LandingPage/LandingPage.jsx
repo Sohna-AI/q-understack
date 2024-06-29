@@ -13,7 +13,7 @@ export default function LandingPage() {
     } else {
         content = (
             <QuestionListPage
-            // homePage={true}
+                homePage={true}
             />
         )
     }
