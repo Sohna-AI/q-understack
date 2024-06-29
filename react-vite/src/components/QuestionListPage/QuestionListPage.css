@@ -1,6 +1,6 @@
 #question-card__container {
     width: var(--group-card-width);
-    margin: 0 auto;
+    /* margin: 0 auto; */
 }
 
 #question-list__header {

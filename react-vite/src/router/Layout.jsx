@@ -17,14 +17,14 @@ export default function Layout() {
     return (
         <>
             <ModalProvider>
-                <div id="main_container">
-                    <Navigation />
-                    <div id="main__container">
-                        <Sidebar />
-                        {isLoaded && <Outlet />}
-                        <Modal />
-                    </div>
+                {/* <div id="main_container"> */}
+                <Navigation />
+                <div id="main__container">
+                    <Sidebar />
+                    {isLoaded && <Outlet />}
+                    <Modal />
                 </div>
+                {/* </div> */}
                 <Footer />
             </ModalProvider>
         </>
