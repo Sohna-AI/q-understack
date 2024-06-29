@@ -11,7 +11,6 @@ export default function QuestionCard({ title, details, tags, upVotes, downVotes,
             <div className="title-tags__container">
                 <h2>{title}</h2>
                 {!homePage && <p>{details}</p>}
-                {/* <div className="tag-author__container"> */}
                 <div className="tags__container">
                     {tags.map((tag) => {
                         return (
@@ -21,7 +20,6 @@ export default function QuestionCard({ title, details, tags, upVotes, downVotes,
                         )
                     })}
                 </div>
-                {/* </div> */}
                 <p className="author">{author.username}</p>
             </div>
         </div>
