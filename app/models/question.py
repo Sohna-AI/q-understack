@@ -62,7 +62,8 @@ class Question(db.Model):
             'answers': [answer.to_dict_no_question() for answer in self.answers],
             'comments': [comment.to_dict() for comment in self.comments],
             'created_at': self.created_at,
-            'updated_at': self.updated_at
+            'updated_at': self.updated_at,
+            'author': self.user.to_dict()
         }
 
     def to_dict_list_page(self):
@@ -80,5 +81,6 @@ class Question(db.Model):
             'tags': [tag.to_dict() for tag in self.tags],
             'down_votes': down_votes,
             'created_at': self.created_at,
-            'updated_at': self.updated_at
+            'updated_at': self.updated_at,
+            'author': self.user.to_dict()
         }
