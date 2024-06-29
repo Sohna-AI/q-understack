@@ -5,19 +5,22 @@ import { RouterProvider } from "react-router-dom";
 import configureStore from "./redux/store";
 import { router } from "./router";
 import * as sessionActions from "./redux/session";
+import * as questionActions from "./redux/questions";
+import './normalize.css';
 import "./index.css";
 
 const store = configureStore();
 
 if (import.meta.env.MODE !== "production") {
-  window.store = store;
-  window.sessionActions = sessionActions;
+    window.store = store;
+    window.sessionActions = sessionActions;
+    window.questionActions = questionActions;
 }
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <ReduxProvider store={store}>
-      <RouterProvider router={router} />
-    </ReduxProvider>
-  </React.StrictMode>
+    <React.StrictMode>
+        <ReduxProvider store={store}>
+            <RouterProvider router={router} />
+        </ReduxProvider>
+    </React.StrictMode>
 );

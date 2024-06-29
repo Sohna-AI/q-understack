@@ -61,16 +61,25 @@ class Question(db.Model):
             'answers': [answer.to_dict_no_question() for answer in self.answers],
             'comments': [comment.to_dict() for comment in self.comments],
             'created_at': self.created_at,
-            'updated_at': self.updated_at
+            'updated_at': self.updated_at,
+            'author': self.user.to_dict()
         }
 
-    def to_dict_no_answers(self):
+    def to_dict_list_page(self):
+        num_answers = len(self.answers)
+        up_votes = len([vote for vote in self.up_down_votes if vote.vote == True])
+        down_votes = len([vote for vote in self.up_down_votes if vote.vote == False])
+        
         return {
             'id': self.id,
             'user_id': self.user_id,
             'title': self.title,
             'details': self.details,
-            'expectation': self.expectation,
+            'num_answers': num_answers,
+            'up_votes': up_votes,
+            'tags': [tag.to_dict() for tag in self.tags],
+            'down_votes': down_votes,
             'created_at': self.created_at,
-            'updated_at': self.updated_at
+            'updated_at': self.updated_at,
+            'author': self.user.to_dict()
         }

@@ -1,0 +1,32 @@
+#sidebar {
+    border-right: 1px solid var(--border-color);
+    padding-top: 100px;
+    width: 100px;
+}
+
+#sidebar #sidebar__main-links {
+    display: flex;
+    flex-direction: column;
+    /* gap: 10px; */
+    margin-bottom: 30px;
+}
+
+#sidebar__main-links>div,
+#sidebar__sub-links>div {
+    border-top-left-radius: .25rem;
+    border-bottom-left-radius: .25rem;
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    gap: 5px;
+}
+
+#sidebar__main-links>div:hover,
+#sidebar__sub-links>div:hover {
+    background-color: rgb(75, 75, 75);
+}
+
+#sidebar__main-links,
+#sidebar__sub-links {
+    cursor: pointer;
+}

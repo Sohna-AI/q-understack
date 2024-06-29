@@ -3,17 +3,17 @@ import ProfileButton from "./ProfileButton";
 import "./Navigation.css";
 
 function Navigation() {
-  return (
-    <ul>
-      <li>
-        <NavLink to="/">Home</NavLink>
-      </li>
+    return (
+        <ul id="navbar">
+            <li>
+                <NavLink to="/">Home</NavLink>
+            </li>
 
-      <li>
-        <ProfileButton />
-      </li>
-    </ul>
-  );
+            <li>
+                <ProfileButton />
+            </li>
+        </ul>
+    );
 }
 
 export default Navigation;

@@ -1,0 +1,39 @@
+footer {
+    border-top: 1px solid var(--border-color);
+    height: 200px;
+    margin-top: 100px;
+}
+
+footer>div {
+    display: flex;
+    justify-content: space-between;
+    width: 80vw;
+    margin: 0 auto;
+}
+
+footer #site_links {
+    color: var(--link-color);
+    display: flex;
+    gap: 100px;
+}
+
+footer #site_links p:hover {
+    color: rgb(0, 250, 0);
+}
+
+footer #site_links #sub_links {
+    font-size: 12px;
+}
+
+footer #social_links button {
+    border: none;
+    border-radius: .25rem;
+    background-color: var(--button-color);
+    cursor: pointer;
+    padding: 10px 20px;
+    margin: 10px;
+}
+
+footer #social_links button:hover {
+    background-color: var(--button-color-hover);
+}
