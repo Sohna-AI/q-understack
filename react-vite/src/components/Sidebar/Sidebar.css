@@ -11,18 +11,20 @@
     margin-bottom: 30px;
 }
 
-#sidebar__main-links>div,
-#sidebar__sub-links>div {
+#sidebar__main-links>a,
+#sidebar__sub-links>a {
     border-top-left-radius: .25rem;
     border-bottom-left-radius: .25rem;
+    color: var(--font-color);
+    text-decoration: none;
     display: flex;
     align-items: center;
     padding: 5px;
     gap: 5px;
 }
 
-#sidebar__main-links>div:hover,
-#sidebar__sub-links>div:hover {
+#sidebar__main-links>a:hover,
+#sidebar__sub-links>a:hover {
     background-color: rgb(75, 75, 75);
 }
 
