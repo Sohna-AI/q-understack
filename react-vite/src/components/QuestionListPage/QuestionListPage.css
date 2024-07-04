@@ -19,6 +19,10 @@
     cursor: pointer;
 }
 
+#question-list__header h1 {
+    margin-left: 20px;
+}
+
 #question-list__header button:hover {
     background-color: var(--button-color-hover);
 }
