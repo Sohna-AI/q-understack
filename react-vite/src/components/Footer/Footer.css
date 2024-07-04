@@ -12,13 +12,16 @@ footer>div {
 }
 
 footer #site_links {
-    color: var(--link-color);
     display: flex;
     gap: 100px;
 }
 
+footer #site_links p {
+    cursor: pointer;
+}
+
 footer #site_links p:hover {
-    color: rgb(0, 250, 0);
+    color: var(--link-color);
 }
 
 footer #site_links #sub_links {
