@@ -34,7 +34,7 @@ function LoginFormModal() {
 
     const handleDemoUserLogin = () => {
         setErrors({});
-        return dispatch(thunkLogin('demo@aa.io', 'password'))
+        return dispatch(thunkLogin({ email: 'demo@aa.io', password: 'password' }))
             .then(() => {
                 closeModal();
             });
