@@ -4,6 +4,7 @@ import { thunkGetAllQuestions } from "../../redux/questions";
 import QuestionCard from "./QuestionCard";
 import './QuestionListPage.css';
 
+// TODO Implement pagination
 function QuestionListPage({ homePage }) {
     const dispatch = useDispatch();
     const [isLoaded, setIsLoaded] = useState(false)
