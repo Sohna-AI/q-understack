@@ -33,6 +33,7 @@ function QuestionListPage({ homePage }) {
                                     return (
                                         <QuestionCard
                                             key={question.id}
+                                            id={question.id}
                                             title={question.title}
                                             details={question.details}
                                             tags={question.tags}

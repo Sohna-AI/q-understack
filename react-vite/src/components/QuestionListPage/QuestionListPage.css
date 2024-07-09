@@ -77,3 +77,8 @@
     text-align: end;
     width: calc(var(--group-card-width) - 150px);
 }
+
+.title-tags__container h2:hover {
+    color: var(--link-color);
+    cursor: pointer;
+}
