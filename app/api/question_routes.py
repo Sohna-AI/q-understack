@@ -1,8 +1,9 @@
 from flask import Blueprint, redirect, url_for, jsonify, request
 from datetime import datetime
 from flask_login import current_user, login_required
-from app.models import Question, db, Save
+from app.models import Question, db, Save, Answer
 from app.forms.create_question_form import QuestionForm
+from app.forms.create_answer_form import AnswerForm
 
 question_routes = Blueprint('questions', __name__)
 
@@ -80,15 +81,14 @@ def update_question(question_id):
     """
     Update a question by question_id
     """
-    
-    if question.user_id != current_user.id:
-        return {'error': {'message': 'Unauthorized'}}, 401
-    
+
     question = Question.query.get(question_id)
     
     if not question:
         return {'errors': {'message': 'Question could not be found'}}, 404
 
+    if question.user_id != current_user.id:
+        return {'error': {'message': 'Unauthorized'}}, 401
 
     data = request.get_json()
 
@@ -111,13 +111,13 @@ def delete_question(question_id):
     Delete a question by question_id
     """
     
-    if question_id != current_user.id:
-        return {'error': {'message': 'Unauthorized'}}, 401
-    
     question = Question.query.get(question_id)
     
     if not question:
         return {'errors': {'message': 'Question could not be found'}}, 404
+    
+    if question.user_id != current_user.id:
+        return {'error': {'message': 'Unauthorized'}}, 401
     
     db.session.delete(question)
     db.session.commit()
@@ -131,4 +131,16 @@ def create_answer(question_id):
     """
     Create an answer for a question by question_id
     """
-    pass
+    form = AnswerForm()
+    if form.validate_on_submit():
+        new_answer = Answer(
+            user_id = current_user.id,
+            question_id = question_id,
+            text = form.text.data,
+            created_at = datetime.now(),
+            updated_at = datetime.now()
+        )
+        db.session.add(new_answer)
+        db.session.commit()
+        return new_answer.to_dict(), 201
+    return form.errors, 400

@@ -15,7 +15,12 @@ export const router = createBrowserRouter([
             },
             {
                 path: 'questions',
-                element: <QuestionListPage />
+                element: <QuestionListPage />,
+                children: [
+                    {
+                        path: 'answers'
+                    }
+                ]
             },
             {
                 path: "login",
