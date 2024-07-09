@@ -1,8 +1,9 @@
 from flask import Blueprint, request
 from datetime import datetime
 from flask_login import current_user, login_required
-from app.models import Question, Answer, User, answer, db, Comment
+from app.models import  Answer, db, Comment
 from app.forms.create_comment_form import CommentForm
+from app.forms.create_answer_form import AnswerForm
 
 answer_routes = Blueprint('answers', __name__)
 
@@ -22,12 +23,14 @@ def edit_answer(answer_id):
     
     data = request.get_json()
     
-    if 'text' in data:
-        answer.text = data['text']
-    answer.updated_at = datetime.now()
+    form = AnswerForm()
+    if form.validate_on_submit():
+        answer.text = form.text.data
+        answer.updated_at = datetime.now()
     
-    db.session.commit()
-    return answer.to_dict()
+        db.session.commit()
+        return answer.to_dict()
+    return form.errors, 400
 
 @answer_routes.route('/<int:answer_id', methods=['DELETE'])
 @login_required

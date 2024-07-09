@@ -1,4 +1,4 @@
-from flask import Blueprint, redirect, url_for, jsonify, request
+from flask import Blueprint, request
 from datetime import datetime
 from flask_login import current_user, login_required
 from app.models import Question, db, Save, Answer, Comment
