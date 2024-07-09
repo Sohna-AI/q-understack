@@ -120,6 +120,7 @@ def delete_question(question_id):
         return {'errors': {'message': 'Question could not be found'}}, 404
     
     db.session.delete(question)
+    db.session.commit()
     return {'message': 'Successfully deleted'}
 
 
