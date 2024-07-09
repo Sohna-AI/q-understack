@@ -1,9 +1,10 @@
 from flask import Blueprint, redirect, url_for, jsonify, request
 from datetime import datetime
 from flask_login import current_user, login_required
-from app.models import Question, db, Save, Answer
+from app.models import Question, db, Save, Answer, Comment
 from app.forms.create_question_form import QuestionForm
 from app.forms.create_answer_form import AnswerForm
+from app.forms.create_comment_form import CommentForm
 
 question_routes = Blueprint('questions', __name__)
 
@@ -125,11 +126,20 @@ def delete_question(question_id):
 
 
 #* Answer related question routes ------------------------------------------------------------------
+
+@question_routes.route('/<int:question_id>/answers', methods=['GET'])
+def get_all_answers_for_question(question_id):
+    """
+    Get all answers for a specific question by id
+    """
+    answers = Answer.query.filter(Answer.question_id == question_id).all()
+    return {'answers': [answer.to_dict() for answer in answers]}
+
 @question_routes.route('/<int:question_id>/answers', methods=['POST'])
 @login_required
 def create_answer(question_id):
     """
-    Create an answer for a question by question_id
+    Create an answer for a question by id
     """
     form = AnswerForm()
     if form.validate_on_submit():
@@ -143,4 +153,36 @@ def create_answer(question_id):
         db.session.add(new_answer)
         db.session.commit()
         return new_answer.to_dict(), 201
+    return form.errors, 400
+
+
+#* Comment related question routes ------------------------------------------------------------------
+@question_routes.route('/<int:question_id/comments', methods=['GET'])
+def get_all_questions_comments(question_id):
+    """
+    Get all comments for a specific question by id.
+    """
+    comments = Comment.query.filter(Comment.question_id == question_id).all()
+    return {'comments': [comment.to_dict() for comment in comments]}
+
+@question_routes.route('/<int:question_id>/comments', methods=['POST'])
+@login_required
+def create_comment_question(question_id):
+    """
+    Create a comment for a question by id
+    """
+    form = CommentForm()
+    if form.validate_on_submit():
+        new_comment = Comment(
+            user_id = current_user.id,
+            type_id=question_id,
+            type='question',
+            comment=form.comment.data,
+            created_at=datetime.now(),
+            updated_at=datetime.now()
+        )
+        
+        db.session.add(new_comment)
+        db.session.commit()
+        return new_comment.to_dict(), 201
     return form.errors, 400
