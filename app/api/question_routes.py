@@ -80,16 +80,14 @@ def update_question(question_id):
     """
     Update a question by question_id
     """
-    
-    if question.user_id != current_user.id:
-        return {'error': {'message': 'Unauthorized'}}, 401
-    
     question = Question.query.get(question_id)
     
     if not question:
         return {'errors': {'message': 'Question could not be found'}}, 404
 
-
+    if question.user_id != current_user.id:
+        return {'error': {'message': 'Unauthorized'}}, 401
+    
     data = request.get_json()
 
     if 'title' in data:
@@ -109,15 +107,14 @@ def update_question(question_id):
 def delete_question(question_id):
     """
     Delete a question by question_id
-    """
-    
-    if question_id != current_user.id:
-        return {'error': {'message': 'Unauthorized'}}, 401
-    
+    """  
     question = Question.query.get(question_id)
     
     if not question:
         return {'errors': {'message': 'Question could not be found'}}, 404
+    
+    if question_id != current_user.id:
+        return {'error': {'message': 'Unauthorized'}}, 401
     
     db.session.delete(question)
     db.session.commit()

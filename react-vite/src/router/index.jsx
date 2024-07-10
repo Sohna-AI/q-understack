@@ -4,6 +4,7 @@ import SignupFormPage from '../components/SignupFormPage';
 import Layout from './Layout';
 import LandingPage from '../components/LandingPage';
 import QuestionListPage from '../components/QuestionListPage';
+import QuestionDetailPage from '../components/QuestionDetailPage';
 
 export const router = createBrowserRouter([
     {
@@ -15,7 +16,17 @@ export const router = createBrowserRouter([
             },
             {
                 path: 'questions',
-                element: <QuestionListPage />
+                children: [
+                    {
+                        index: true,
+                        element: <QuestionListPage />
+                    },
+                    {
+                        path: ':questionId',
+                        element: <QuestionDetailPage />
+                    }
+
+                ]
             },
             {
                 path: "login",

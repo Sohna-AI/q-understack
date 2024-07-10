@@ -1,5 +1,14 @@
-export default function QuestionCard({ title, details, tags, upVotes, downVotes,
-    numAnswers, author, userId, createdAt, updatedAt, homePage }) {
+import { useNavigate } from "react-router-dom";
+
+export default function QuestionCard({ id, title, details, tags, upVotes, downVotes,
+    numAnswers, author, homePage }) {
+
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        navigate(`/questions/${id}`)
+    }
+
     return (
         <div className="question-card">
             <div className="votes-answers__container">
@@ -9,13 +18,13 @@ export default function QuestionCard({ title, details, tags, upVotes, downVotes,
                 </p>
             </div>
             <div className="title-tags__container">
-                <h2>{title}</h2>
+                <h2 onClick={handleClick}>{title}</h2>
                 {!homePage && <p>{details}</p>}
                 <div className="tags__container">
                     {tags.map((tag) => {
                         return (
-                            <div>
-                                <p key={tag.id} className="tag">{tag.tag_name}</p>
+                            <div key={tag.id}>
+                                <p className="tag">{tag.tag_name}</p>
                             </div>
                         )
                     })}

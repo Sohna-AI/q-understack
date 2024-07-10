@@ -1,7 +1,5 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import QuestionListPage from '../QuestionListPage';
-import { thunkGetAllQuestions } from '../../redux/questions';
 
 export default function LandingPage() {
     const sessionUser = useSelector((state) => state.session.user);
