@@ -186,3 +186,17 @@ def create_comment_question(question_id):
         db.session.commit()
         return new_comment.to_dict(), 201
     return form.errors, 400
+
+#* Save related question routes ------------------------------------------------------------------
+
+@question_routes.route('/<int:question_id>/save', methods=['POST'])
+@login_required
+def save_question(question_id):
+    """
+    Save a question by question ID
+    """
+    save = Save.query.filter_by(user_id = current_user.id, type_id = question_id, type = 'question').first()
+    if save:
+        return {'error': {'message': 'Question already saved'}}
+    
+    
