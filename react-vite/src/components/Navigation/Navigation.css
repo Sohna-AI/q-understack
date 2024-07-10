@@ -1,3 +1,97 @@
+#navbar {
+    display: flex;
+    /* border-bottom: 1px solid var(--border-color); */
+    justify-content: space-between;
+    align-items: center;
+    width: 90vw;
+    margin: 0 auto;
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+#logo_about_links {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+#logo {
+    cursor: pointer;
+}
+
+#search_bar {
+    height: 30px;
+    width: 30vw;
+}
+
+#home_profile_links {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+}
+
+#profile_button {
+    font-size: 20px;
+    background-color: var(--button-color);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    border: none;
+    border-radius: .25rem;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+#profile_button:hover {
+    background-color: var(--button-color-hover);
+}
+
+#navbar a {
+    text-decoration: none;
+    color: var(--font-color);
+    cursor: pointer;
+}
+
+#navbar a:hover {
+    color: var(--link-color);
+}
+
 .profile-dropdown {
-  position: absolute;
+    background-color: #1F1F1F;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    border: 1px solid var(--border-color);
+    border-top: none;
+    top: 46px;
+    right: 5vw;
+    list-style-type: none;
+    padding: 10px;
+    gap: 10px;
+}
+
+#logout_button {
+    background-color: var(--button-color);
+    border: none;
+    border-radius: .25rem;
+    cursor: pointer;
+}
+
+#logout_button:hover {
+    background-color: var(--button-color-hover);
+}
+
+.modal_menu_item {
+    cursor: pointer;
+}
+
+.modal_menu_item:hover {
+    color: var(--link-color);
+}
+
+@media (prefers-color-scheme: light) {
+    .profile-dropdown {
+        background-color: #ffffff;
+    }
 }

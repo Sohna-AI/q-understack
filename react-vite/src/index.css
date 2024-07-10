@@ -1,1 +1,53 @@
-/* TODO: Add sitewide styles */
+:root {
+    --border-color: rgb(75, 75, 75);
+    --button-color: rgb(2, 79, 2);
+    --button-color-hover: rgb(0, 100, 0);
+    --group-card-width: clamp(400px, 50vw, 800px);
+    --link-color: rgb(0, 200, 0);
+    --font-family: system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        'Segoe UI',
+        Roboto,
+        Oxygen,
+        Ubuntu,
+        Cantarell,
+        'Open Sans',
+        'Helvetica Neue',
+        sans-serif;
+    --font-color: rgba(255, 255, 2355, 0.87);
+    color-scheme: light dark;
+    color: var(--font-color);
+    background-color: #1F1F1F;
+    font-family: var(--font-family);
+
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: 100%;
+}
+
+.split {
+    border-bottom: 1px solid var(--border-color);
+}
+
+/** Keeps Footer at bottom of page regardless of content
+**  without adding unnecessary height */
+#main__container {
+    display: flex;
+    justify-content: center;
+    min-height: calc(100vh - 360px);
+    width: var(--group-card-width) + 200px;
+}
+
+@media (prefers-color-scheme: light) {
+    :root {
+        color: black;
+        background-color: #ffffff;
+    }
+
+    button {
+        color: rgba(255, 255, 255, 0.87);
+    }
+}
