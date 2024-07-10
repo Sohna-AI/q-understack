@@ -46,20 +46,20 @@ def user_saves():
 @question_routes.route('/<int:question_id>')
 def question_details(question_id):
     question = Question.query.get(question_id)
-    
+
     if not question:
         return {'errors': {'message': 'Question could not be found'}}, 404
-    
+
     return question.to_dict()
-    
-    
+
+
 @question_routes.route('/new', methods=['POST'])
 @login_required
 def create_question():
     """
     Create a new question
     """
-    
+
     form = QuestionForm()
     if form.validate_on_submit():
         new_question = Question(
@@ -68,7 +68,7 @@ def create_question():
             details = form.details.data,
             expectation = form.expectation.data
         )
-        
+
         db.session.add(new_question)
         db.session.commit()
         return new_question.to_dict(), 201
@@ -83,7 +83,7 @@ def update_question(question_id):
     """
 
     question = Question.query.get(question_id)
-    
+
     if not question:
         return {'errors': {'message': 'Question could not be found'}}, 404
 
@@ -110,15 +110,15 @@ def delete_question(question_id):
     """
     Delete a question by question_id
     """
-    
+
     question = Question.query.get(question_id)
-    
+
     if not question:
         return {'errors': {'message': 'Question could not be found'}}, 404
-    
+
     if question.user_id != current_user.id:
         return {'error': {'message': 'Unauthorized'}}, 401
-    
+
     db.session.delete(question)
     db.session.commit()
     return {'message': 'Successfully deleted'}
@@ -132,6 +132,7 @@ def create_answer(question_id):
     Create an answer for a question by question_id
     """
     form = AnswerForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         new_answer = Answer(
             user_id = current_user.id,
