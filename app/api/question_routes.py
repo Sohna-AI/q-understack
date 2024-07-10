@@ -1,4 +1,4 @@
-from flask import Blueprint, request
+from flask import Blueprint
 from datetime import datetime
 from flask_login import current_user, login_required
 from app.models import Question, db, Save, Answer, Comment, Follow
@@ -91,18 +91,16 @@ def update_question(question_id):
     if question.user_id != current_user.id:
         return {'error': {'message': 'Unauthorized'}}, 401
 
-    data = request.get_json()
+    form = QuestionForm()
+    if form.validate_on_submit():
+        question.title = form.title.data
+        question.details = form.details.data
+        question.expectation = form.expectation.data
+        question.updated_at = datetime.now()
 
-    if 'title' in data:
-        question.title = data['title']
-    if 'details' in data:
-        question.details = data['details']
-    if 'expectation' in data:
-        question.expectation = data['expectation']
-    question.updated_at = datetime.now()
-
-    db.session.commit()
-    return question.to_dict()
+        db.session.commit()
+        return question.to_dict()
+    return form.errors, 400
 
 
 @question_routes.route('/<int:question_id>', methods=['DELETE'])
