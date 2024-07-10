@@ -49,10 +49,10 @@ def question_details(question_id):
     if not question:
         return {'errors': {'message': 'Question could not be found'}}, 404
     
-    return question.to_dict()
+    return question.to_dict_details()
     
     
-@question_routes.route('/new', methods=['POST'])
+@question_routes.route('/', methods=['POST'])
 @login_required
 def create_question():
     """
