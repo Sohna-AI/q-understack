@@ -37,8 +37,7 @@ function QuestionListPage({ homePage }) {
                                             title={question.title}
                                             details={question.details}
                                             tags={question.tags}
-                                            upVotes={question.up_votes}
-                                            downVotes={question.down_votes}
+                                            num_votes={question.num_votes}
                                             numAnswers={question.num_answers}
                                             author={question.author}
                                             userId={question.user_id}

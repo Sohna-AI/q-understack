@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-export default function QuestionCard({ id, title, details, tags, upVotes, downVotes,
+export default function QuestionCard({ id, title, details, tags, num_votes,
     numAnswers, author, homePage }) {
 
     const navigate = useNavigate();
@@ -12,7 +12,7 @@ export default function QuestionCard({ id, title, details, tags, upVotes, downVo
     return (
         <div className="question-card">
             <div className="votes-answers__container">
-                <p>{upVotes - downVotes} Votes</p>
+                <p>{num_votes} Votes</p>
                 <p className={numAnswers > 0 ? 'answered' : ''}>
                     {numAnswers} {numAnswers === 1 ? 'Answer' : 'Answers'}
                 </p>
