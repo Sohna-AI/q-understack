@@ -51,7 +51,7 @@ function QuestionListPage({ homePage }) {
                     </>
                 }
                 {
-                    !isLoaded && <div style={{ height: '100vw' }} id="question-card__container"></div>
+                    !isLoaded && <div style={{ height: '100vh' }} id="question-card__container"></div>
                 }
             </div>
         </>

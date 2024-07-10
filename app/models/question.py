@@ -51,6 +51,10 @@ class Question(db.Model):
             cascade='all, delete-orphan')
 
     def to_dict(self):
+        num_answers = len(self.answers)
+        up_votes = len([vote for vote in self.up_down_votes if vote.vote == True])
+        down_votes = len([vote for vote in self.up_down_votes if vote.vote == False])
+        
         return {
             'id': self.id,
             'user': self.user.to_dict(),
@@ -62,7 +66,10 @@ class Question(db.Model):
             'comments': [comment.to_dict() for comment in self.comments],
             'created_at': self.created_at,
             'updated_at': self.updated_at,
-            'author': self.user.to_dict()
+            'author': self.user.to_dict(),
+            'num_answers': num_answers,
+            'up_votes': up_votes,
+            'down_votes': down_votes,
         }
 
     def to_dict_list_page(self):
