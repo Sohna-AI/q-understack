@@ -1,4 +1,4 @@
-import { FaBookmark, FaHome, FaQuestionCircle, FaSave, FaTag, } from 'react-icons/fa';
+import { FaBookmark, FaHome, FaQuestionCircle, FaTag, } from 'react-icons/fa';
 import './Sidebar.css';
 import { NavLink } from 'react-router-dom';
 
