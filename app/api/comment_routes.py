@@ -1,4 +1,4 @@
-from flask import Blueprint
+from flask import Blueprint, request
 from datetime import datetime
 from flask_login import current_user, login_required
 from app.models import db, Comment
@@ -21,6 +21,7 @@ def edit_comment(comment_id):
         return {'error': {'message': 'Unauthorized'}}, 401
     
     form = CommentForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         comment.comment = form.comment.data
         comment.updated_at = datetime.now()

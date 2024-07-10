@@ -1,4 +1,4 @@
-from flask import Blueprint
+from flask import Blueprint, request
 from datetime import datetime
 from flask_login import current_user, login_required
 from app.models import Question, db, Save, Answer, Comment, Follow
@@ -62,6 +62,7 @@ def create_question():
     """
     
     form = QuestionForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         new_question = Question(
             user_id = current_user.id,
@@ -92,6 +93,7 @@ def update_question(question_id):
         return {'error': {'message': 'Unauthorized'}}, 401
 
     form = QuestionForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         question.title = form.title.data
         question.details = form.details.data
@@ -140,6 +142,7 @@ def create_answer(question_id):
     Create an answer for a question by id
     """
     form = AnswerForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         new_answer = Answer(
             user_id = current_user.id,
@@ -170,6 +173,7 @@ def create_comment_question(question_id):
     Create a comment for a question by id
     """
     form = CommentForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         new_comment = Comment(
             user_id = current_user.id,
