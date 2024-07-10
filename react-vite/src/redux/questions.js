@@ -12,7 +12,7 @@ const setCurrentQuestion = (question) => ({
 })
 
 export const thunkGetAllQuestions = () => async (dispatch) => {
-    const response = await fetch('/api/questions');
+    const response = await fetch('/api/questions/');
     if (response.ok) {
         const data = await response.json();
         dispatch(setQuestions(data))
@@ -25,7 +25,7 @@ export const thunkGetAllQuestions = () => async (dispatch) => {
 }
 
 export const thunkGetQuestionDetailsById = (questionId) => async (dispatch) => {
-    const response = await fetch(`/api/questions/${questionId}`);
+    const response = await fetch(`/api/questions/${questionId}/`);
     if (response.ok) {
         const data = await response.json();
         dispatch(setCurrentQuestion(data))
