@@ -1,7 +1,7 @@
-from flask import Blueprint, request
+from flask import Blueprint
 from datetime import datetime
 from flask_login import current_user, login_required
-from app.models import  Answer, db, Comment
+from app.models import  Answer, db, Comment, Save, Follow
 from app.forms.create_comment_form import CommentForm
 from app.forms.create_answer_form import AnswerForm
 
@@ -20,8 +20,6 @@ def edit_answer(answer_id):
     
     if answer.user_id != current_user.id:
         return {'error': {'message': 'Unauthorized'}}, 401
-    
-    data = request.get_json()
     
     form = AnswerForm()
     if form.validate_on_submit():
@@ -80,3 +78,66 @@ def create_comment_answer(answer_id):
         db.session.commit()
         return new_comment.to_dict(), 201
     return form.errors, 400
+
+
+#* Save related question routes ------------------------------------------------------------------
+@answer_routes.route('/<int:answer_id>/save', methods=['POST'])
+@login_required
+def save_answer(answer_id):
+    """
+    Save an answer by id
+    """
+    save = Save.query.filter_by(user_id = current_user.id, type_id = answer_id, type = 'answer').first()
+    if save:
+        return {'error': 'Answer already saved'}, 400
+    
+    new_save = Save(user_id = current_user.id, type_id = answer_id, type = 'answer')
+    db.session.add(new_save)
+    db.session.commit()
+    return {'message': 'Answer saved successfully'}, 201
+
+@answer_routes.route('/<int:answer_id>/save', methods=['DELETE'])
+@login_required
+def remove_save_answer(answer_id):
+    """
+    Remove an answer from save by id
+    """
+    save = Save.query.filter_by(user_id = current_user.id, type_id = answer_id, type = 'answer').first()
+    if not save:
+        return {'error': 'Answer not found'}, 404
+    
+    db.session.delete(save)
+    db.session.commit()
+    return {'message': 'Saved answer removed successfully'}
+
+
+#* Follow related question routes ------------------------------------------------------------------
+@answer_routes.route('/<int:answer_id>/follow', methods=['POST'])
+@login_required
+def follow_answer(answer_id):
+    """
+    Follow a answer by id
+    """
+    follow = Follow.query.filter_by(user_id = current_user.id, type_id = answer_id, type = 'answer').first()
+    if follow:
+        return {'error': 'Already following this answer'}, 400
+    
+    new_follow = Follow(user_id=current_user.id, type_id=answer_id, type='answer')
+    db.session.add(new_follow)
+    db.session.commit()
+    return {'message': 'answer followed successfully'}, 201
+
+@answer_routes.route('/<int:answer_id>/follow', methods=['DELETE'])
+@login_required
+def unfollow_answer(answer_id):
+    """
+    Unfollow a answer by id
+    """
+    follow = Follow.query.filter_by(user_id = current_user.id, type_id = answer_id, type = 'answer').first()
+    if follow:
+        return {'error': 'answer not found'}, 404
+    
+    db.session.delete(follow)
+    db.session.commit()
+    return {'message': 'Unfollowed answer successfully'}
+

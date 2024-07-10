@@ -1,7 +1,7 @@
 from flask import Blueprint, request
 from datetime import datetime
 from flask_login import current_user, login_required
-from app.models import Question, db, Save, Answer, Comment
+from app.models import Question, db, Save, Answer, Comment, Follow
 from app.forms.create_question_form import QuestionForm
 from app.forms.create_answer_form import AnswerForm
 from app.forms.create_comment_form import CommentForm
@@ -187,8 +187,8 @@ def create_comment_question(question_id):
         return new_comment.to_dict(), 201
     return form.errors, 400
 
-#* Save related question routes ------------------------------------------------------------------
 
+#* Save related question routes ------------------------------------------------------------------
 @question_routes.route('/<int:question_id>/save', methods=['POST'])
 @login_required
 def save_question(question_id):
@@ -199,4 +199,51 @@ def save_question(question_id):
     if save:
         return {'error': {'message': 'Question already saved'}}
     
+    new_save = Save(user_id = current_user.id, type_id = question_id, type = 'question')
+    db.session.add(new_save)
+    db.session.commit()
+    return {'message': 'Question saved successfully'}, 201
+
+@question_routes.route('/<int:question_id>/save', methods=['DELETE'])
+@login_required
+def remove_save_question(question_id):
+    """
+    Remove a question from saves by id
+    """
+    save = Save.query.filter_by(user_id = current_user.id, type_id = question_id, type = 'question').first()
+    if not save:
+        return {'error': 'Question not found'}, 404
     
+    db.session.delete(save)
+    db.session.commit()
+    return {'message': 'Saved question removed successfully'}
+
+#* Follow related question routes ------------------------------------------------------------------
+@question_routes.route('/<int:question_id>/follow', methods=['POST'])
+@login_required
+def follow_question(question_id):
+    """
+    Follow a question by id
+    """
+    follow = Follow.query.filter_by(user_id = current_user.id, type_id = question_id, type = 'question').first()
+    if follow:
+        return {'error': 'Already following this question'}, 400
+    
+    new_follow = Follow(user_id=current_user.id, type_id=question_id, type='question')
+    db.session.add(new_follow)
+    db.session.commit()
+    return {'message': 'Question followed successfully'}, 201
+
+@question_routes.route('/<int:question_id>/follow', methods=['DELETE'])
+@login_required
+def unfollow_question(question_id):
+    """
+    Unfollow a question by id
+    """
+    follow = Follow.query.filter_by(user_id = current_user.id, type_id = question_id, type = 'question').first()
+    if follow:
+        return {'error': 'Question not found'}, 404
+    
+    db.session.delete(follow)
+    db.session.commit()
+    return {'message': 'Unfollowed question successfully'}
