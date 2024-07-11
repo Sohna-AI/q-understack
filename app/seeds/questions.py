@@ -192,11 +192,11 @@ user_questions = [
 def seed_questions():
     for info in user_questions:
         username, questions = info.values()
-        print('username', username)
-        print('questions', questions)
+        # print('username', username)
+        # print('questions', questions)
         user = User.query.filter(User.username == username).first()
-        print('----', user)
-        
+        # print('----', user)
+
         for questionInfo in questions:
             question = Question(
                 user_id=user.id,
@@ -207,9 +207,9 @@ def seed_questions():
                 updated_at=questionInfo['created_at']
             )
             db.session.add(question)
-    
+
     db.session.commit()
-    
+
 def undo_questions():
     if environment == 'production':
         db.session.execute(f"TRUNCATE table {SCHEMA}.questions RESTART IDENTITY CASCADE;")
