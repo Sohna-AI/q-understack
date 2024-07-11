@@ -2,16 +2,12 @@ import { useEffect, useState } from "react"
 
 function TestAnswer() {
     const [response, setResponse] = useState({})
+    const [isLoaded, setIsLoaded] = useState(false)
 
     useEffect(() => {
         const newAnswer = async () => {
-            const data = await fetch("/api/questions/1/answers",
-                {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        text: "hello"
-                    })
-                })
+            const data = await fetch("/api/questions/1")
+                .then(setIsLoaded(true))
             setResponse(data)
         }
         newAnswer()
@@ -19,7 +15,10 @@ function TestAnswer() {
 
 
     return (<>
-        {if response?.text && <h1>{response}</h1>}
+        {isLoaded && <>
+            {response && <p>{response.title}</p>}
+        </>
+        }
     </>
     )
 }

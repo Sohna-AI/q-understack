@@ -21,9 +21,9 @@ export default function QuestionDetailPage() {
     const [isLoaded, setIsLoaded] = useState(false);
 
     useEffect(() => {
-        dispatch(thunkGetQuestionDetailsById(questionId)).then(() => [
+        dispatch(thunkGetQuestionDetailsById(questionId)).then(() => {
             setIsLoaded(true)
-        ])
+        })
     }, [dispatch, questionId])
 
     return (

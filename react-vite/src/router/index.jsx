@@ -5,6 +5,7 @@ import Layout from './Layout';
 import LandingPage from '../components/LandingPage';
 import QuestionListPage from '../components/QuestionListPage';
 import QuestionDetailPage from '../components/QuestionDetailPage';
+import TestAnswer from '../components/TestAnswer/TestAnswer';
 
 export const router = createBrowserRouter([
     {
@@ -36,6 +37,10 @@ export const router = createBrowserRouter([
                 path: "signup",
                 element: <SignupFormPage />,
             },
+            {
+                path: "test",
+                element: <TestAnswer />
+            }
         ],
     },
 ]);

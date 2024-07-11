@@ -10,7 +10,7 @@ question_routes = Blueprint('questions', __name__)
 
 # TODO add pagination and limits
 # TODO research / utilize Pagination object (SQLAlchemy)
-@question_routes.route('/')
+@question_routes.route('')
 def questions():
     """
     Query for all questions and returns them in a list of question dictionaries
@@ -43,21 +43,26 @@ def user_saves():
 
 @question_routes.route('/<int:question_id>')
 def question_details(question_id):
+    """
+        returns all details of a question
+    """
     question = Question.query.get(question_id)
-    
+
     if not question:
         return {'errors': {'message': 'Question could not be found'}}, 404
-   
+
+    print('question details:', question.to_dict_details())
+
     return question.to_dict_details()
-    
-    
+
+
 @question_routes.route('/', methods=['POST'])
 @login_required
 def create_question():
     """
     Create a new question
     """
-    
+
     form = QuestionForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
@@ -67,7 +72,7 @@ def create_question():
             details = form.details.data,
             expectation = form.expectation.data
         )
-        
+
         db.session.add(new_question)
         db.session.commit()
         return new_question.to_dict(), 201
@@ -81,7 +86,7 @@ def update_question(question_id):
     Update a question by question_id
     """
     question = Question.query.get(question_id)
-    
+
     if not question:
         return {'errors': {'message': 'Question could not be found'}}, 404
 
@@ -107,13 +112,13 @@ def delete_question(question_id):
     Delete a question by question_id
     """
     question = Question.query.get(question_id)
-    
+
     if not question:
         return {'errors': {'message': 'Question could not be found'}}, 404
-    
+
     if question.user_id != current_user.id:
         return {'error': {'message': 'Unauthorized'}}, 401
-    
+
     db.session.delete(question)
     db.session.commit()
     return {'message': 'Successfully deleted'}
@@ -177,7 +182,7 @@ def create_comment_question(question_id):
             created_at=datetime.now(),
             updated_at=datetime.now()
         )
-        
+
         db.session.add(new_comment)
         db.session.commit()
         return new_comment.to_dict(), 201
@@ -194,7 +199,7 @@ def save_question(question_id):
     save = Save.query.filter_by(user_id = current_user.id, type_id = question_id, type = 'question').first()
     if save:
         return {'error': {'message': 'Question already saved'}}
-    
+
     new_save = Save(user_id = current_user.id, type_id = question_id, type = 'question')
     db.session.add(new_save)
     db.session.commit()
@@ -209,7 +214,7 @@ def remove_save_question(question_id):
     save = Save.query.filter_by(user_id = current_user.id, type_id = question_id, type = 'question').first()
     if not save:
         return {'error': 'Question not found'}, 404
-    
+
     db.session.delete(save)
     db.session.commit()
     return {'message': 'Saved question removed successfully'}
@@ -224,7 +229,7 @@ def follow_question(question_id):
     follow = Follow.query.filter_by(user_id = current_user.id, type_id = question_id, type = 'question').first()
     if follow:
         return {'error': 'Already following this question'}, 400
-    
+
     new_follow = Follow(user_id=current_user.id, type_id=question_id, type='question')
     db.session.add(new_follow)
     db.session.commit()
@@ -239,7 +244,7 @@ def unfollow_question(question_id):
     follow = Follow.query.filter_by(user_id = current_user.id, type_id = question_id, type = 'question').first()
     if follow:
         return {'error': 'Question not found'}, 404
-    
+
     db.session.delete(follow)
     db.session.commit()
     return {'message': 'Unfollowed question successfully'}
