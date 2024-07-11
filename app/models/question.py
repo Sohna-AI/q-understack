@@ -98,10 +98,10 @@ class Question(db.Model):
         up_votes = len([vote for vote in self.up_down_votes if vote.vote == True])
         down_votes = len([vote for vote in self.up_down_votes if vote.vote == False])
         num_votes = up_votes - down_votes 
-        votes = [vote.vote for vote in self.up_down_votes if vote.user_id == user_id]
+        votes = [vote.to_dict() for vote in self.up_down_votes if vote.user_id == user_id]
         user_vote = None
         if len(votes):
-            user_vote = votes[0]
+            user_vote = votes[0]['vote']
         
         saves = [save for save in self.saves if save.user_id == user_id]
         user_save = False
