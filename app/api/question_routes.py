@@ -152,7 +152,7 @@ def create_answer(question_id):
 
 
 #* Comment related question routes ------------------------------------------------------------------
-@question_routes.route('/<int:question_id/comments', methods=['GET'])
+@question_routes.route('/<int:question_id>/comments', methods=['GET'])
 def get_all_questions_comments(question_id):
     """
     Get all comments for a specific question by id.
