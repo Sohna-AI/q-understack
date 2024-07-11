@@ -142,4 +142,3 @@ def unfollow_answer(answer_id):
     db.session.delete(follow)
     db.session.commit()
     return {'message': 'Unfollowed answer successfully'}
-

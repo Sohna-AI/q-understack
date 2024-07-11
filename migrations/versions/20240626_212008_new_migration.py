@@ -1,16 +1,8 @@
-<<<<<<<< HEAD:migrations/versions/20240626_212008_new_migration.py
 """new migration
 
 Revision ID: 759cba8b91ab
 Revises: ffdc0a98111c
 Create Date: 2024-06-26 21:20:08.929525
-========
-"""create tables
-
-Revision ID: 35e141514792
-Revises: ffdc0a98111c
-Create Date: 2024-06-25 21:27:29.818390
->>>>>>>> cae27d3 (models finished, seeders tested):migrations/versions/20240625_212729_create_tables.py
 
 """
 from alembic import op
@@ -22,11 +14,7 @@ SCHEMA = os.environ.get("SCHEMA")
 
 
 # revision identifiers, used by Alembic.
-<<<<<<<< HEAD:migrations/versions/20240626_212008_new_migration.py
 revision = '759cba8b91ab'
-========
-revision = '35e141514792'
->>>>>>>> cae27d3 (models finished, seeders tested):migrations/versions/20240625_212729_create_tables.py
 down_revision = 'ffdc0a98111c'
 branch_labels = None
 depends_on = None
@@ -41,16 +29,16 @@ def upgrade():
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
-
+    
     if environment == 'production':
         op.execute(f"ALTER TABLE tags SET SCHEMA {SCHEMA};")
-
+    
     op.create_table('comments',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('type_id', sa.Integer(), nullable=False),
     sa.Column('type', sa.String(length=20), nullable=False),
-    sa.Column('comment', sa.String(length=255), nullable=False),
+    sa.Column('comment', sa.String(length=1500), nullable=False),
     sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
@@ -59,7 +47,7 @@ def upgrade():
 
     if environment == 'production':
         op.execute(f"ALTER TABLE comments SET SCHEMA {SCHEMA};")
-
+    
     op.create_table('follows',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
@@ -73,22 +61,22 @@ def upgrade():
 
     if environment == 'production':
         op.execute(f"ALTER TABLE follows SET SCHEMA {SCHEMA};")
-
+    
     op.create_table('questions',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
-    sa.Column('title', sa.String(length=50), nullable=False),
-    sa.Column('details', sa.String(length=255), nullable=False),
-    sa.Column('expectation', sa.String(length=255), nullable=False),
+    sa.Column('title', sa.String(length=150), nullable=False),
+    sa.Column('details', sa.String(length=1500), nullable=False),
+    sa.Column('expectation', sa.String(length=1500), nullable=False),
     sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
-
+    
     if environment == 'production':
         op.execute(f"ALTER TABLE questions SET SCHEMA {SCHEMA};")
-
+    
     op.create_table('saves',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
@@ -99,13 +87,10 @@ def upgrade():
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
-<<<<<<<< HEAD:migrations/versions/20240626_212008_new_migration.py
-
+    
     if environment == 'production':
         op.execute(f"ALTER TABLE saves SET SCHEMA {SCHEMA};")
-
-========
->>>>>>>> cae27d3 (models finished, seeders tested):migrations/versions/20240625_212729_create_tables.py
+    
     op.create_table('up_down_votes',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
@@ -115,41 +100,27 @@ def upgrade():
     sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
-<<<<<<<< HEAD:migrations/versions/20240626_212008_new_migration.py
-========
     sa.PrimaryKeyConstraint('id')
     )
-    op.create_table('answers',
-    sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('user_id', sa.Integer(), nullable=False),
-    sa.Column('question_id', sa.Integer(), nullable=False),
-    sa.Column('text', sa.String(length=255), nullable=False),
-    sa.Column('created_at', sa.DateTime(), nullable=True),
-    sa.Column('updated_at', sa.DateTime(), nullable=True),
-    sa.ForeignKeyConstraint(['question_id'], ['questions.id'], ),
-    sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
->>>>>>>> cae27d3 (models finished, seeders tested):migrations/versions/20240625_212729_create_tables.py
-    sa.PrimaryKeyConstraint('id')
-    )
-
+    
     if environment == 'production':
         op.execute(f"ALTER TABLE up_down_votes SET SCHEMA {SCHEMA};")
-
+    
     op.create_table('answers',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('question_id', sa.Integer(), nullable=False),
-    sa.Column('text', sa.String(length=255), nullable=False),
+    sa.Column('text', sa.String(length=1500), nullable=False),
     sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['question_id'], ['questions.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
-
+    
     if environment == 'production':
-        op.execute(f"ALTER TABLE answers SET SCHEMA {SCHEMA};")
-
+        op.execute(f"ALTER TABLE answers SET SCHEMA {SCHEMA};")    
+    
     op.create_table('question_tags',
     sa.Column('question_id', sa.Integer(), nullable=False),
     sa.Column('tag_id', sa.Integer(), nullable=False),
@@ -159,7 +130,7 @@ def upgrade():
     sa.ForeignKeyConstraint(['tag_id'], ['tags.id'], ),
     sa.PrimaryKeyConstraint('question_id', 'tag_id')
     )
-
+    
     if environment == 'production':
         op.execute(f"ALTER TABLE question_tags SET SCHEMA {SCHEMA};")
     # ### end Alembic commands ###
@@ -167,11 +138,7 @@ def upgrade():
 
 def downgrade():
     # ### commands auto generated by Alembic - please adjust! ###
-<<<<<<<< HEAD:migrations/versions/20240626_212008_new_migration.py
     op.drop_table('question_tags')
-========
-    op.drop_table('question_tag')
->>>>>>>> cae27d3 (models finished, seeders tested):migrations/versions/20240625_212729_create_tables.py
     op.drop_table('answers')
     op.drop_table('up_down_votes')
     op.drop_table('saves')

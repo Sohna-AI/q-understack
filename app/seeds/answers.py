@@ -309,14 +309,6 @@ def seed_answers():
                 updated_at=answer['created_at']
             )
             question.answers.append(new_answer)
-
-    # demo = Answer(
-    #     user_id = 2,
-    #     question_id = 1,
-    #     text = 'learn more languages to get a job'
-    # )
-
-    # db.session.add(demo)
     db.session.commit()
 
 def undo_answers():

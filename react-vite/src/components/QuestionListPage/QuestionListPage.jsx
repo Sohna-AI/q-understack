@@ -33,11 +33,11 @@ function QuestionListPage({ homePage }) {
                                     return (
                                         <QuestionCard
                                             key={question.id}
+                                            id={question.id}
                                             title={question.title}
                                             details={question.details}
                                             tags={question.tags}
-                                            upVotes={question.up_votes}
-                                            downVotes={question.down_votes}
+                                            num_votes={question.num_votes}
                                             numAnswers={question.num_answers}
                                             author={question.author}
                                             userId={question.user_id}
@@ -50,7 +50,7 @@ function QuestionListPage({ homePage }) {
                     </>
                 }
                 {
-                    !isLoaded && <div style={{ height: '100vw' }} id="question-card__container"></div>
+                    !isLoaded && <div style={{ height: '100vh' }} id="question-card__container"></div>
                 }
             </div>
         </>

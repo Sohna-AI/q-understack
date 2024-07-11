@@ -30,8 +30,6 @@ def user_questions():
     questions = Question.query.filter(Question.user_id==user_id)
     return {'questions': [question.to_dict_list_page() for question in questions]}
 
-
-
 @question_routes.route('/saves')
 @login_required
 def user_saves():
@@ -43,18 +41,17 @@ def user_saves():
     questions = Question.query.join(Question.saves).filter(Save.user_id == user_id)
     return {'questions': [question.to_dict_list_page() for question in questions]}
 
-
 @question_routes.route('/<int:question_id>')
 def question_details(question_id):
     question = Question.query.get(question_id)
     
     if not question:
         return {'errors': {'message': 'Question could not be found'}}, 404
+   
+    return question.to_dict_details()
     
-    return question.to_dict()
     
-    
-@question_routes.route('/new', methods=['POST'])
+@question_routes.route('/', methods=['POST'])
 @login_required
 def create_question():
     """
@@ -83,7 +80,6 @@ def update_question(question_id):
     """
     Update a question by question_id
     """
-
     question = Question.query.get(question_id)
     
     if not question:
@@ -104,14 +100,12 @@ def update_question(question_id):
         return question.to_dict()
     return form.errors, 400
 
-
 @question_routes.route('/<int:question_id>', methods=['DELETE'])
 @login_required
 def delete_question(question_id):
     """
     Delete a question by question_id
     """
-    
     question = Question.query.get(question_id)
     
     if not question:

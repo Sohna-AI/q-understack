@@ -1,15 +1,17 @@
-import { NavLink, redirect } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import ProfileButton from "./ProfileButton";
 import "./Navigation.css";
 
 function Navigation() {
+    const navigate = useNavigate()
+
     return (
         <>
             <div id="navbar">
                 <div id="logo_about_links">
                     <p
                         id="logo"
-                        onClick={() => redirect('/')}
+                        onClick={() => navigate('/')}
                     >LOGO PLACEHOLDER</p>
                     <NavLink to='/about'>About</NavLink>
                 </div>

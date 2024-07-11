@@ -6,4 +6,3 @@ class QuestionForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired(), Length(max=50)])
     details = TextAreaField('Details', validators=[DataRequired(), Length(max=1500)])
     expectation = TextAreaField('Expectation', validators=[DataRequired(), Length(max=1500)])
-    
