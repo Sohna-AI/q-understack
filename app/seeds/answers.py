@@ -297,10 +297,10 @@ def seed_answers():
     for info in question_answers:
         title, user_answers = info.values()
         question = Question.query.filter(Question.title == title).first()
-        
+
         for user_info in user_answers:
             username, answer = user_info.values()
-            
+
             user = User.query.filter(User.username == username).first()
             new_answer = Answer(
                 user_id=user.id,
@@ -309,7 +309,6 @@ def seed_answers():
                 updated_at=answer['created_at']
             )
             question.answers.append(new_answer)
-    
     db.session.commit()
 
 def undo_answers():

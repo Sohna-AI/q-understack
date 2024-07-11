@@ -45,7 +45,7 @@ class Answer(db.Model):
             'user_id': self.user_id,
             'question_id': self.question_id,
             'text': self.text,
-            'question': self.question.to_dict_no_answers(),
+            'question': self.question.to_dict_list_page(),
             'comments': [comment.to_dict() for comment in self.comments],
             'created_at': self.created_at,
             'updated_at': self.updated_at
