@@ -5,6 +5,8 @@ import Layout from './Layout';
 import LandingPage from '../components/LandingPage';
 import QuestionListPage from '../components/QuestionListPage';
 import QuestionDetailPage from '../components/QuestionDetailPage';
+import QuestionForm from '../components/QuestionFormPage';
+import Error from '../components/ErrorPage';
 // import TestAnswer from '../components/TestAnswer/TestAnswer';
 
 export const router = createBrowserRouter([
@@ -25,8 +27,11 @@ export const router = createBrowserRouter([
                     {
                         path: ':questionId',
                         element: <QuestionDetailPage />
+                    },
+                    {
+                        path: 'new',
+                        element: <QuestionForm />
                     }
-
                 ]
             },
             {
@@ -41,6 +46,10 @@ export const router = createBrowserRouter([
             //     path: "test",
             //     element: <TestAnswer />
             // }
+            {
+                path: '*',
+                element: <Error />
+            }
         ],
     },
 ]);

@@ -38,6 +38,14 @@ export const thunkGetQuestionDetailsById = (questionId) => async (dispatch) => {
     }
 }
 
+export const thunkCreateQuestion = (data) => {
+    const response = await fetch('/api/questions',
+        {
+
+        }
+    )
+}
+
 const initialState = { questions: {} }
 
 function questionReducer(state = initialState, action) {
