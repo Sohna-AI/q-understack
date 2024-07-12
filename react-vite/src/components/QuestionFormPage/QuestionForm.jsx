@@ -30,11 +30,12 @@ export default function QuestionForm({ question }) {
     };
 
     const removeTag = (e) => {
-        console.log(e)
-        // let arr = tags.slice();
-        // arr.splice(i, 1);
-        // setTags(arr);
-    }
+        const tag = e.target.previousSibling.innerText
+        const index = tags.indexOf(tag)
+        let arr = tags.slice();
+        arr.splice(index, 1);
+        setTags(arr);
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -89,11 +90,11 @@ export default function QuestionForm({ question }) {
                             <button className="button" onClick={addTag}>Add tag</button>
                         </div>
                         <div className="flex gap-15">
-                            {tags.map((tag) => {
+                            {tags.map((tag, i) => {
                                 return (
-                                    <div key={tag} className="tag flex">
-                                        <p key={tag} className="no-margin">{tag}</p>
-                                        <p key={tag} onClick={removeTag} className="no-margin">X</p>
+                                    <div key={`${i}:${tag}`} name={i} className="tag flex">
+                                        <p className="no-margin tag-text">{tag}</p>
+                                        <p onClick={removeTag} className="no-margin x-button">X</p>
                                     </div>
                                 )
                             })}

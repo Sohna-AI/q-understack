@@ -63,6 +63,7 @@
 
 .button:hover {
     background-color: var(--button-color-hover);
+    cursor: pointer;
 }
 
 @media (prefers-color-scheme: light) {
