@@ -38,12 +38,18 @@ export const thunkGetQuestionDetailsById = (questionId) => async (dispatch) => {
     }
 }
 
-export const thunkCreateQuestion = (data) => {
-    const response = await fetch('/api/questions',
+export const thunkCreateQuestion = (data) => async (dispatch) => {
+    const response = await fetch(
+        '/api/questions',
         {
-
-        }
-    )
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        })
+    if (response.ok) {
+        const data = response.json();
+        console.log(data);
+    }
 }
 
 const initialState = { questions: {} }
