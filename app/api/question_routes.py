@@ -51,8 +51,6 @@ def question_details(question_id):
     if not question:
         return {'errors': {'message': 'Question could not be found'}}, 404
 
-    print('question details:', question.to_dict_details())
-
     return question.to_dict_details()
 
 
