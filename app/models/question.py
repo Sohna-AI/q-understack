@@ -7,6 +7,7 @@ question_tag = db.Table('question_tags',
     db.Column('tag_id', db.Integer, db.ForeignKey(add_prefix_for_prod('tags.id')), primary_key=True),
     )
 
+
 if environment == 'production':
     question_tag.schema = SCHEMA
 
@@ -79,7 +80,7 @@ class Question(db.Model):
         up_votes = len([vote for vote in self.up_down_votes if vote.vote == True])
         down_votes = len([vote for vote in self.up_down_votes if vote.vote == False])
         num_votes = up_votes - down_votes 
-
+        
         return {
             'id': self.id,
             'user_id': self.user_id,
