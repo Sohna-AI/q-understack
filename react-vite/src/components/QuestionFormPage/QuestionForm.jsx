@@ -20,16 +20,20 @@ export default function QuestionForm({ question }) {
     }, [question]);
 
     const addTag = (e) => {
+        setErrors({});
         e.preventDefault();
-        if (tags.length < 5) {
+        if (tags.length < 5 && tagInput.length > 1) {
             setTags([...tags, tagInput]);
             setTagInput('');
+        } else if (tagInput.length <= 1) {
+            setErrors({ tags: 'Tag name too short.' })
         } else {
             setErrors({ tags: 'Too many tags.' });
         }
     };
 
     const removeTag = (e) => {
+        setErrors({});
         const tag = e.target.previousSibling.innerText
         const index = tags.indexOf(tag)
         let arr = tags.slice();
@@ -39,6 +43,7 @@ export default function QuestionForm({ question }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        setErrors({});
     };
 
     return (
