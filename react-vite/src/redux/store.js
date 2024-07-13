@@ -1,13 +1,25 @@
 import { legacy_createStore as createStore, applyMiddleware, compose, combineReducers } from 'redux';
-import thunk from 'redux-thunk';
-import sessionReducer from './session';
 import questionReducer from './questions';
-import savedQuestionsReducer from './savedQuestion';
+import commentReducer from './comments';
+import sessionReducer from './session';
+import answerReducer from './answers';
+import followReducer from './follows';
+import saveReducer from './saves';
+import userReducer from './users';
+import voteReducer from './votes';
+import tagReducer from './tags';
+import thunk from 'redux-thunk';
 
 const rootReducer = combineReducers({
-    session: sessionReducer,
     questions: questionReducer,
-    savedQuestions: savedQuestionsReducer,
+    comments: commentReducer,
+    session: sessionReducer,
+    answers: answerReducer,
+    follows: followReducer,
+    saves: saveReducer,
+    users: userReducer,
+    votes: voteReducer,
+    tags: tagReducer,
 });
 
 let enhancer;
