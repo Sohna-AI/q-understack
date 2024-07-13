@@ -1,39 +1,39 @@
 .user-save-questions-nav-links-container {
-  display: flex;
-  gap: 20px;
-  margin-bottom: 30px;
-  margin-left: 30px;
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px;
+    margin-left: 30px;
 }
 
 .user-question-button-link,
 .user-saves-button-link {
-  cursor: pointer;
-  background-color: #f3f7fe;
-  color: #3b82f6;
-  border: none;
-  border-radius: 8px;
-  width: 100px;
-  height: 45px;
-  transition: 0.3s;
+    cursor: pointer;
+    background-color: #f3f7fe;
+    color: #3b82f6;
+    border: none;
+    border-radius: 8px;
+    width: 100px;
+    height: 45px;
+    transition: 0.3s;
 }
 
 .user-question-button-link button:hover,
 .user-saves-button-link button:hover {
-  background-color: lightgreen;
+    background-color: lightgreen;
 }
 
 .user-question-button-link button,
 .user-saves-button-link button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
-  color: #000;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    color: #000;
 }
 
 .active button {
-  background-color: green;
+    background-color: green;
 }
 
 

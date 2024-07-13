@@ -1,204 +1,208 @@
 .user-question-container {
-  display: flex;
-  flex-direction: column;
-  width: var(--group-card-width);
-  border: 1px solid var(--link-color);
-  border-radius: 10px;
-  margin-left: 30px;
-  margin-bottom: 10px;
-  padding: 10px;
+    display: flex;
+    flex-direction: column;
+    width: var(--group-card-width);
+    border: 1px solid var(--link-color);
+    border-radius: 10px;
+    margin-left: 30px;
+    margin-bottom: 10px;
+    padding: 10px;
 }
 
 .user-question-container:hover {
-  box-shadow: 0px 0px 13px 1px lightgreen;
-  transition: 300ms ease-in;
-  transform: scale(1.02);
+    box-shadow: 0px 0px 13px 1px lightgreen;
+    transition: 300ms ease-in;
+    transform: scale(1.02);
 }
+
 .user-question-tag-container {
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
 }
 
 .user-question-title {
-  text-decoration: none;
-  color: white;
-  width: fit-content;
+    text-decoration: none;
+    color: white;
+    width: fit-content;
 }
 
 .user-question-title:hover {
-  color: var(--link-color);
+    color: var(--link-color);
 }
 
 .user-question-title-tag-container {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .user-question-vote-answer-container {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  margin: 2px 15px;
-  font-weight: bold;
-  font-size: 12px;
-  white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin: 2px 15px;
+    font-weight: bold;
+    font-size: 12px;
+    white-space: nowrap;
 }
 
 .user-question-tag {
-  background-color: rgb(73, 73, 73);
-  border-radius: 0.5rem;
-  color: white;
-  padding: 3px 10px;
-  margin-top: 0;
-  white-space: nowrap;
+    background-color: rgb(73, 73, 73);
+    border-radius: 0.5rem;
+    color: white;
+    padding: 3px 10px;
+    margin-top: 0;
+    white-space: nowrap;
 }
 
 .user-question-tag-delete-container {
-  display: flex;
-  justify-content: space-between;
+    display: flex;
+    justify-content: space-between;
 }
 
 .user-question-vote-answer-container {
-  margin: 2px 15px;
-  font-weight: bold;
-  font-size: 12px;
-  white-space: nowrap;
+    margin: 2px 15px;
+    font-weight: bold;
+    font-size: 12px;
+    white-space: nowrap;
 }
 
 .user-question-vote-answer-container .user-question-answered {
-  border: 1px solid rgb(0, 144, 0);
-  border-radius: 0.25rem;
-  color: rgb(0, 144, 0);
-  padding: 2px 3px;
+    border: 1px solid rgb(0, 144, 0);
+    border-radius: 0.25rem;
+    color: rgb(0, 144, 0);
+    padding: 2px 3px;
 }
 
 .user-question-counter {
-  margin-left: 30px;
+    margin-left: 30px;
 }
 
 .user-question-vote-negative,
 .user-question-answered-negative {
-  border: 1px solid red;
-  border-radius: 0.25rem;
-  color: red;
-  padding: 2px 3px;
+    border: 1px solid red;
+    border-radius: 0.25rem;
+    color: red;
+    padding: 2px 3px;
 }
 
 .user-question-vote-positive,
 .user-question-answered-positive {
-  border: 1px solid green;
-  border-radius: 0.25rem;
-  color: green;
-  padding: 2px 3px;
+    border: 1px solid green;
+    border-radius: 0.25rem;
+    color: green;
+    padding: 2px 3px;
 }
 
 .user-question-vote-answer-edit-container {
-  display: flex;
-  justify-content: space-between;
+    display: flex;
+    justify-content: space-between;
 }
 
 .user-question-delete-button {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 45px;
-  height: 45px;
-  border-radius: 15px;
-  background-color: rgb(102, 102, 141);
-  cursor: pointer;
-  border: 3px solid rgb(255, 201, 201);
-  transition-duration: 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    border-radius: 15px;
+    background-color: rgb(102, 102, 141);
+    cursor: pointer;
+    border: 3px solid rgb(255, 201, 201);
+    transition-duration: 0.3s;
 }
 
 .bin-bottom {
-  width: 15px;
-  height: 15px;
+    width: 15px;
+    height: 15px;
 }
 
 .bin-top {
-  width: 13px;
-  transform-origin: right;
-  transition-duration: 0.3s;
+    width: 13px;
+    transform-origin: right;
+    transition-duration: 0.3s;
 }
 
 .user-question-delete-button:hover .bin-top {
-  transform: rotate(45deg);
+    transform: rotate(45deg);
 }
 
 .user-question-delete-button:hover {
-  background-color: red;
+    background-color: red;
 }
 
 .user-question-delete-button:active {
-  transform: scale(0.9);
+    transform: scale(0.9);
 }
 
 .user-question-edit-button {
-  width: 45px;
-  height: 45px;
-  border-radius: 15px;
-  border: 3px solid rgb(255, 201, 201);
-  background-color: rgb(102, 102, 141);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.123);
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.3s;
+    width: 45px;
+    height: 45px;
+    border-radius: 15px;
+    border: 3px solid rgb(255, 201, 201);
+    background-color: rgb(102, 102, 141);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.123);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
 }
 
 .user-question-edit-button::before {
-  content: '';
-  width: 200%;
-  height: 200%;
-  background-color: slateblue;
-  position: absolute;
-  z-index: 2;
-  transform: scale(0);
-  transition: all 0.3s;
-  border-radius: 50%;
-  filter: blur(10px);
+    content: '';
+    width: 200%;
+    height: 200%;
+    background-color: slateblue;
+    position: absolute;
+    z-index: 2;
+    transform: scale(0);
+    transition: all 0.3s;
+    border-radius: 50%;
+    filter: blur(10px);
 }
 
 .user-question-edit-button:hover::before {
-  transform: scale(1);
+    transform: scale(1);
 }
 
 .user-question-edit-button:hover {
-  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.336);
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.336);
 }
 
 .user-question-edit-button svg {
-  height: 17px;
-  fill: white;
-  z-index: 3;
-  transition: all 0.2s;
-  transform-origin: bottom;
+    height: 17px;
+    fill: white;
+    z-index: 3;
+    transition: all 0.2s;
+    transform-origin: bottom;
 }
+
 .user-question-edit-button:hover svg {
-  transform: rotate(-15deg) translateX(5px);
+    transform: rotate(-15deg) translateX(5px);
 }
+
 .user-question-edit-button::after {
-  content: '';
-  width: 19px;
-  height: 1.5px;
-  position: absolute;
-  bottom: 9px;
-  left: -5px;
-  background-color: white;
-  border-radius: 2px;
-  z-index: 3;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.5s ease-out;
+    content: '';
+    width: 19px;
+    height: 1.5px;
+    position: absolute;
+    bottom: 9px;
+    left: -5px;
+    background-color: white;
+    border-radius: 2px;
+    z-index: 3;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.5s ease-out;
 }
+
 .user-question-edit-button:hover::after {
-  transform: scaleX(1);
-  left: 0px;
-  transform-origin: right;
+    transform: scaleX(1);
+    left: 0px;
+    transform-origin: right;
 }
