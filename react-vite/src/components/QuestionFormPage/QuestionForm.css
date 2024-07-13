@@ -1,0 +1,46 @@
+#question-form-page {
+    box-sizing: border-box;
+    margin: 20px 40px;
+    gap: 20px;
+    height: fit-content;
+}
+
+.tag {
+    gap: 5px;
+    background-color: rgb(2, 79, 2);
+    width: fit-content;
+    height: fit-content;
+    border: 1px solid;
+    padding: 5px;
+    border-radius: 6px;
+    font-size: x-small;
+    align-items: center;
+    border: 1px solid var(--border-color);
+}
+
+.tag-text {
+    font-weight: bold;
+    cursor: default;
+}
+
+.x-button {
+    padding: 3px;
+    background-color: rgb(20, 100, 50);
+    border-radius: 6px;
+}
+
+.x-button:hover {
+    cursor: pointer;
+}
+
+.question-textarea {
+    height: 150px;
+}
+
+.button {
+    width: fit-content;
+    height: fit-content;
+    padding: 5px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+}

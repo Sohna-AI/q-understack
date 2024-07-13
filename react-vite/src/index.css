@@ -41,6 +41,31 @@
     width: var(--group-card-width) + 200px;
 }
 
+.flex {
+    display: flex;
+}
+
+.column {
+    flex-direction: column;
+}
+
+.no-margin {
+    margin: 0;
+}
+
+.gap-15 {
+    gap: 15px;
+}
+
+.button {
+    background-color: var(--button-color);
+}
+
+.button:hover {
+    background-color: var(--button-color-hover);
+    cursor: pointer;
+}
+
 @media (prefers-color-scheme: light) {
     :root {
         color: black;

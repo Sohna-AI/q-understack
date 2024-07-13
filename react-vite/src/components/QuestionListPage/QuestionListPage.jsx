@@ -3,10 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { thunkGetAllQuestions } from "../../redux/questions";
 import QuestionCard from "./QuestionCard";
 import './QuestionListPage.css';
+import { useNavigate } from "react-router-dom";
 
 // TODO Implement pagination
 function QuestionListPage({ homePage }) {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [isLoaded, setIsLoaded] = useState(false)
     const questions = useSelector((state) => state.questions.questions);
 
@@ -16,13 +18,17 @@ function QuestionListPage({ homePage }) {
         });
     }, [dispatch, setIsLoaded])
 
+    const handleClick = () => {
+        navigate('/questions/new');
+    }
+
     return (
         <>
             <div id="question-card__container">
                 <div id="question-list__header">
                     <h1>{homePage ? 'Top Questions' : 'All Questions'}</h1>
                     <div>
-                        <button>Ask a Question</button>
+                        <button onClick={handleClick}>Ask a Question</button>
                     </div>
                 </div>
                 {isLoaded &&

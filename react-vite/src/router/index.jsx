@@ -5,6 +5,8 @@ import Layout from './Layout';
 import LandingPage from '../components/LandingPage';
 import QuestionListPage from '../components/QuestionListPage';
 import QuestionDetailPage from '../components/QuestionDetailPage';
+import QuestionForm from '../components/QuestionFormPage';
+import Error from '../components/ErrorPage';
 import SavedQuestions from '../components/SavesPage/SavesPage';
 import UserQuestions from '../components/UserQuestions/UserQuestions';
 import UserQuestionSaveNav from '../components/UserQuestionSavePage/UserQuestionSaveNav';
@@ -21,15 +23,27 @@ export const router = createBrowserRouter([
       {
         path: 'questions',
         children: [
-          {
-            index: true,
-            element: <QuestionListPage />,
-          },
-          {
-            path: ':questionId',
-            element: <QuestionDetailPage />,
-          },
-        ],
+            {
+                path: "/",
+                element: <LandingPage />,
+            },
+            {
+                path: 'questions',
+                children: [
+                    {
+                      index: true,
+                      element: <QuestionListPage />,
+                    },
+                    {
+                      path: ':questionId',
+                      element: <QuestionDetailPage />,
+                    },
+                    {
+                        path: 'new',
+                        element: <QuestionForm />
+                    }
+                ]
+
       },
       {
         path: 'user',
