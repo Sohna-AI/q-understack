@@ -13,64 +13,60 @@ import UserQuestionSaveNav from '../components/UserQuestionSavePage/UserQuestion
 // import TestAnswer from '../components/TestAnswer/TestAnswer';
 
 export const router = createBrowserRouter([
-  {
-    element: <Layout />,
-    children: [
-      {
-        path: '/',
-        element: <LandingPage />,
-      },
-      {
-        path: 'questions',
+    {
+        element: <Layout />,
         children: [
             {
-                path: "/",
+                path: '/',
                 element: <LandingPage />,
             },
             {
                 path: 'questions',
                 children: [
                     {
-                      index: true,
-                      element: <QuestionListPage />,
+                        index: true,
+                        element: <QuestionListPage />,
                     },
                     {
-                      path: ':questionId',
-                      element: <QuestionDetailPage />,
+                        path: ':questionId',
+                        element: <QuestionDetailPage />,
                     },
                     {
                         path: 'new',
                         element: <QuestionForm />
                     }
                 ]
-
-      },
-      {
-        path: 'user',
-        element: <UserQuestionSaveNav />,
-        children: [
-          {
-            path: 'saves',
-            element: <SavedQuestions />,
-          },
-          {
-            path: 'questions',
-            element: <UserQuestions />,
-          },
-        ],
-      },
-      {
-        path: 'login',
-        element: <LoginFormPage />,
-      },
-      {
-        path: 'signup',
-        element: <SignupFormPage />,
-      },
-      // {
-      //     path: "test",
-      //     element: <TestAnswer />
-      // }
-    ],
-  },
+            },
+            {
+                path: 'user',
+                element: <UserQuestionSaveNav />,
+                children: [
+                    {
+                        path: 'saves',
+                        element: <SavedQuestions />,
+                    },
+                    {
+                        path: 'questions',
+                        element: <UserQuestions />,
+                    },
+                ],
+            },
+            {
+                path: 'login',
+                element: <LoginFormPage />,
+            },
+            {
+                path: 'signup',
+                element: <SignupFormPage />,
+            },
+            // {
+            //     path: "test",
+            //     element: <TestAnswer />
+            // }
+            {
+                path: '*',
+                element: <Error />
+            }
+        ]
+    },
 ]);

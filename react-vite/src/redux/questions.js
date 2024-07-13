@@ -108,10 +108,11 @@ function questionReducer(state = initialState, action) {
 
         case SET_USER_QUESTIONS:
             return { ...state, userQuestions: action.payload };
-        case DELETE_QUESTION:
+        case DELETE_QUESTION: {
             const newState = { ...state };
             delete newState.questions[action.payload];
             return newState;
+        }
 
         default:
             return state;
