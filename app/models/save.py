@@ -17,13 +17,13 @@ class Save(db.Model):
     type = db.Column('type', db.String(20), nullable=False)
     created_at = db.Column(db.DateTime, default=func.now())
     updated_at = db.Column(db.DateTime, default=func.now())
-    
+
     user = db.relationship('User', back_populates='saves')
 
     question = db.relationship('Question',
             back_populates='saves',
             primaryjoin='and_(foreign(Save.type_id) == Question.id, Save.type=="question")')
-    
+
     answer = db.relationship('Answer',
             back_populates='saves',
             primaryjoin='and_(foreign(Save.type_id) == Answer.id, Save.type=="answer")')
@@ -36,7 +36,7 @@ class Save(db.Model):
             return Answer.query.filter(id=self.type_id).first()
         else:
             raise Exception("Unknown type")
-    
+
     @validates('type')
     def validate_type(self, key, type):
         if type != 'question' and type != 'answer':
@@ -44,11 +44,30 @@ class Save(db.Model):
         return type
 
     def to_dict(self):
-        return {
-            'id': self.id,
-            'user_id': self.user_id,
-            'type_id': self.type_id,
-            'type': self.type,
-            'created_at': self.created_at,
-            'updated_at': self.updated_at
-        }
+        if self.type=='question':
+            return {
+                'id': self.id,
+                'user_id': self.user_id,
+                'question': self.question.id,
+                'created_at': self.created_at,
+                'updated_at': self.updated_at
+            }
+        if self.type=='answer':
+            return {
+                'id': self.id,
+                'user_id': self.user_id,
+                'answer': self.answer.id,
+                'created_at': self.created_at,
+                'updated_at': self.updated_at
+            }
+
+    def to_saves_dict(self):
+        if self.type=='question':
+            return {
+                'id': self.id,
+                'user_id': self.user_id,
+                'type_id': self.type_id,
+                'type': self.type,
+                'created_at': self.created_at,
+                'updated_at': self.updated_at
+            }

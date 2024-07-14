@@ -25,7 +25,7 @@ export const selectAnswers = createSelector([selectAnswersObj], (selectAnswersOb
 
 const initialState = { data: {}, allIds: [] };
 
-function answerReducer(state = initialState, action) {
+function answerReducer(state = structuredClone(initialState), action) {
     switch (action.type) {
 
         case SET_ANSWER: {
@@ -38,7 +38,7 @@ function answerReducer(state = initialState, action) {
         }
 
         case SET_ANSWERS: {
-            const newState = structuredClone(state);
+            const newState = structuredClone(initialState);
             action.answers.forEach(answer => {
                 newState.data[answer.id] = structuredClone(answer);
                 if (newState.allIds.indexOf(answer.id) < 0) {

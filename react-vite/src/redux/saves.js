@@ -23,27 +23,43 @@ const selectSavesObj = (state) => state.saves;
 
 export const selectSaves = createSelector([selectSavesObj], (selectSavesObj) => ({ ...selectSavesObj }))
 
-const initialState = { data: {}, allIds: [] };
+const initialState = { data: { questions: {}, answers: {} }, allIds: { questions: [], answers: [] } };
 
 function saveReducer(state = initialState, action) {
     switch (action.type) {
 
         case SET_SAVE: {
             const newState = structuredClone(state);
-            newState.data[action.save.id] = structuredClone(action.save);
-            if (newState.allIds.indexOf(action.save.id) < 0) {
-                newState.allIds.push(action.save.id);
+            if (action.save.question) {
+                newState.data.questions[action.save.id] = structuredClone(action.save)
+                if (newState.allIds.questions.indexOf(action.save.id) < 0) {
+                    newState.allIds.questions.push(action.save.id);
+                }
+            } else {
+                newState.data.answers[action.save.id] = structuredClone(action.save);
+                if (newState.allIds.answers.indexOf(action.save.id) < 0) {
+                    newState.allIds.answers.push(action.save.id);
+                }
             }
-            return newState;
+            return newState
         }
 
         case SET_SAVES: {
             const newState = structuredClone(state);
-            action.saves.forEach(save => {
-                newState.data[save.id] = structuredClone(save);
-                if (newState.allIds.indexOf(save.id) < 0) {
-                    newState.allIds.push(save.id)
-                }
+            action.saves.forEach(type => {
+                type.forEach(save => {
+                    if (save.question) {
+                        newState.data.questions[save.id] = structuredClone(save)
+                        if (newState.allIds.questions.indexOf(save.id) < 0) {
+                            newState.allIds.questions.push(save.id);
+                        }
+                    } else {
+                        newState.data.answers[save.id] = structuredClone(save);
+                        if (newState.allIds.answers.indexOf(save.id) < 0) {
+                            newState.allIds.answers.push(save.id);
+                        }
+                    }
+                })
             })
             return newState;
         }
