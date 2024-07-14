@@ -21,7 +21,7 @@ export const deleteAnswer = (answerId) => ({
 
 const selectAnswersObj = (state) => state.answers;
 
-export const selectAnswer = createSelector([selectAnswersObj], (selectAnswersObj) => ({ ...selectAnswersObj }))
+export const selectAnswers = createSelector([selectAnswersObj], (selectAnswersObj) => ({ ...selectAnswersObj }))
 
 const initialState = { data: {}, allIds: [] };
 

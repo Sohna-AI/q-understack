@@ -50,7 +50,7 @@ def question_details(question_id):
 
     if not question:
         return {'errors': {'message': 'Question could not be found'}}, 404
-
+    print(question.to_dict_details())
     return question.to_dict_details()
 
 
@@ -70,6 +70,8 @@ def create_question():
             details = form.details.data,
             expectation = form.expectation.data
         )
+        for tag in form.tags.data:
+            print(tag)
 
         db.session.add(new_question)
         db.session.commit()

@@ -1,19 +1,24 @@
+import { thunkCreateQuestion } from "../../utils/store";
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import './QuestionForm.css';
+import { useDispatch } from "react-redux";
 
 export default function QuestionForm({ question }) {
-    const [title, setTitle] = useState('');
-    const [details, setDetails] = useState('');
     const [expectations, setExpectations] = useState('');
-    const [tags, setTags] = useState([]);
     const [tagInput, setTagInput] = useState('');
+    const [details, setDetails] = useState('');
     const [errors, setErrors] = useState({});
+    const [title, setTitle] = useState('');
+    const [tags, setTags] = useState([]);
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     useEffect(() => {
         if (question) {
-            setTitle(question.title);
-            setDetails(question.details);
             setExpectations(question.expectations);
+            setDetails(question.details);
+            setTitle(question.title);
             setTags(question.tags);
         }
 
@@ -41,9 +46,19 @@ export default function QuestionForm({ question }) {
         setTags(arr);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setErrors({});
+        const data = {
+            title,
+            details,
+            expectations,
+            tags
+        };
+        console.log(data)
+        const newQuestion = await dispatch(thunkCreateQuestion(JSON.stringify(data)))
+
+        navigate(`/questions/${newQuestion?.id}`);
     };
 
     return (

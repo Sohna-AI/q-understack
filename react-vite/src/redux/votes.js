@@ -21,7 +21,7 @@ export const deleteVote = (voteId) => ({
 
 const selectVotesObj = (state) => state.votes;
 
-export const selectVote = createSelector([selectVotesObj], (selectVotesObj) => ({ ...selectVotesObj }))
+export const selectVotes = createSelector([selectVotesObj], (selectVotesObj) => ({ ...selectVotesObj }))
 
 const initialState = { data: {}, allIds: [] };
 

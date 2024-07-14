@@ -21,7 +21,7 @@ export const deleteComment = (commentId) => ({
 
 const selectCommentsObj = (state) => state.comments;
 
-export const selectComment = createSelector([selectCommentsObj], (selectCommentsObj) => ({ ...selectCommentsObj }))
+export const selectComments = createSelector([selectCommentsObj], (selectCommentsObj) => ({ ...selectCommentsObj }))
 
 const initialState = { data: {}, allIds: [] };
 

@@ -21,7 +21,7 @@ export const deleteTag = (tagId) => ({
 
 const selectTagsObj = (state) => state.tags;
 
-export const selectTag = createSelector([selectTagsObj], (selectTagsObj) => ({ ...selectTagsObj }))
+export const selectTags = createSelector([selectTagsObj], (selectTagsObj) => ({ ...selectTagsObj }))
 
 const initialState = { data: {}, allIds: [] };
 

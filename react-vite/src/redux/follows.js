@@ -21,7 +21,7 @@ export const deleteFollow = (followId) => ({
 
 const selectFollowsObj = (state) => state.follows;
 
-export const selectFollow = createSelector([selectFollowsObj], (selectFollowsObj) => ({ ...selectFollowsObj }))
+export const selectFollows = createSelector([selectFollowsObj], (selectFollowsObj) => ({ ...selectFollowsObj }))
 
 const initialState = { data: {}, allIds: [] };
 

@@ -21,7 +21,7 @@ export const deleteSave = (saveId) => ({
 
 const selectSavesObj = (state) => state.saves;
 
-export const selectSave = createSelector([selectSavesObj], (selectSavesObj) => ({ ...selectSavesObj }))
+export const selectSaves = createSelector([selectSavesObj], (selectSavesObj) => ({ ...selectSavesObj }))
 
 const initialState = { data: {}, allIds: [] };
 

@@ -21,7 +21,7 @@ export const deleteUser = (userId) => ({
 
 const selectUsersObj = (state) => state.users;
 
-export const selectUser = createSelector([selectUsersObj], (selectUsersObj) => ({ ...selectUsersObj }))
+export const selectUsers = createSelector([selectUsersObj], (selectUsersObj) => ({ ...selectUsersObj }))
 
 const initialState = { data: {}, allIds: [] };
 

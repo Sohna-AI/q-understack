@@ -27,7 +27,7 @@ export default function QuestionCard({ id, title, details, tags, num_votes, numA
                         );
                     })}
                 </div>
-                <p className="author">{author.username}</p>
+                <p className="author">{author}</p>
             </div>
         </div>
     );
