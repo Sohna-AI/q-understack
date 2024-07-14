@@ -10,7 +10,7 @@ import * as tagActions from '../redux/tags';
 
 const separateQuestionData = (data) => async (dispatch) => {
     const ids = { tag: [], user: [] }
-    const separatedData = { tags: [], questions: [], users: [], answers: [] };
+    const separatedData = { tags: [], questions: [], users: [], answers: [], comments: [] };
     data.questions.forEach((question) => {
         const newData = structuredClone(question);
         for (let i = 0; i < newData.tags.length; i++) {
@@ -27,9 +27,13 @@ const separateQuestionData = (data) => async (dispatch) => {
         }
         delete newData.author;
         if (question.answers) {
-            separatedData.answers = structuredClone(question.answers)
+            separatedData.answers = structuredClone(question.answers);
+            delete newData.answers;
         }
-        delete newData.answers;
+        if (question.comments) {
+            separatedData.comments = structuredClone(question.comments);
+            delete newData.comments;
+        }
         separatedData.questions.push(newData);
     });
     if (separatedData.questions.length > 0) await dispatch(questionActions.setQuestions(separatedData.questions));
@@ -66,15 +70,6 @@ export const thunkGetQuestionDetailsById = (questionId) => async (dispatch) => {
 };
 
 export const thunkCreateQuestion = (question) => async (dispatch) => {
-    // tags.forEach(async (tag) => {
-    //     const response = await fetch(
-    //         '/api/questions',
-    //         {
-    //             method: 'POST',
-    //             headers: { 'Content-Type': 'application/json' },
-    //             body: JSON.stringify({ tag_name: tag })
-    //         })
-    // })
     const response = await fetch(
         '/api/questions',
         {
@@ -120,24 +115,25 @@ export const thunkDeleteQuestion = (questionId) => async (dispatch) => {
     }
 };
 
-// export const thunkGetSavedQuestions = () => async (dispatch) => {
-//     const response = await fetch('/api/questions/saves');
-//     if (response.ok) {
-//         const data = await response.json();
-//         dispatch(setSavedQuestions(data.questions));
-//     } else if (response.status < 500) {
-//         const errorMessages = await response.json();
-//         return errorMessages;
-//     } else {
-//         return { server: 'Something went wrong. Please try again' };
-//     }
-// };
+export const thunkGetSavedQuestions = () => async (dispatch) => {
+    const response = await fetch('/api/questions/saves');
+    if (response.ok) {
+        const data = await response.json();
+        console.log(data)
+        return await dispatch(separateQuestionData(data));
+    } else if (response.status < 500) {
+        const errorMessages = await response.json();
+        return errorMessages;
+    } else {
+        return { server: 'Something went wrong. Please try again' };
+    }
+};
 
-// export const thunkUnsaveQuestion = (questionId) => async (dispatch) => {
-//     const response = await fetch(`/api/questions/${questionId}/save`, {
-//         method: 'DELETE',
-//     });
-//     if (response.ok) {
-//         dispatch(unsaveQuestion(questionId));
-//     }
-// };
+export const thunkUnsaveQuestion = (questionId) => async (dispatch) => {
+    const response = await fetch(`/api/questions/${questionId}/save`, {
+        method: 'DELETE',
+    });
+    if (response.ok) {
+        // dispatch(unsaveQuestion(questionId));
+    }
+};
