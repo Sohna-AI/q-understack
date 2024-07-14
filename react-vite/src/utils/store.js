@@ -65,17 +65,31 @@ export const thunkGetQuestionDetailsById = (questionId) => async (dispatch) => {
     }
 };
 
-export const thunkCreateQuestion = (data) => async (dispatch) => {
+export const thunkCreateQuestion = (question) => async (dispatch) => {
+    // tags.forEach(async (tag) => {
+    //     const response = await fetch(
+    //         '/api/questions',
+    //         {
+    //             method: 'POST',
+    //             headers: { 'Content-Type': 'application/json' },
+    //             body: JSON.stringify({ tag_name: tag })
+    //         })
+    // })
     const response = await fetch(
         '/api/questions',
         {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
+            body: question
         })
     if (response.ok) {
-        const data = response.json();
+        const data = await response.json();
         return await dispatch(separateQuestionData({ questions: [data] }));
+    } else if (response.status < 500) {
+        const errorMessages = await response.json();
+        return errorMessages;
+    } else {
+        return { server: 'Something went wrong. Please try again' };
     }
 }
 

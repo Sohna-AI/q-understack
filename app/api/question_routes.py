@@ -54,12 +54,15 @@ def question_details(question_id):
     return question.to_dict_details()
 
 
-@question_routes.route('/', methods=['POST'])
+@question_routes.route('', methods=['POST'])
 @login_required
 def create_question():
     """
     Create a new question
     """
+    tagsData = form.tags
+
+    del form.tags
 
     form = QuestionForm()
     form['csrf_token'].data = request.cookies['csrf_token']
@@ -70,8 +73,6 @@ def create_question():
             details = form.details.data,
             expectation = form.expectation.data
         )
-        for tag in form.tags.data:
-            print(tag)
 
         db.session.add(new_question)
         db.session.commit()

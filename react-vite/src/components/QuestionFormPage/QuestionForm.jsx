@@ -1,11 +1,14 @@
+import * as questionActions from '../../redux/questions';
 import { thunkCreateQuestion } from "../../utils/store";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import './QuestionForm.css';
-import { useDispatch } from "react-redux";
 
 export default function QuestionForm({ question }) {
+    const questions = useSelector(questionActions.selectQuestions)
     const [expectations, setExpectations] = useState('');
+    const [isCreated, setIsCreated] = useState(false);
     const [tagInput, setTagInput] = useState('');
     const [details, setDetails] = useState('');
     const [errors, setErrors] = useState({});
@@ -23,6 +26,13 @@ export default function QuestionForm({ question }) {
         }
 
     }, [question]);
+
+    useEffect(() => {
+        if (isCreated) {
+            const id = questions.data[questions.allIds[questions.allIds.length - 1]].id
+            navigate(`/questions/${id}`)
+        }
+    }, [isCreated, navigate, questions])
 
     const addTag = (e) => {
         setErrors({});
@@ -50,15 +60,14 @@ export default function QuestionForm({ question }) {
         e.preventDefault();
         setErrors({});
         const data = {
-            title,
-            details,
-            expectations,
-            tags
+            title: title,
+            details: details,
+            expectation: expectations,
+            tags: tags
         };
-        console.log(data)
-        const newQuestion = await dispatch(thunkCreateQuestion(JSON.stringify(data)))
+        await dispatch(thunkCreateQuestion(JSON.stringify(data), tags))
+            .then(() => setIsCreated(true))
 
-        navigate(`/questions/${newQuestion?.id}`);
     };
 
     return (
