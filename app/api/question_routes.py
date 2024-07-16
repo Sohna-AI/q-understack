@@ -60,11 +60,10 @@ def create_question():
     """
     Create a new question
     """
+    form = QuestionForm()
     tagsData = form.tags
-
     del form.tags
 
-    form = QuestionForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         new_question = Question(
