@@ -48,8 +48,10 @@ def seed_tags():
 
 def undo_tags():
     if environment == 'production':
+        db.session.execute(f"TRUNCATE table {SCHEMA}.question_tags RESTART IDENTITY CASCADE;")
         db.session.execute(f"TRUNCATE table {SCHEMA}.tags RESTART IDENTITY CASCADE;")
     else:
+        db.session.execute(text("DELETE FROM question_tags"))
         db.session.execute(text("DELETE FROM tags"))
 
     db.session.commit()
