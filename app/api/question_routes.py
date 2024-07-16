@@ -50,16 +50,19 @@ def question_details(question_id):
 
     if not question:
         return {'errors': {'message': 'Question could not be found'}}, 404
-
+    print(question.to_dict_details())
     return question.to_dict_details()
 
 
-@question_routes.route('/', methods=['POST'])
+@question_routes.route('', methods=['POST'])
 @login_required
 def create_question():
     """
     Create a new question
     """
+    tagsData = form.tags
+
+    del form.tags
 
     form = QuestionForm()
     form['csrf_token'].data = request.cookies['csrf_token']

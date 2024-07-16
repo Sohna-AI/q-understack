@@ -1,23 +1,38 @@
+import * as questionActions from '../../redux/questions';
+import { thunkCreateQuestion } from "../../utils/store";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import './QuestionForm.css';
 
 export default function QuestionForm({ question }) {
-    const [title, setTitle] = useState('');
-    const [details, setDetails] = useState('');
+    const questions = useSelector(questionActions.selectQuestions)
     const [expectations, setExpectations] = useState('');
-    const [tags, setTags] = useState([]);
+    const [isCreated, setIsCreated] = useState(false);
     const [tagInput, setTagInput] = useState('');
+    const [details, setDetails] = useState('');
     const [errors, setErrors] = useState({});
+    const [title, setTitle] = useState('');
+    const [tags, setTags] = useState([]);
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     useEffect(() => {
         if (question) {
-            setTitle(question.title);
-            setDetails(question.details);
             setExpectations(question.expectations);
+            setDetails(question.details);
+            setTitle(question.title);
             setTags(question.tags);
         }
 
     }, [question]);
+
+    useEffect(() => {
+        if (isCreated) {
+            const id = questions.data[questions.allIds[questions.allIds.length - 1]].id
+            navigate(`/questions/${id}`)
+        }
+    }, [isCreated, navigate, questions])
 
     const addTag = (e) => {
         setErrors({});
@@ -41,9 +56,18 @@ export default function QuestionForm({ question }) {
         setTags(arr);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setErrors({});
+        const data = {
+            title: title,
+            details: details,
+            expectation: expectations,
+            tags: tags
+        };
+        await dispatch(thunkCreateQuestion(JSON.stringify(data), tags))
+            .then(() => setIsCreated(true))
+
     };
 
     return (

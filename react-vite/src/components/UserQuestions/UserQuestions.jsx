@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { thunkDeleteQuestion, thunkGetUserQuestions } from '../../redux/questions';
+import { thunkDeleteQuestion, thunkGetUserQuestions } from '../../utils/store';
 import { NavLink } from 'react-router-dom';
 import './UserQuestion.css';
 

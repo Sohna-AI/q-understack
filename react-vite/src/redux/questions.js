@@ -1,116 +1,61 @@
+import { createSelector } from '@reduxjs/toolkit';
+
+const SET_QUESTION = 'questions/setQuestion';
 const SET_QUESTIONS = 'questions/setQuestions';
-const SET_CURRENT_QUESTION = 'question/setCurrentQuestion';
-const SET_USER_QUESTIONS = 'questions/setUserQuestions';
 const DELETE_QUESTION = 'questions/deleteQuestion';
 
-const setQuestions = (questions) => ({
+export const setQuestion = (question) => ({
+    type: SET_QUESTION,
+    question,
+});
+
+export const setQuestions = (questions) => ({
     type: SET_QUESTIONS,
-    payload: questions,
+    questions,
 });
 
-const setCurrentQuestion = (question) => ({
-    type: SET_CURRENT_QUESTION,
-    payload: question,
-});
-
-const setUserQuestions = (questions) => ({
-    type: SET_USER_QUESTIONS,
-    payload: questions,
-});
-
-const deleteQuestion = (questionId) => ({
+export const deleteQuestion = (questionId) => ({
     type: DELETE_QUESTION,
-    payload: questionId,
+    questionId,
 });
 
-export const thunkGetAllQuestions = () => async (dispatch) => {
-    const response = await fetch('/api/questions');
-    if (response.ok) {
-        const data = await response.json();
-        dispatch(setQuestions(data));
-    } else if (response.status < 500) {
-        const errorMessages = await response.json();
-        return errorMessages;
-    } else {
-        return { server: 'Something went wrong. Please try again' };
-    }
-};
+const selectQuestionsObj = (state) => state.questions;
 
-export const thunkGetQuestionDetailsById = (questionId) => async (dispatch) => {
-    const response = await fetch(`/api/questions/${questionId}`);
-    if (response.ok) {
-        const data = await response.json();
-        dispatch(setCurrentQuestion(data));
-    } else if (response.status < 500) {
-        const errorMessages = await response.json();
-        return errorMessages;
-    } else {
-        return { server: 'Something went wrong. Please try again' };
-    }
-};
+export const selectQuestions = createSelector([selectQuestionsObj], (selectQuestionsObj) => ({ ...selectQuestionsObj }))
 
-export const thunkCreateQuestion = (data) => async (dispatch) => {
-    const response = await fetch(
-        '/api/questions',
-        {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-        })
-    if (response.ok) {
-        const data = response.json();
-        console.log(data);
-    }
-}
+const initialState = { data: {}, allIds: [] };
 
-export const thunkGetUserQuestions = () => async (dispatch) => {
-    const response = await fetch('/api/questions/current');
-    if (response.ok) {
-        const data = await response.json();
-        dispatch(setUserQuestions(data.questions));
-    } else if (response.status < 500) {
-        const errorMessages = await response.json();
-        return errorMessages;
-    } else {
-        return { server: 'Something went wrong. Please try again' };
-    }
-};
-
-export const thunkDeleteQuestion = (questionId) => async (dispatch) => {
-    const response = await fetch(`/api/questions/${questionId}`, {
-        method: 'DELETE',
-    });
-    if (response.ok) {
-        dispatch(deleteQuestion(questionId));
-    } else if (response.status < 500) {
-        const errorMessages = await response.json();
-        return errorMessages;
-    } else {
-        return { server: 'Something went wrong. Please try again' };
-    }
-};
-
-const initialState = { questions: {}, userQuestions: [] };
-
-function questionReducer(state = initialState, action) {
+function questionReducer(state = structuredClone(initialState), action) {
     switch (action.type) {
-        case SET_QUESTIONS:
-            return { ...state, questions: action.payload.questions };
 
-        case SET_CURRENT_QUESTION:
-            return {
-                ...state,
-                questions: {
-                    ...state.questions,
-                    [action.payload.id]: { ...state.questions[action.payload.id], ...action.payload },
-                },
-            };
+        case SET_QUESTION: {
+            const newState = structuredClone(state);
+            newState.data[action.question.id] = structuredClone(action.question);
+            if (newState.allIds.indexOf(action.question.id) < 0) {
+                newState.allIds.push(action.question.id);
+            }
+            return newState;
+        }
 
-        case SET_USER_QUESTIONS:
-            return { ...state, userQuestions: action.payload };
+        case SET_QUESTIONS: {
+            const newState = structuredClone(initialState);
+            action.questions.forEach(question => {
+                newState.data[question.id] = structuredClone(question);
+                if (newState.allIds.indexOf(question.id) < 0) {
+                    newState.allIds.push(question.id)
+                }
+            })
+            return newState;
+        }
+
         case DELETE_QUESTION: {
-            const newState = { ...state };
-            delete newState.questions[action.payload];
+            const newState = structuredClone(state);
+            if (newState.data[action.questionId]) {
+                delete newState.data[action.questionId];
+            }
+            if (newState.allIds.indexOf(action.questionId > -1)) {
+                newState.allIds.splice(newState.allIds.indexOf(action.questionId > -1), 1);
+            }
             return newState;
         }
 

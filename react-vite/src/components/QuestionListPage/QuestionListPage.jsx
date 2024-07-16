@@ -1,21 +1,27 @@
-import { useEffect, useState } from "react";
+import { thunkGetAllQuestions } from "../../utils/store";
 import { useDispatch, useSelector } from "react-redux";
-import { thunkGetAllQuestions } from "../../redux/questions";
+import * as questionActions from '../../redux/questions';
+import * as userActions from '../../redux/users';
+import * as tagActions from '../../redux/tags';
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import QuestionCard from "./QuestionCard";
 import './QuestionListPage.css';
-import { useNavigate } from "react-router-dom";
 
 // TODO Implement pagination
 function QuestionListPage({ homePage }) {
+    const questions = useSelector(questionActions.selectQuestions);
+    const users = useSelector(userActions.selectUsers);
+    const tags = useSelector(tagActions.selectTags);
+    const [isLoaded, setIsLoaded] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [isLoaded, setIsLoaded] = useState(false)
-    const questions = useSelector((state) => state.questions.questions);
 
     useEffect(() => {
-        dispatch(thunkGetAllQuestions()).then(() => {
-            setIsLoaded(true)
-        });
+        dispatch(thunkGetAllQuestions())
+            .then(() => {
+                setIsLoaded(true)
+            });
     }, [dispatch, setIsLoaded])
 
     const handleClick = () => {
@@ -35,18 +41,18 @@ function QuestionListPage({ homePage }) {
                     <>
                         <div>
                             {
-                                questions.map((question) => {
+                                questions.allIds?.map((qId) => {
                                     return (
                                         <QuestionCard
-                                            key={question.id}
-                                            id={question.id}
-                                            title={question.title}
-                                            details={question.details}
-                                            tags={question.tags}
-                                            num_votes={question.num_votes}
-                                            numAnswers={question.num_answers}
-                                            author={question.author}
-                                            userId={question.user_id}
+                                            key={qId}
+                                            id={qId}
+                                            title={questions.data[qId].title}
+                                            details={questions.data[qId].details}
+                                            tags={questions.data[qId].tags.map((tagId) => tags.data[tagId])}
+                                            num_votes={questions.data[qId].num_votes}
+                                            numAnswers={questions.data[qId].num_answers}
+                                            author={users.data[questions.data[qId].user_id].username}
+                                            userId={questions.data[qId].user_id}
                                             homePage={homePage}
                                         />
                                     )
