@@ -3,6 +3,8 @@ import { createSelector } from '@reduxjs/toolkit';
 const SET_QUESTION = 'questions/setQuestion';
 const SET_QUESTIONS = 'questions/setQuestions';
 const DELETE_QUESTION = 'questions/deleteQuestion';
+const SAVE_QUESTION = 'questions/saveQuestion';
+const UNSAVE_QUESTION = 'questions/unsaveQuestion';
 
 export const setQuestion = (question) => ({
     type: SET_QUESTION,
@@ -18,6 +20,16 @@ export const deleteQuestion = (questionId) => ({
     type: DELETE_QUESTION,
     questionId,
 });
+
+export const saveQuestion = (questionId) => ({
+    type: SAVE_QUESTION,
+    questionId
+})
+
+export const unsaveQuestion = (questionId) => ({
+    type: UNSAVE_QUESTION,
+    questionId
+})
 
 const selectQuestionsObj = (state) => state.questions;
 
@@ -55,6 +67,22 @@ function questionReducer(state = structuredClone(initialState), action) {
             }
             if (newState.allIds.indexOf(action.questionId > -1)) {
                 newState.allIds.splice(newState.allIds.indexOf(action.questionId > -1), 1);
+            }
+            return newState;
+        }
+
+        case SAVE_QUESTION: {
+            const newState = structuredClone(state);
+            if (newState.data[action.questionId]) {
+                newState.data[action.questionId].user_save = true;
+            }
+            return newState;
+        }
+
+        case UNSAVE_QUESTION: {
+            const newState = structuredClone(state);
+            if (newState.data[action.questionId]) {
+                newState.data[action.questionId].user_save = false;
             }
             return newState;
         }
