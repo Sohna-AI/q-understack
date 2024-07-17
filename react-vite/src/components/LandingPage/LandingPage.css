@@ -1,0 +1,41 @@
+.landing-page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.landing-page-buttons-container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.landing-page-login-button-container,
+.landing-page-signup-button-container,
+.landing-page-questions-button-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.landing-page-login-button,
+.landing-page-signup-button,
+.landing-page-questions-button {
+  font-size: 20px;
+  background-color: var(--button-color);
+  border: none;
+  padding: 5px 10px;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+.landing-page-login-button:hover,
+.landing-page-signup-button:hover,
+.landing-page-questions-button:hover {
+  background-color: var(--button-color-hover);
+}
+
+.landing-page-login-button > li,
+.landing-page-signup-button > li {
+  list-style: none;
+}
