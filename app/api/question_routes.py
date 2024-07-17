@@ -1,7 +1,7 @@
 from flask import Blueprint, request
 from datetime import datetime
 from flask_login import current_user, login_required
-from app.models import Question, db, Save, Answer, Comment, Follow
+from app.models import Question, db, Save, Answer, Tag, Comment, Follow
 from app.forms.create_question_form import QuestionForm
 from app.forms.create_answer_form import AnswerForm
 from app.forms.create_comment_form import CommentForm
@@ -59,9 +59,7 @@ def create_question():
     """
     Create a new question
     """
-    tagsData = form.tags
-
-    del form.tags
+    tags = request.json['tags']
 
     form = QuestionForm()
     form['csrf_token'].data = request.cookies['csrf_token']
@@ -72,6 +70,13 @@ def create_question():
             details = form.details.data,
             expectation = form.expectation.data
         )
+        for tag in tags:
+            db_tag = Tag.query.filter(Tag.tag_name==tag).first()
+            if db_tag:
+                new_question.tags.append(db_tag)
+            else:
+                new_tag = Tag(tag_name=tag)
+                new_question.tags.append(new_tag)
 
         db.session.add(new_question)
         db.session.commit()

@@ -49,7 +49,8 @@ class Answer(db.Model):
             'comments': [comment.to_dict() for comment in self.comments],
             'author': self.user.to_dict(),
             'created_at': self.created_at,
-            'updated_at': self.updated_at
+            'updated_at': self.updated_at,
+            'user': self.user.to_dict()
         }
 
     def to_dict_no_question(self):
@@ -57,7 +58,9 @@ class Answer(db.Model):
             'id': self.id,
             'user_id': self.user_id,
             'question_id': self.question_id,
+            'comments': [comment.to_dict() for comment in self.comments],
             'text': self.text,
             'created_at': self.created_at,
-            'updated_at': self.updated_at
+            'updated_at': self.updated_at,
+            'user': self.user.to_dict()
         }
