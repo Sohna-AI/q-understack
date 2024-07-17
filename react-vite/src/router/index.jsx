@@ -29,7 +29,16 @@ export const router = createBrowserRouter([
                     },
                     {
                         path: ':questionId',
-                        element: <QuestionDetailPage />,
+                        children: [
+                            {
+                                path: '',
+                                element: <QuestionDetailPage />,
+                            },
+                            {
+                                path: 'edit',
+                                element: <QuestionForm edit={true} />
+                            }
+                        ]
                     },
                     {
                         path: 'new',

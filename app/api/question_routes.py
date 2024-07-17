@@ -92,13 +92,21 @@ def update_question(question_id):
     """
     question = Question.query.get(question_id)
     tags = request.json['tags']
+
+    if len(tags) > 5:
+        return {'errors': {'message': 'Too many tags'}}, 500
+
     for tag in question.tags:
-        if tag.tag_name not in tags:
+        print(tag.tag_name)
+        if not tag.tag_name in tags:
             question.tags.remove(tag)
     new_tags = []
     for tag in tags:
-        if tag not in question.tags:
-            new_tags.add(tag)
+        if not tag in question.tags:
+            new_tags.append(tag)
+
+    if (len(new_tags) + len(question.tags)) > 5:
+        return {'errors': {'message': 'Too many tags'}}, 500
 
     if not question:
         return {'errors': {'message': 'Question could not be found'}}, 404
