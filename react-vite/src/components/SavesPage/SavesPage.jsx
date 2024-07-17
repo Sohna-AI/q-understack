@@ -141,6 +141,9 @@ const SavedQuestions = () => {
                     </div>
                 </>
             )}
+            {
+                !isLoaded && <div style={{ height: '100vh' }} className='saved-question-container' />
+            }
         </div>
     );
 };

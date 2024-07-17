@@ -32,7 +32,7 @@ export default function QuestionDetailPage() {
     }, [dispatch, questionId])
 
     return (
-        <div>
+        <div id='main-area'>
             {isLoaded &&
                 <>
                     <div id='title__container'>
@@ -57,7 +57,7 @@ export default function QuestionDetailPage() {
                                 <FaRegBookmark />
                             }
                         </div>
-                        <div>
+                        <div id='question-details__container'>
                             <p>{question?.details}</p>
                             <p>{question?.expectation}</p>
                             <div id='tags-username__container'>
@@ -73,23 +73,24 @@ export default function QuestionDetailPage() {
                                 <p>{user?.username}</p>
                             </div>
                         </div>
-                        <div id='answer__container'>
-                            <textarea name="answer" cols={50}></textarea>
-                            {sessionUser && <button >Post Your Answer</button>}
-                            {!sessionUser &&
-                                <span>
-                                    <OpenModalButton
-                                        modalComponent={<SignupFormModal />}
-                                        buttonText="Sign up"
-                                    />
-                                    {' or '}
-                                    <OpenModalButton
-                                        modalComponent={<LoginFormModal />}
-                                        buttonText="Log In"
-                                    />
-                                </span>
-                            }
-                        </div>
+                    </div>
+                    <div id='answer__container'>
+                        <h2>Your Answer</h2>
+                        <textarea name="answer" cols={50}></textarea>
+                        {sessionUser && <button >Post Your Answer</button>}
+                        {!sessionUser &&
+                            <span>
+                                <OpenModalButton
+                                    modalComponent={<SignupFormModal />}
+                                    buttonText="Sign up"
+                                />
+                                {' or '}
+                                <OpenModalButton
+                                    modalComponent={<LoginFormModal />}
+                                    buttonText="Log In"
+                                />
+                            </span>
+                        }
                     </div>
                 </>
             }

@@ -18,9 +18,6 @@ def user_saves():
     user_id = current_user.get_id()
     questions = Save.query.filter(Save.user_id==user_id, Save.type=='question')
     answers = Save.query.filter(Save.user_id==user_id, Save.type=='answer')
-    print(questions)
-    print(answers)
-    # saves = [[save.to_saves_dict() for save in questions], [save.to_saves_dict() for save in answers]]
     return { 'questions': [save.question.to_dict_details() for save in questions],
             'answers': [save.answer.to_dict() for save in answers],
             'saves': [[save.to_dict() for save in questions], [save.to_dict() for save in answers]]}
