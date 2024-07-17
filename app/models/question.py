@@ -60,7 +60,6 @@ class Question(db.Model):
 
         return {
             'id': self.id,
-            'user': self.user.to_dict(),
             'title': self.title,
             'details': self.details,
             'expectation': self.expectation,
