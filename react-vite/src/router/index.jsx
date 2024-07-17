@@ -10,15 +10,8 @@ import UserQuestions from '../components/UserQuestions/UserQuestions';
 import UserQuestionSaveNav from '../components/UserQuestionSavePage/UserQuestionSaveNav';
 
 export const router = createBrowserRouter([
-  {
-    element: <Layout />,
-    children: [
-      {
-        path: '/',
-        element: <LandingPage />,
-      },
-      {
-        path: 'questions',
+    {
+        element: <Layout />,
         children: [
             {
                 path: '/',
@@ -56,7 +49,7 @@ export const router = createBrowserRouter([
                 children: [
                     {
                         path: 'saves',
-                        element: <SavedQuestions />,
+                        element: <SavesPage />,
                     },
                     {
                         path: 'questions',
@@ -64,6 +57,7 @@ export const router = createBrowserRouter([
                     },
                 ],
             },
+            {
                 path: '*',
                 element: <Error />
             }
