@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { thunkDeleteQuestion, thunkGetUserQuestions } from '../../utils/store';
+import { thunkGetUserQuestions } from '../../utils/store';
 import { NavLink } from 'react-router-dom';
 import * as questionActions from '../../redux/questions';
 import * as tagActions from '../../redux/tags';
 import './UserQuestion.css';
 import DeleteQuestionModal from '../DeleteQuestionModal/DeleteQuestionModal';
 import OpenModalButton from '../OpenModalButton';
-import { useModal } from '../../context/Modal';
 
 // TODO Implement pagination
 const UserQuestions = () => {
