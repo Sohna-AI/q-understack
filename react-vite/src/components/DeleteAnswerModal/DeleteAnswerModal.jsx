@@ -3,7 +3,7 @@ import { useModal } from '../../context/Modal';
 import { thunkUnsaveAnswer } from '../../utils/store';
 import './UnsaveAnswerModal.css';
 
-const UnsaveAnswerModal = ({ answerId, navigateOnDelete, detailsPage }) => {
+const DeleteAnswerModal = ({ answerId, navigateOnDelete, detailsPage }) => {
   const { closeModal } = useModal();
   const dispatch = useDispatch();
 
@@ -39,4 +39,4 @@ const UnsaveAnswerModal = ({ answerId, navigateOnDelete, detailsPage }) => {
   );
 };
 
-export default UnsaveAnswerModal;
+export default DeleteAnswerModal;

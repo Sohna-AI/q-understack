@@ -231,17 +231,32 @@ export const thunkUnsaveAnswer = (answerId, savesPage) => async (dispatch) => {
   const response = await fetch(`/api/answers/${answerId}/save`, {
     method: 'DELETE',
   });
+
   if (response.ok) {
-    if (response.ok) {
-      await dispatch(answerActions.unsaveAnswer(answerId));
-      if (savesPage) {
-        return dispatch(answerActions.deleteAnswer(answerId));
-      }
-    } else if (response.status < 500) {
-      const errorMessages = await response.json();
-      return errorMessages;
-    } else {
-      return { server: 'Something went wrong. Please try again' };
+    await dispatch(answerActions.unsaveAnswer(answerId));
+    if (savesPage) {
+      await dispatch(answerActions.deleteAnswer(answerId));
+      window.location.reload();
     }
+  } else if (response.status < 500) {
+    const errorMessages = await response.json();
+    return errorMessages;
+  } else {
+    return { server: 'Something went wrong. Please try again' };
+  }
+};
+
+export const thunkDeleteComment = (commentId) => async (dispatch) => {
+  const response = await fetch(`/api/comments/${commentId}`, {
+    method: 'DELETE',
+  });
+
+  if (response.ok) {
+    await dispatch(commentActions.deleteComment(commentId));
+  } else if (response.status < 500) {
+    const errorMessages = await response.json();
+    return errorMessages;
+  } else {
+    return { server: 'Something went wrong. Please try again' };
   }
 };
