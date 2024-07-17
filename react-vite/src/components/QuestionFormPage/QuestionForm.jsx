@@ -1,12 +1,13 @@
 import * as questionActions from '../../redux/questions';
-import { thunkCreateQuestion } from "../../utils/store";
+import { thunkCreateQuestion, thunkGetQuestionDetailsById, thunkUpdateQuestion } from "../../utils/store";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import './QuestionForm.css';
 
-export default function QuestionForm({ question }) {
-    const questions = useSelector(questionActions.selectQuestions)
+export default function QuestionForm({ edit }) {
+    const editId = useParams()['questionId'];
+    const questions = useSelector(questionActions.selectQuestions).data[editId];
     const [expectations, setExpectations] = useState('');
     const [isCreated, setIsCreated] = useState(false);
     const [tagInput, setTagInput] = useState('');
@@ -16,23 +17,31 @@ export default function QuestionForm({ question }) {
     const [tags, setTags] = useState([]);
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    // TODO check sessionUser validity
 
     useEffect(() => {
-        if (question) {
-            setExpectations(question.expectations);
-            setDetails(question.details);
-            setTitle(question.title);
-            setTags(question.tags);
+        if (edit) {
+            dispatch(thunkGetQuestionDetailsById(+editId)).then((data) => {
+                const tags = [];
+                for (let tag of data.tags) {
+                    tags.push(tag.tag_name)
+                }
+                setExpectations(data.expectation);
+                setDetails(data.details);
+                setTitle(data.title);
+                setTags(tags);
+            })
         }
-
-    }, [question]);
+    }, [editId, dispatch, edit, navigate]);
 
     useEffect(() => {
-        if (isCreated) {
+        if (isCreated && !edit) {
             const id = questions.data[questions.allIds[questions.allIds.length - 1]].id
             navigate(`/questions/${id}`)
+        } else if (isCreated) {
+            navigate(`/questions/${editId}`)
         }
-    }, [isCreated, navigate, questions])
+    }, [isCreated, navigate, questions, edit, editId])
 
     const addTag = (e) => {
         setErrors({});
@@ -65,15 +74,19 @@ export default function QuestionForm({ question }) {
             expectation: expectations,
             tags: tags
         };
-        await dispatch(thunkCreateQuestion(JSON.stringify(data), tags))
-            .then(() => setIsCreated(true))
-
+        if (edit) {
+            await dispatch(thunkUpdateQuestion(JSON.stringify(data), editId))
+                .then(() => setIsCreated(true))
+        } else {
+            await dispatch(thunkCreateQuestion(JSON.stringify(data)))
+                .then(() => setIsCreated(true))
+        }
     };
 
     return (
         <div id="question-form-page" className="flex column">
             <div>
-                {question ? <h1>Update question</h1> : <h1>Ask a question</h1>}
+                {edit ? <h1>Update question</h1> : <h1>Ask a question</h1>}
                 <h2>Don&apos;t ask well formed questions.  Expect wild answers.</h2>
             </div>
             <form className="flex column gap-15" onSubmit={handleSubmit}>

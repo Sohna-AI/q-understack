@@ -95,7 +95,8 @@ export const thunkGetQuestionDetailsById = (questionId) => async (dispatch) => {
     const response = await fetch(`/api/questions/${questionId}`);
     if (response.ok) {
         const data = await response.json();
-        return await dispatch(separateData({ questions: [data] }));
+        dispatch(separateData({ questions: [data] }));
+        return data;
     } else if (response.status < 500) {
         const errorMessages = await response.json();
         return errorMessages;
@@ -109,6 +110,25 @@ export const thunkCreateQuestion = (question) => async (dispatch) => {
         '/api/questions',
         {
             method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: question
+        })
+    if (response.ok) {
+        const data = await response.json();
+        return await dispatch(separateData({ questions: [data] }));
+    } else if (response.status < 500) {
+        const errorMessages = await response.json();
+        return errorMessages;
+    } else {
+        return { server: 'Something went wrong. Please try again' };
+    }
+}
+
+export const thunkUpdateQuestion = (question, questionId) => async (dispatch) => {
+    const response = await fetch(
+        `/api/questions/${questionId}`,
+        {
+            method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: question
         })
