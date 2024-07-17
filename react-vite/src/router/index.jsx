@@ -20,38 +20,53 @@ export const router = createBrowserRouter([
       {
         path: 'questions',
         children: [
-          {
-            index: true,
-            element: <QuestionListPage />,
-          },
-          {
-            path: ':questionId',
-            element: <QuestionDetailPage />,
-          },
-          {
-            path: 'new',
-            element: <QuestionForm />,
-          },
-        ],
-      },
-      {
-        path: 'user',
-        element: <UserQuestionSaveNav />,
-        children: [
-          {
-            path: 'saves',
-            element: <SavesPage />,
-          },
-          {
-            path: 'questions',
-            element: <UserQuestions />,
-          },
-        ],
-      },
-      {
-        path: '*',
-        element: <Error />,
-      },
-    ],
-  },
+            {
+                path: '/',
+                element: <LandingPage />,
+            },
+            {
+                path: 'questions',
+                children: [
+                    {
+                        index: true,
+                        element: <QuestionListPage />,
+                    },
+                    {
+                        path: ':questionId',
+                        children: [
+                            {
+                                path: '',
+                                element: <QuestionDetailPage />,
+                            },
+                            {
+                                path: 'edit',
+                                element: <QuestionForm edit={true} />
+                            }
+                        ]
+                    },
+                    {
+                        path: 'new',
+                        element: <QuestionForm />
+                    }
+                ]
+            },
+            {
+                path: 'user',
+                element: <UserQuestionSaveNav />,
+                children: [
+                    {
+                        path: 'saves',
+                        element: <SavedQuestions />,
+                    },
+                    {
+                        path: 'questions',
+                        element: <UserQuestions />,
+                    },
+                ],
+            },
+                path: '*',
+                element: <Error />
+            }
+        ]
+    },
 ]);

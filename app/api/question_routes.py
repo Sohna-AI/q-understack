@@ -91,6 +91,22 @@ def update_question(question_id):
     Update a question by question_id
     """
     question = Question.query.get(question_id)
+    tags = request.json['tags']
+
+    if len(tags) > 5:
+        return {'errors': {'message': 'Too many tags'}}, 500
+
+    for tag in question.tags:
+        print(tag.tag_name)
+        if not tag.tag_name in tags:
+            question.tags.remove(tag)
+    new_tags = []
+    for tag in tags:
+        if not tag in question.tags:
+            new_tags.append(tag)
+
+    if (len(new_tags) + len(question.tags)) > 5:
+        return {'errors': {'message': 'Too many tags'}}, 500
 
     if not question:
         return {'errors': {'message': 'Question could not be found'}}, 404
@@ -105,6 +121,13 @@ def update_question(question_id):
         question.details = form.details.data
         question.expectation = form.expectation.data
         question.updated_at = datetime.now()
+        for tag in new_tags:
+            db_tag = Tag.query.filter(Tag.tag_name==tag).first()
+            if db_tag:
+                question.tags.append(db_tag)
+            else:
+                new_tag = Tag(tag_name=tag)
+                question.tags.append(new_tag)
 
         db.session.commit()
         return question.to_dict()
