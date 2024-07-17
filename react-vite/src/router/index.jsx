@@ -1,16 +1,13 @@
 import { createBrowserRouter } from 'react-router-dom';
-import LoginFormPage from '../components/LoginFormPage';
-import SignupFormPage from '../components/SignupFormPage';
 import Layout from './Layout';
 import LandingPage from '../components/LandingPage';
 import QuestionListPage from '../components/QuestionListPage';
 import QuestionDetailPage from '../components/QuestionDetailPage';
 import QuestionForm from '../components/QuestionFormPage';
 import Error from '../components/ErrorPage';
-import SavedQuestions from '../components/SavesPage/SavesPage';
+import SavesPage from '../components/SavesPage/SavesPage';
 import UserQuestions from '../components/UserQuestions/UserQuestions';
 import UserQuestionSaveNav from '../components/UserQuestionSavePage/UserQuestionSaveNav';
-// import TestAnswer from '../components/TestAnswer/TestAnswer';
 
 export const router = createBrowserRouter([
     {
@@ -29,7 +26,16 @@ export const router = createBrowserRouter([
                     },
                     {
                         path: ':questionId',
-                        element: <QuestionDetailPage />,
+                        children: [
+                            {
+                                path: '',
+                                element: <QuestionDetailPage />,
+                            },
+                            {
+                                path: 'edit',
+                                element: <QuestionForm edit={true} />
+                            }
+                        ]
                     },
                     {
                         path: 'new',
@@ -43,7 +49,7 @@ export const router = createBrowserRouter([
                 children: [
                     {
                         path: 'saves',
-                        element: <SavedQuestions />,
+                        element: <SavesPage />,
                     },
                     {
                         path: 'questions',
@@ -51,18 +57,6 @@ export const router = createBrowserRouter([
                     },
                 ],
             },
-            {
-                path: 'login',
-                element: <LoginFormPage />,
-            },
-            {
-                path: 'signup',
-                element: <SignupFormPage />,
-            },
-            // {
-            //     path: "test",
-            //     element: <TestAnswer />
-            // }
             {
                 path: '*',
                 element: <Error />
