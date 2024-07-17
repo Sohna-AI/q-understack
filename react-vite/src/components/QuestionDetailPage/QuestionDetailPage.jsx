@@ -1,4 +1,4 @@
-import { thunkGetQuestionDetailsById } from '../../utils/store';
+import { thunkGetQuestionDetailsById, thunkSaveQuestion, thunkUnsaveQuestion } from '../../utils/store';
 import * as questionActions from '../../redux/questions';
 import { useDispatch, useSelector } from 'react-redux';
 import OpenModalButton from '../OpenModalButton';
@@ -43,6 +43,14 @@ export default function QuestionDetailPage() {
         })
     }, [dispatch, questionId])
 
+    const handleSave = () => {
+        dispatch(thunkSaveQuestion(questionId));
+    }
+
+    const handleUnsave = () => {
+        dispatch(thunkUnsaveQuestion(questionId));
+    }
+
     return (
         <div id='main-area'>
             {isLoaded &&
@@ -65,8 +73,8 @@ export default function QuestionDetailPage() {
                                 <FaArrowAltCircleDown /> :
                                 <FaRegArrowAltCircleDown />}
                             {question?.user_save ?
-                                <FaBookmark /> :
-                                <FaRegBookmark />
+                                <FaBookmark onClick={handleUnsave} /> :
+                                <FaRegBookmark onClick={handleSave} />
                             }
                         </div>
                         <div id='question-details__container'>

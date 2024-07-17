@@ -70,12 +70,12 @@ const separateData = (data) => async (dispatch) => {
     });
     if (data.answers) separateAnswers(data.answers)
     if (data.saves?.length) separatedData.saves = structuredClone(data.saves);
-    if (separatedData.questions.length > 0) await dispatch(questionActions.setQuestions(separatedData.questions));
-    if (separatedData.answers.length > 0) await dispatch(answerActions.setAnswers(separatedData.answers));
-    if (separatedData.comments.length > 0) await dispatch(commentActions.setComments(separatedData.comments));
-    if (separatedData.users.length > 0) await dispatch(userActions.setUsers(separatedData.users));
-    if (separatedData.saves.length > 0) await dispatch(saveActions.setSaves(separatedData.saves));
-    if (separatedData.tags.length > 0) await dispatch(tagActions.setTags(separatedData.tags));
+    await dispatch(questionActions.setQuestions(separatedData.questions));
+    await dispatch(answerActions.setAnswers(separatedData.answers));
+    await dispatch(commentActions.setComments(separatedData.comments));
+    await dispatch(userActions.setUsers(separatedData.users));
+    await dispatch(saveActions.setSaves(separatedData.saves));
+    await dispatch(tagActions.setTags(separatedData.tags));
 };
 
 export const thunkGetAllQuestions = () => async (dispatch) => {
@@ -183,11 +183,35 @@ export const thunkGetSaves = () => async (dispatch) => {
     }
 };
 
-export const thunkUnsaveQuestion = (questionId) => async () => {
+export const thunkSaveQuestion = (questionId) => async (dispatch) => {
+    const response = await fetch(`/api/questions/${questionId}/save`, {
+        method: 'POST'
+    })
+    if (response.ok) {
+        return await dispatch(questionActions.saveQuestion(questionId));
+    } else if (response.status < 500) {
+        const errorMessages = await response.json();
+        return errorMessages;
+    } else {
+        return { server: 'Something went wrong. Please try again' };
+    }
+}
+
+export const thunkUnsaveQuestion = (questionId, savesPage) => async (dispatch) => {
     const response = await fetch(`/api/questions/${questionId}/save`, {
         method: 'DELETE',
     });
     if (response.ok) {
-        // dispatch(unsaveQuestion(questionId));
+        if (response.ok) {
+            await dispatch(questionActions.unsaveQuestion(questionId));
+            if (savesPage) {
+                return dispatch(questionActions.deleteQuestion(questionId));
+            }
+        } else if (response.status < 500) {
+            const errorMessages = await response.json();
+            return errorMessages;
+        } else {
+            return { server: 'Something went wrong. Please try again' };
+        }
     }
 };
