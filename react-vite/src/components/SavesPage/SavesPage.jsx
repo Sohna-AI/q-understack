@@ -147,11 +147,11 @@ const SavesPage = () => {
             ) : (
               <p>No Saved answers</p>
             )}
-          </div>
-        </>
-      )}
-    </div>
-  );
+            {
+                !isLoaded && <div style={{ height: '100vh' }} className='saved-question-container' />
+            }
+        </div>
+    );
 };
 
 export default SavesPage;

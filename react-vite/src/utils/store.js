@@ -23,7 +23,7 @@ const separateData = (data) => async (dispatch) => {
             ids.comment.push(comment.id)
         }
     }
-    const separeateAnswers = (answers) => {
+    const separateAnswers = (answers) => {
         answers.forEach((answer) => {
             const newAnswer = structuredClone(answer);
             if (ids.answer.indexOf(newAnswer.id) < 0) {
@@ -61,14 +61,14 @@ const separateData = (data) => async (dispatch) => {
             }
         }
         if (newData.answers) {
-            separeateAnswers(newData.answers)
+            separateAnswers(newData.answers)
             for (let i = 0; i < newData.answers.length; i++) {
                 newData.answers[i] = newData.answers[i].id
             }
         }
         separatedData.questions.push(newData);
     });
-    if (data.answers) separeateAnswers(data.answers)
+    if (data.answers) separateAnswers(data.answers)
     if (data.saves?.length) separatedData.saves = structuredClone(data.saves);
     if (separatedData.questions.length > 0) await dispatch(questionActions.setQuestions(separatedData.questions));
     if (separatedData.answers.length > 0) await dispatch(answerActions.setAnswers(separatedData.answers));
