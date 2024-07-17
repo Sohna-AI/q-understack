@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
 import { thunkUnsaveAnswer } from '../../utils/store';
-import './UnsaveAnswerModal.css';
+import './DeleteAnswerModal.css';
 
 const DeleteAnswerModal = ({ answerId, navigateOnDelete, detailsPage }) => {
   const { closeModal } = useModal();
