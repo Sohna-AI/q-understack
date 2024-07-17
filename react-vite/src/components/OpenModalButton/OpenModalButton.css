@@ -1,4 +1,41 @@
 .modal_button {
-    cursor: pointer;
-    color: red;
+  cursor: pointer;
+  color: red;
+}
+
+.modal_button_delete {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+  border-radius: 15px;
+  background-color: rgb(102, 102, 141);
+  cursor: pointer;
+  border: 3px solid rgb(255, 201, 201);
+  transition-duration: 0.3s;
+}
+
+.bin-bottom {
+  width: 15px;
+  height: 15px;
+}
+
+.bin-top {
+  width: 13px;
+  transform-origin: right;
+  transition-duration: 0.3s;
+}
+
+.modal_button_delete:hover .bin-top {
+  transform: rotate(45deg);
+}
+
+.modal_button_delete:hover {
+  background-color: red;
+}
+
+.modal_button_delete:active {
+  transform: scale(0.9);
 }

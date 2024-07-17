@@ -14,11 +14,7 @@ export default function LandingPage() {
       {!sessionUser ? (
         <div className="landing-page-container">
           <div className="landing-page-main-logo-container">
-            <img
-              src="../../../dist/assets/q-understack-main-logo.png"
-              alt=""
-              className="landing-page-main-logo"
-            />
+            <img src="../../../public/q-understack-main-logo.png" alt="" className="landing-page-main-logo" />
           </div>
           <div className="landing-page-buttons-container">
             <div className="landing-page-questions-button-container">

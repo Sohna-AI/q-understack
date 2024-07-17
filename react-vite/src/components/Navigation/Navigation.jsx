@@ -10,7 +10,7 @@ function Navigation() {
       <div id="navbar">
         <div id="logo_about_links">
           <p id="logo" onClick={() => navigate('/')}>
-            <img src="../../../dist/assets/q-understack-logo.png" alt=""/>
+            <img src="../../../public/q-understack-logo.png" alt=""/>
           </p>
           <NavLink to="/about">About</NavLink>
         </div>
