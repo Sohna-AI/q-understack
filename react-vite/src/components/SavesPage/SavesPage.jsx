@@ -9,7 +9,7 @@ import { NavLink } from 'react-router-dom';
 import './SavesPage.css';
 
 // TODO Implement pagination
-const SavesPage = () => {
+const SavedQuestions = () => {
   const questions = useSelector(questionActions.selectQuestions);
   const sessionUser = useSelector((state) => state.session.user);
   const answers = useSelector(answerActions.selectAnswers);
@@ -147,11 +147,12 @@ const SavesPage = () => {
             ) : (
               <p>No Saved answers</p>
             )}
-            {
-                !isLoaded && <div style={{ height: '100vh' }} className='saved-question-container' />
-            }
-        </div>
-    );
+          </div>
+        </>
+      )}
+      {!isLoaded && <div style={{ height: '100vh' }} className="saved-question-container" />}
+    </div>
+  );
 };
 
-export default SavesPage;
+export default SavedQuestions;
