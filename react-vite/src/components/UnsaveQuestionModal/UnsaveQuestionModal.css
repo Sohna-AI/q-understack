@@ -1,0 +1,28 @@
+.unsave-question-modal-container {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 10px;
+  }
+  
+  .unsave-cancel-button-container {
+    display: flex;
+    gap: 30px;
+  }
+  
+  .unsave-answer-cancel-button {
+    font-size: 20px;
+    background-color: var(--button-color);
+    border: none;
+    padding: 5px 10px;
+    border-radius: 0.25rem;
+    cursor: pointer;
+  }
+  
+  .unsave-answer-button {
+    font-size: 20px;
+    background-color: red;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 0.25rem;
+    cursor: pointer;
+  }
