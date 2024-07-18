@@ -1,4 +1,5 @@
-.saved-question-container {
+.saved-question-container,
+.saved-answer-container {
   display: flex;
   flex-direction: column;
   width: var(--group-card-width);
@@ -8,18 +9,21 @@
   padding: 10px;
 }
 
-.saved-question-tag-container {
+.saved-question-tag-container,
+.saved-answer-tag-container {
   display: flex;
   flex-direction: row;
   gap: 10px;
 }
 
-.saved-question-title {
+.saved-question-title,
+.saved-answer-title {
   text-decoration: none;
   color: white;
 }
 
-.saved-question-title-tag-container {
+.saved-question-title-tag-container,
+.saved-answer-title-tag-container {
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -29,7 +33,8 @@
   color: var(--link-color);
 }
 
-.saved-question-vote-answer-container {
+.saved-question-vote-answer-container,
+.saved-answer-vote-answer-container {
   display: flex;
   align-items: center;
   gap: 15px;
@@ -48,19 +53,23 @@
   white-space: nowrap;
 }
 
-.saved-question-tag-author-container {
+.saved-question-tag-author-container,
+.saved-answer-question-title-container {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
-.saved-question-vote-answer-container .saved-question-answered {
+.saved-question-vote-answer-container .saved-question-answered,
+.saved-answer-vote-answer-container .saved-answer-commented {
   border: 1px solid rgb(0, 144, 0);
   border-radius: 0.25rem;
   color: rgb(0, 144, 0);
   padding: 2px 3px;
 }
 
-.saved-question-vote-answer-unsave-container {
+.saved-question-vote-answer-unsave-container,
+.saved-answer-vote-answer-unsave-container {
   display: flex;
   justify-content: space-between;
 }
@@ -71,20 +80,28 @@
   cursor: pointer;
 }
 
-.saved-question-counter {
+.saved-question-counter,
+.saved-answer-counter {
   margin-left: 30px;
 }
 
-.saved-question-vote-negative {
+.saved-question-vote-negative,
+.saved-answer-vote-negative {
   border: 1px solid red;
   border-radius: 0.25rem;
   color: red;
   padding: 2px 3px;
 }
 
-.saved-question-vote-positive {
+.saved-question-vote-positive,
+.saved-answer-vote-positive {
   border: 1px solid green;
   border-radius: 0.25rem;
   color: green;
   padding: 2px 3px;
+}
+
+.saved-answer-question-title {
+  text-decoration: none;
+  color: green;
 }

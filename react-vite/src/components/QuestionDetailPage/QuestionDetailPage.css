@@ -38,6 +38,10 @@
     font-size: 45px;
 }
 
+#vote-area>*:not(p) {
+    cursor: pointer;
+}
+
 #vote-area>p {
     font-size: 30px;
     margin: 5px 0;

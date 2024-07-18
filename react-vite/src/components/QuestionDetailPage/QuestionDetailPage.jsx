@@ -1,4 +1,4 @@
-import { thunkGetQuestionDetailsById, thunkPostAnswer } from '../../utils/store';
+import { thunkPostAnswer, thunkGetQuestionDetailsById, thunkSaveQuestion, thunkUnsaveQuestion } from '../../utils/store';
 import * as questionActions from '../../redux/questions';
 import * as commentActions from '../../redux/comments';
 import { useDispatch, useSelector } from 'react-redux';
@@ -45,6 +45,7 @@ export default function QuestionDetailPage() {
         })
     }, [dispatch, questionId])
 
+
     useEffect(() => {
     }, [question])
 
@@ -52,6 +53,14 @@ export default function QuestionDetailPage() {
         const data = { text: answerInput };
         dispatch(thunkPostAnswer(JSON.stringify(data), questionId))
         setAnswerInput('');
+
+    const handleSave = () => {
+        dispatch(thunkSaveQuestion(questionId));
+    }
+
+    const handleUnsave = () => {
+        dispatch(thunkUnsaveQuestion(questionId));
+
     }
 
     return (
@@ -78,8 +87,8 @@ export default function QuestionDetailPage() {
                                 <FaArrowAltCircleDown /> :
                                 <FaRegArrowAltCircleDown />}
                             {question?.user_save ?
-                                <FaBookmark /> :
-                                <FaRegBookmark />
+                                <FaBookmark onClick={handleUnsave} /> :
+                                <FaRegBookmark onClick={handleSave} />
                             }
                         </div>
                         <div id='question-details__container'>

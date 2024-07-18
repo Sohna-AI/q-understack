@@ -94,7 +94,8 @@ class Question(db.Model):
         }
 
     def to_dict_details(self):
-        user_id = current_user.get_id()
+        user_id = current_user.id
+
         up_votes = len([vote for vote in self.up_down_votes if vote.vote == True])
         down_votes = len([vote for vote in self.up_down_votes if vote.vote == False])
         num_votes = up_votes - down_votes
@@ -103,10 +104,10 @@ class Question(db.Model):
         if len(votes):
             user_vote = votes[0]['vote']
 
-        saves = [save for save in self.saves if save.user_id == user_id]
         user_save = False
-        if len(saves):
-            user_save = True
+        for save in self.saves:
+            if save.user_id == user_id:
+                user_save = True
 
         return {
             'id': self.id,
