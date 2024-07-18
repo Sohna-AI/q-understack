@@ -42,33 +42,36 @@ const separateData = (data) => async (dispatch) => {
             }
         })
     }
-    data.questions.forEach((question) => {
-        const newData = structuredClone(question);
-        for (let i = 0; i < newData.tags.length; i++) {
-            const tag = newData.tags[i]
-            if (ids.tag.indexOf(tag.id) < 0) {
-                ids.tag.push(tag.id);
-                separatedData.tags.push(structuredClone(tag));
+    const separateQuestions = (questions) => {
+        questions.forEach((question) => {
+            const newData = structuredClone(question);
+            for (let i = 0; i < newData.tags.length; i++) {
+                const tag = newData.tags[i]
+                if (ids.tag.indexOf(tag.id) < 0) {
+                    ids.tag.push(tag.id);
+                    separatedData.tags.push(structuredClone(tag));
+                }
+                newData.tags[i] = tag.id
             }
-            newData.tags[i] = tag.id
-        }
-        if (newData.author) separateAuthor(newData.author)
-        delete newData.author;
-        if (newData.comments) {
-            for (let i = 0; i < newData.comments.length; i++) {
-                separateComment(newData.comments[i]);
-                newData.comments[i] = newData.comments[i].id
+            if (newData.author) separateAuthor(newData.author)
+            delete newData.author;
+            if (newData.comments) {
+                for (let i = 0; i < newData.comments.length; i++) {
+                    separateComment(newData.comments[i]);
+                    newData.comments[i] = newData.comments[i].id
+                }
             }
-        }
-        if (newData.answers) {
-            separateAnswers(newData.answers)
-            for (let i = 0; i < newData.answers.length; i++) {
-                newData.answers[i] = newData.answers[i].id
+            if (newData.answers) {
+                separateAnswers(newData.answers)
+                for (let i = 0; i < newData.answers.length; i++) {
+                    newData.answers[i] = newData.answers[i].id
+                }
             }
-        }
-        separatedData.questions.push(newData);
-    });
-    if (data.answers) separateAnswers(data.answers)
+            separatedData.questions.push(newData);
+        });
+    }
+    if (data.questions) separateQuestions(data.questions);
+    if (data.answers) separateAnswers(data.answers);
     if (data.saves?.length) separatedData.saves = structuredClone(data.saves);
     if (separatedData.questions.length > 0) await dispatch(questionActions.setQuestions(separatedData.questions));
     if (separatedData.answers.length > 0) await dispatch(answerActions.setAnswers(separatedData.answers));
@@ -112,7 +115,7 @@ export const thunkCreateQuestion = (question) => async (dispatch) => {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: question
-        })
+        });
     if (response.ok) {
         const data = await response.json();
         return await dispatch(separateData({ questions: [data] }));
@@ -131,7 +134,7 @@ export const thunkUpdateQuestion = (question, questionId) => async (dispatch) =>
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: question
-        })
+        });
     if (response.ok) {
         const data = await response.json();
         return await dispatch(separateData({ questions: [data] }));
@@ -189,5 +192,37 @@ export const thunkUnsaveQuestion = (questionId) => async () => {
     });
     if (response.ok) {
         // dispatch(unsaveQuestion(questionId));
+    }
+};
+
+export const thunkPostAnswer = (answerData, questionId) => async (dispatch) => {
+    const response = await fetch(`/api/questions/${questionId}/answers`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: answerData
+    });
+    if (response.ok) {
+        return dispatch(thunkGetQuestionDetailsById(questionId))
+    } else if (response.status < 500) {
+        const errorMessages = await response.json();
+        return errorMessages;
+    } else {
+        return { server: 'Something went wrong. Please try again' };
+    }
+};
+
+export const thunkEditAnswer = (answerData, answerId, questionId) => async (dispatch) => {
+    const response = await fetch(`/api/answers/${answerId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: answerData
+    });
+    if (response.ok) {
+        return dispatch(thunkGetQuestionDetailsById(questionId))
+    } else if (response.status < 500) {
+        const errorMessages = await response.json();
+        return errorMessages;
+    } else {
+        return { server: 'Something went wrong. Please try again' };
     }
 };

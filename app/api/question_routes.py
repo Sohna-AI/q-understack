@@ -60,7 +60,7 @@ def create_question():
     Create a new question
     """
     tags = request.json['tags']
-    
+
     form = QuestionForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
@@ -168,6 +168,7 @@ def create_answer(question_id):
     """
     Create an answer for a question by id
     """
+    print(request.json)
     form = AnswerForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():

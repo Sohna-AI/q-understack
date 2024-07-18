@@ -111,3 +111,73 @@
 #post-answer__container>button:hover {
     background-color: var(--button-color-hover);
 }
+
+.user-answer-edit-button {
+    width: 45px;
+    height: 45px;
+    border-radius: 15px;
+    border: 3px solid rgb(255, 201, 201);
+    background-color: rgb(102, 102, 141);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.123);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+}
+
+.user-answer-edit-button::before {
+    content: '';
+    width: 200%;
+    height: 200%;
+    background-color: slateblue;
+    position: absolute;
+    z-index: 2;
+    transform: scale(0);
+    transition: all 0.3s;
+    border-radius: 50%;
+    filter: blur(10px);
+}
+
+.user-answer-edit-button:hover::before {
+    transform: scale(1);
+}
+
+.user-answer-edit-button:hover {
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.336);
+}
+
+.user-answer-edit-button svg {
+    height: 17px;
+    fill: white;
+    z-index: 3;
+    transition: all 0.2s;
+    transform-origin: bottom;
+}
+
+.user-answer-edit-button:hover svg {
+    transform: rotate(-15deg) translateX(5px);
+}
+
+.user-answer-edit-button::after {
+    content: '';
+    width: 19px;
+    height: 1.5px;
+    position: absolute;
+    bottom: 9px;
+    left: -5px;
+    background-color: white;
+    border-radius: 2px;
+    z-index: 3;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.5s ease-out;
+}
+
+.user-answer-edit-button:hover::after {
+    transform: scaleX(1);
+    left: 0px;
+    transform-origin: right;
+}

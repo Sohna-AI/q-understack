@@ -7,6 +7,7 @@ function OpenModalButton({
   onButtonClick, // optional: callback function that will be called once the button that opens the modal is clicked
   onModalClose, // optional: callback function that will be called once the modal is closed
   children,
+  editAnswer,
 }) {
   const { setModalContent, setOnModalClose } = useModal();
 
@@ -18,15 +19,20 @@ function OpenModalButton({
 
   return (
     <>
-      {buttonText && (
+      {(!editAnswer && buttonText) && (
         <button className="modal_button" onClick={onClick}>
           {buttonText}
         </button>
       )}
-      {children && (
+      {(!editAnswer && children) && (
         <button className="modal_button_delete" onClick={onClick}>
-        {children}
-      </button>
+          {children}
+        </button>
+      )}
+      {editAnswer && (
+        <button className="modal_button user-answer-edit-button" onClick={onClick}>
+          {buttonText}
+        </button>
       )}
     </>
   );
