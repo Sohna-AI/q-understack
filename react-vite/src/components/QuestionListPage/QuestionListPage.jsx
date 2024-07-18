@@ -1,9 +1,11 @@
+import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 import { thunkGetAllQuestions } from "../../utils/store";
-import { useDispatch, useSelector } from "react-redux";
 import * as questionActions from '../../redux/questions';
+import { useDispatch, useSelector } from "react-redux";
 import * as userActions from '../../redux/users';
 import * as tagActions from '../../redux/tags';
 import { useNavigate } from "react-router-dom";
+import LoginFormModal from "../LoginFormModal";
 import { useEffect, useState } from "react";
 import QuestionCard from "./QuestionCard";
 import './QuestionListPage.css';
@@ -11,6 +13,7 @@ import './QuestionListPage.css';
 // TODO Implement pagination
 function QuestionListPage({ homePage }) {
     const questions = useSelector(questionActions.selectQuestions);
+    const sessionUser = useSelector((state) => state.session.user);
     const users = useSelector(userActions.selectUsers);
     const tags = useSelector(tagActions.selectTags);
     const [isLoaded, setIsLoaded] = useState(false);
@@ -34,7 +37,10 @@ function QuestionListPage({ homePage }) {
                 <div id="question-list__header">
                     <h1>{homePage ? 'Top Questions' : 'All Questions'}</h1>
                     <div>
-                        <button onClick={handleClick}>Ask a Question</button>
+                        {sessionUser && <button onClick={handleClick}>Ask a Question</button>}
+                        {!sessionUser && <button className="landing-page-login-button">
+                            <OpenModalMenuItem itemText="Ask a Question" modalComponent={<LoginFormModal />} />
+                        </button>}
                     </div>
                 </div>
                 {isLoaded &&
