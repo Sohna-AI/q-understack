@@ -16,8 +16,8 @@ def user_saves():
     a list of question dictionaries and a list of answer dictionaries.
     """
     user_id = current_user.get_id()
-    questions = Save.query.filter(Save.user_id==user_id, Save.type=='question')
-    answers = Save.query.filter(Save.user_id==user_id, Save.type=='answer')
+    questions = Save.query.filter(Save.user_id==user_id, Save.type=='question').all()
+    answers = Save.query.filter(Save.user_id==user_id, Save.type=='answer').all()
     
     return { 'questions': [save.question.to_dict_details() for save in questions],
             'answers': [save.answer.to_dict() for save in answers],

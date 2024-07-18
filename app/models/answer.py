@@ -1,6 +1,6 @@
 from .db import add_prefix_for_prod, db, environment, SCHEMA
 from sqlalchemy.sql import func
-
+from flask_login import current_user
 
 class Answer(db.Model):
     __tablename__ = 'answers'
@@ -40,6 +40,9 @@ class Answer(db.Model):
             cascade='all, delete-orphan')
 
     def to_dict(self):
+        up_votes = len([vote for vote in self.up_down_votes if vote.vote == True])
+        down_votes = len([vote for vote in self.up_down_votes if vote.vote == False])
+        num_votes = up_votes - down_votes
         return {
             'id': self.id,
             'user_id': self.user_id,
@@ -47,6 +50,7 @@ class Answer(db.Model):
             'text': self.text,
             'question': self.question.to_dict_list_page(),
             'comments': [comment.to_dict() for comment in self.comments],
+            'num_votes': num_votes,
             'author': self.user.to_dict(),
             'created_at': self.created_at,
             'updated_at': self.updated_at,
@@ -54,13 +58,25 @@ class Answer(db.Model):
         }
 
     def to_dict_no_question(self):
+        user_id = current_user.id
+        
+        up_votes = len([vote for vote in self.up_down_votes if vote.vote == True])
+        down_votes = len([vote for vote in self.up_down_votes if vote.vote == False])
+        num_votes = up_votes - down_votes
+        
+        user_save = False
+        for save in self.saves:
+            if save.user_id == user_id:
+                user_save = True
         return {
             'id': self.id,
             'user_id': self.user_id,
             'question_id': self.question_id,
             'comments': [comment.to_dict() for comment in self.comments],
+            'num_votes': num_votes,
             'text': self.text,
             'created_at': self.created_at,
             'updated_at': self.updated_at,
-            'user': self.user.to_dict()
+            'user': self.user.to_dict(),
+            'user_save': user_save
         }

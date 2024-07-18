@@ -10,57 +10,57 @@ import UserQuestions from '../components/UserQuestions/UserQuestions';
 import UserQuestionSaveNav from '../components/UserQuestionSavePage/UserQuestionSaveNav';
 
 export const router = createBrowserRouter([
-    {
-        element: <Layout />,
+  {
+    element: <Layout />,
+    children: [
+      {
+        path: '/',
+        element: <LandingPage />,
+      },
+      {
+        path: 'questions',
         children: [
-            {
-                path: '/',
-                element: <LandingPage />,
-            },
-            {
-                path: 'questions',
-                children: [
-                    {
-                        index: true,
-                        element: <QuestionListPage />,
-                    },
-                    {
-                        path: ':questionId',
-                        children: [
-                            {
-                                path: '',
-                                element: <QuestionDetailPage />,
-                            },
-                            {
-                                path: 'edit',
-                                element: <QuestionForm edit={true} />
-                            }
-                        ]
-                    },
-                    {
-                        path: 'new',
-                        element: <QuestionForm />
-                    }
-                ]
-            },
-            {
-                path: 'user',
-                element: <UserQuestionSaveNav />,
-                children: [
-                    {
-                        path: 'saves',
-                        element: <SavesPage />,
-                    },
-                    {
-                        path: 'questions',
-                        element: <UserQuestions />,
-                    },
-                ],
-            },
-            {
-                path: '*',
-                element: <Error />
-            }
-        ]
-    },
+          {
+            index: true,
+            element: <QuestionListPage />,
+          },
+          {
+            path: ':questionId',
+            children: [
+              {
+                path: '',
+                element: <QuestionDetailPage />,
+              },
+              {
+                path: 'edit',
+                element: <QuestionForm edit={true} />,
+              },
+            ],
+          },
+          {
+            path: 'new',
+            element: <QuestionForm />,
+          },
+        ],
+      },
+      {
+        path: 'user',
+        element: <UserQuestionSaveNav />,
+        children: [
+          {
+            path: 'saves',
+            element: <SavesPage />,
+          },
+          {
+            path: 'questions',
+            element: <UserQuestions />,
+          },
+        ],
+      },
+      {
+        path: '*',
+        element: <Error />,
+      },
+    ],
+  },
 ]);

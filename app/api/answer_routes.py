@@ -31,7 +31,7 @@ def edit_answer(answer_id):
         return answer.to_dict()
     return form.errors, 400
 
-@answer_routes.route('/<int:answer_id', methods=['DELETE'])
+@answer_routes.route('/<int:answer_id>', methods=['DELETE'])
 @login_required
 def delete_answer(answer_id):
     """
@@ -82,7 +82,7 @@ def create_comment_answer(answer_id):
     return form.errors, 400
 
 
-#* Save related question routes ------------------------------------------------------------------
+#* Save related answer routes ------------------------------------------------------------------
 @answer_routes.route('/<int:answer_id>/save', methods=['POST'])
 @login_required
 def save_answer(answer_id):
@@ -113,7 +113,7 @@ def remove_save_answer(answer_id):
     return {'message': 'Saved answer removed successfully'}
 
 
-#* Follow related question routes ------------------------------------------------------------------
+#* Follow related answer routes ------------------------------------------------------------------
 @answer_routes.route('/<int:answer_id>/follow', methods=['POST'])
 @login_required
 def follow_answer(answer_id):
