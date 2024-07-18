@@ -16,7 +16,7 @@ const DeleteCommentModal = ({ commentId }) => {
       <div>
         <div className="delete-comment-modal-container">
           <h1 className="title">Confirm Unsave</h1>
-          <h3 className="subtitle">Are you sure you want to unsave this answer?</h3>
+          <h3 className="subtitle">Are you sure you want to unsave this comment?</h3>
           <div className="delete-cancel-button-container">
             <div className="delete-comment-button-container">
               <button onClick={handleDelete} className="delete-comment-button">
