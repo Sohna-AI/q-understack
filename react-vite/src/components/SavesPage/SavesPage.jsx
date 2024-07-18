@@ -13,7 +13,7 @@ import UnsaveQuestionModal from '../UnsaveQuestionModal/UnsaveQuestionModal.jsx'
 import DeleteAnswerModal from '../DeleteAnswerModal/DeleteAnswerModal.jsx';
 
 // TODO Implement pagination
-const SavedQuestions = () => {
+const SavesPage = () => {
   const questions = useSelector(questionActions.selectQuestions);
   const sessionUser = useSelector((state) => state.session.user);
   const answers = useSelector(answerActions.selectAnswers);
@@ -194,4 +194,4 @@ const SavedQuestions = () => {
   );
 };
 
-export default SavedQuestions;
+export default SavesPage;
