@@ -25,7 +25,7 @@ export const selectSaves = createSelector([selectSavesObj], (selectSavesObj) => 
 
 const initialState = { data: { questions: {}, answers: {} }, allIds: { questions: [], answers: [] } };
 
-function saveReducer(state = initialState, action) {
+function saveReducer(state = structuredClone(initialState), action) {
   switch (action.type) {
     case SET_SAVE: {
       const newState = structuredClone(state);
@@ -44,7 +44,7 @@ function saveReducer(state = initialState, action) {
     }
 
     case SET_SAVES: {
-      const newState = structuredClone(state);
+      const newState = structuredClone(initialState);
       action.saves.forEach((type) => {
         type.forEach((save) => {
           if (save.question) {

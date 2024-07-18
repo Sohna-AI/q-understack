@@ -233,11 +233,7 @@ export const thunkUnsaveAnswer = (answerId, savesPage) => async (dispatch) => {
   });
 
   if (response.ok) {
-    await dispatch(answerActions.unsaveAnswer(answerId));
-    if (savesPage) {
-      await dispatch(answerActions.deleteAnswer(answerId));
-      window.location.reload();
-    }
+    await dispatch(thunkGetSaves());
   } else if (response.status < 500) {
     const errorMessages = await response.json();
     return errorMessages;

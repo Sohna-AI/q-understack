@@ -31,9 +31,7 @@ const SavedQuestions = () => {
     }
   }, [dispatch, sessionUser]);
 
-  const savedSaveIds = saves.allIds?.answers || [];
-
-  const savedAnswerIds = savedSaveIds.map((saveId) => saves.data.answers[saveId]?.answer);
+  useEffect(() => {}, [answers]);
 
   return (
     <div>
@@ -101,35 +99,51 @@ const SavedQuestions = () => {
             )}
             {isLoaded && (
               <>
-                {savedAnswerIds.length ? (
+                {saves.allIds.answers.length > 0 ? (
                   <div>
                     <h3 className="saved-answer-counter">
                       {saves.allIds.answers.length} saved{' '}
                       {saves.allIds.answers.length === 1 ? 'answer' : 'answers'}
                     </h3>
-                    {savedAnswerIds.map((id) => {
+                    {saves.allIds.answers.map((id) => {
                       return (
                         <div className="saved-answer-container" key={id}>
                           <div className="saved-answer-vote-answer-unsave-container">
                             <div className="saved-answer-vote-answer-container">
                               <div
                                 className={
-                                  answers.data[id]?.num_votes <= 0
+                                  answers.data[saves.data.answers[id].answer]?.num_votes <= 0
                                     ? 'saved-answer-vote-negative'
                                     : 'saved-answer-vote-positive'
                                 }
                               >
-                                <span style={{ paddingRight: '3px' }}>{answers.data[id]?.num_votes}</span>
-                                {answers.data[id]?.num_votes <= 1 ? 'vote' : 'votes'}
+                                <span style={{ paddingRight: '3px' }}>
+                                  {answers.data[saves.data.answers[id].answer]?.num_votes}
+                                </span>
+                                {answers.data[saves.data.answers[id].answer]?.num_votes <= 1
+                                  ? 'vote'
+                                  : 'votes'}
                               </div>
-                              <p className={answers.data[id]?.comments > 0 ? 'saved-answer-commented' : ''}>
-                                {answers.data[id]?.comments}{' '}
-                                {answers.data[id]?.comments === 1 ? 'Comment' : 'Comments'}
+                              <p
+                                className={
+                                  answers.data[saves.data.answers[id].answer]?.comments > 0
+                                    ? 'saved-answer-commented'
+                                    : ''
+                                }
+                              >
+                                {answers.data[saves.data.answers[id].answer]?.comments}{' '}
+                                {answers.data[saves.data.answers[id].answer]?.comments === 1
+                                  ? 'Comment'
+                                  : 'Comments'}
                               </p>
                             </div>
                             <div>
                               <OpenModalButton
-                                modalComponent={<DeleteAnswerModal answerId={answers.data[id]?.id} />}
+                                modalComponent={
+                                  <DeleteAnswerModal
+                                    answerId={answers.data[saves.data.answers[id].answer]?.id}
+                                  />
+                                }
                               >
                                 <svg viewBox="0 0 384 512" height="1em" xmlns="http://www.w3.org/2000/svg">
                                   <path d="M0 48C0 21.5 21.5 0 48 0l0 48V441.4l130.1-92.9c8.3-6 19.6-6 27.9 0L336 441.4V48H48V0H336c26.5 0 48 21.5 48 48V488c0 9-5 17.2-13 21.3s-17.6 3.4-24.9-1.8L192 397.5 37.9 507.5c-7.3 5.2-16.9 5.9-24.9 1.8S0 497 0 488V48z"></path>
@@ -138,22 +152,27 @@ const SavedQuestions = () => {
                             </div>
                           </div>
                           <div className="saved-answer-title-tag-container">
-                            <NavLink to={`/answers/${answers.data[id]?.id}`} className="saved-answer-title">
-                              {answers.data[id]?.text}
+                            <NavLink
+                              to={`/answers/${answers.data[saves.data.answers[id].answer]?.id}`}
+                              className="saved-answer-title"
+                            >
+                              {answers.data[saves.data.answers[id].answer]?.text}
                             </NavLink>
                             <div className="saved-answer-title-author-container">
                               <div className="saved-answer-question-title-container">
                                 <div>
                                   <div>Question:</div>
                                   <NavLink
-                                    to={`/questions/${answers.data[id]?.question.id}`}
+                                    to={`/questions/${
+                                      answers.data[saves.data.answers[id].answer]?.question_id
+                                    }`}
                                     className="saved-answer-question-title"
                                   >
-                                    {answers.data[id]?.question.title}
+                                    {answers.data[saves.data.answers[id].answer]?.question.title}
                                   </NavLink>
                                 </div>
                                 <div className="saved-answer-author">
-                                  <div>{users.data[answers.data[id]?.user_id]?.username}</div>
+                                  <div>{answers.data[saves.data.answers[id].answer]?.user.username}</div>
                                 </div>
                               </div>
                             </div>
