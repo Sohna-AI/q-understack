@@ -58,12 +58,14 @@ class Answer(db.Model):
         }
 
     def to_dict_no_question(self):
-        user_id = current_user.id
-        
+        user_id = None
+        if current_user.is_active:
+            user_id = current_user.id
+
         up_votes = len([vote for vote in self.up_down_votes if vote.vote == True])
         down_votes = len([vote for vote in self.up_down_votes if vote.vote == False])
         num_votes = up_votes - down_votes
-        
+
         user_save = False
         for save in self.saves:
             if save.user_id == user_id:

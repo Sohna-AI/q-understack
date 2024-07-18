@@ -94,7 +94,9 @@ class Question(db.Model):
         }
 
     def to_dict_details(self):
-        user_id = current_user.id
+        user_id = None
+        if current_user.is_active:
+            user_id = current_user.id
 
         up_votes = len([vote for vote in self.up_down_votes if vote.vote == True])
         down_votes = len([vote for vote in self.up_down_votes if vote.vote == False])

@@ -53,7 +53,7 @@ export default function QuestionDetailPage() {
     });
   }, [dispatch, questionId]);
 
-  useEffect(() => {}, [question]);
+  useEffect(() => { }, [question]);
 
   const handlePostAnswer = async () => {
     const data = { text: answerInput };
@@ -137,7 +137,7 @@ export default function QuestionDetailPage() {
                     <p>
                       {answers?.data[answerId]?.text} - {answers?.data[answerId]?.user.username}
                     </p>
-                    {sessionUser.id === answers?.data[answerId]?.user_id && (
+                    {sessionUser?.id === answers?.data[answerId]?.user_id && (
                       <OpenModalButton
                         buttonText={
                           <svg height="1em" viewBox="0 0 512 512">
