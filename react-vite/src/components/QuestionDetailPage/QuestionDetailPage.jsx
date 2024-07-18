@@ -55,7 +55,7 @@ export default function QuestionDetailPage() {
 
   useEffect(() => { }, [question]);
 
-  const handlePostAnswer = async () => {
+  const handlePostAnswer = () => {
     const data = { text: answerInput };
     dispatch(thunkPostAnswer(JSON.stringify(data), questionId));
     setAnswerInput('');

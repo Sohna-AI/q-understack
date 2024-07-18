@@ -295,3 +295,17 @@ export const thunkEditAnswer = (answerData, answerId, questionId) => async (disp
         return { server: 'Something went wrong. Please try again' };
     }
 };
+
+export const thunkDeleteAnswer = (answerId, questionId) => async (dispatch) => {
+    const response = await fetch(`/api/answers/${answerId}`, {
+        method: 'DELETE'
+    });
+    if (response.ok) {
+        dispatch(thunkGetQuestionDetailsById(questionId))
+    } else if (response.status < 500) {
+        const errorMessages = await response.json();
+        return errorMessages;
+    } else {
+        return { server: 'Something went wrong. Please try again' };
+    }
+}
