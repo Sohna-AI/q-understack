@@ -17,8 +17,6 @@ def edit_answer(answer_id):
 
     if not answer:
         return {'errors': {'Answer could not be found'}}, 404
-    print('current_user:', current_user.id)
-    print('answer user:', answer.user_id)
     if answer.user_id != current_user.id:
         return {'error': {'message': 'Unauthorized'}}, 401
 
