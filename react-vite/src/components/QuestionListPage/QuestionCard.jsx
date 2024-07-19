@@ -1,13 +1,11 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
-export default function QuestionCard({ id, title, details, tags, num_votes,
-    numAnswers, author, homePage }) {
-
+export default function QuestionCard({ id, title, details, tags, num_votes, numAnswers, author, homePage }) {
     const navigate = useNavigate();
 
     const handleClick = () => {
-        navigate(`/questions/${id}`)
-    }
+        navigate(`/questions/${id}`);
+    };
 
     return (
         <div className="question-card">
@@ -26,11 +24,11 @@ export default function QuestionCard({ id, title, details, tags, num_votes,
                             <div key={tag.id}>
                                 <p className="tag">{tag.tag_name}</p>
                             </div>
-                        )
+                        );
                     })}
                 </div>
-                <p className="author">{author.username}</p>
+                <p className="author">{author}</p>
             </div>
         </div>
-    )
+    );
 }

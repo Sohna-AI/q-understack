@@ -1,7 +1,7 @@
 from flask import Blueprint, request
 from datetime import datetime
 from flask_login import current_user, login_required
-from app.models import Question, db, Save, Answer, Comment, Follow
+from app.models import Question, db, Save, Answer, Tag, Comment, Follow
 from app.forms.create_question_form import QuestionForm
 from app.forms.create_answer_form import AnswerForm
 from app.forms.create_comment_form import CommentForm
@@ -50,16 +50,16 @@ def question_details(question_id):
 
     if not question:
         return {'errors': {'message': 'Question could not be found'}}, 404
-
     return question.to_dict_details()
 
 
-@question_routes.route('/', methods=['POST'])
+@question_routes.route('', methods=['POST'])
 @login_required
 def create_question():
     """
     Create a new question
     """
+    tags = request.json['tags']
 
     form = QuestionForm()
     form['csrf_token'].data = request.cookies['csrf_token']
@@ -70,20 +70,42 @@ def create_question():
             details = form.details.data,
             expectation = form.expectation.data
         )
+        for tag in tags:
+            db_tag = Tag.query.filter(Tag.tag_name==tag).first()
+            if db_tag:
+                new_question.tags.append(db_tag)
+            else:
+                new_tag = Tag(tag_name=tag)
+                new_question.tags.append(new_tag)
 
         db.session.add(new_question)
         db.session.commit()
-        return new_question.to_dict(), 201
+        return new_question.to_dict_details(), 201
     return form.errors, 400
 
 
-@question_routes.route('/<int:question_id>', methods=['PATCH', 'PUT'])
+@question_routes.route('/<int:question_id>', methods=['PUT'])
 @login_required
 def update_question(question_id):
     """
     Update a question by question_id
     """
     question = Question.query.get(question_id)
+    tags = request.json['tags']
+
+    if len(tags) > 5:
+        return {'errors': {'message': 'Too many tags'}}, 500
+
+    for tag in question.tags:
+        if not tag.tag_name in tags:
+            question.tags.remove(tag)
+    new_tags = []
+    for tag in tags:
+        if not tag in question.tags:
+            new_tags.append(tag)
+
+    if (len(new_tags) + len(question.tags)) > 5:
+        return {'errors': {'message': 'Too many tags'}}, 500
 
     if not question:
         return {'errors': {'message': 'Question could not be found'}}, 404
@@ -98,6 +120,13 @@ def update_question(question_id):
         question.details = form.details.data
         question.expectation = form.expectation.data
         question.updated_at = datetime.now()
+        for tag in new_tags:
+            db_tag = Tag.query.filter(Tag.tag_name==tag).first()
+            if db_tag:
+                question.tags.append(db_tag)
+            else:
+                new_tag = Tag(tag_name=tag)
+                question.tags.append(new_tag)
 
         db.session.commit()
         return question.to_dict()

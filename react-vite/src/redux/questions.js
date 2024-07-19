@@ -1,62 +1,95 @@
+import { createSelector } from '@reduxjs/toolkit';
 
+const SET_QUESTION = 'questions/setQuestion';
 const SET_QUESTIONS = 'questions/setQuestions';
-const SET_CURRENT_QUESTION = 'question/setCurrentQuestion';
+const DELETE_QUESTION = 'questions/deleteQuestion';
+const SAVE_QUESTION = 'questions/saveQuestion';
+const UNSAVE_QUESTION = 'questions/unsaveQuestion';
 
-const setQuestions = (questions) => ({
+export const setQuestion = (question) => ({
+    type: SET_QUESTION,
+    question,
+});
+
+export const setQuestions = (questions) => ({
     type: SET_QUESTIONS,
-    payload: questions
+    questions,
+});
+
+export const deleteQuestion = (questionId) => ({
+    type: DELETE_QUESTION,
+    questionId,
+});
+
+export const saveQuestion = (questionId) => ({
+    type: SAVE_QUESTION,
+    questionId
 })
 
-const setCurrentQuestion = (question) => ({
-    type: SET_CURRENT_QUESTION,
-    payload: question
+export const unsaveQuestion = (questionId) => ({
+    type: UNSAVE_QUESTION,
+    questionId
 })
 
-export const thunkGetAllQuestions = () => async (dispatch) => {
-    const response = await fetch('/api/questions');
-    if (response.ok) {
-        const data = await response.json();
-        dispatch(setQuestions(data))
-    } else if (response.status < 500) {
-        const errorMessages = await response.json();
-        return errorMessages;
-    } else {
-        return { server: 'Something went wrong. Please try again' }
-    }
-}
+const selectQuestionsObj = (state) => state.questions;
 
-export const thunkGetQuestionDetailsById = (questionId) => async (dispatch) => {
-    const response = await fetch(`/api/questions/${questionId}`);
-    if (response.ok) {
-        const data = await response.json();
-        dispatch(setCurrentQuestion(data))
-    } else if (response.status < 500) {
-        const errorMessages = await response.json();
-        return errorMessages;
-    } else {
-        return { server: 'Something went wrong. Please try again' }
-    }
-}
+export const selectQuestions = createSelector([selectQuestionsObj], (selectQuestionsObj) => ({ ...selectQuestionsObj }))
 
-const initialState = { questions: {} }
+const initialState = { data: {}, allIds: [] };
 
-function questionReducer(state = initialState, action) {
+function questionReducer(state = structuredClone(initialState), action) {
     switch (action.type) {
-        case SET_QUESTIONS:
-            return { ...state, questions: action.payload.questions }
 
-        case SET_CURRENT_QUESTION:
-            return {
-                ...state, questions: {
-                    ...state.questions,
-                    [action.payload.id]:
-                        { ...state.questions[action.payload.id], ...action.payload }
-                }
+        case SET_QUESTION: {
+            const newState = structuredClone(state);
+            newState.data[action.question.id] = structuredClone(action.question);
+            if (newState.allIds.indexOf(action.question.id) < 0) {
+                newState.allIds.push(action.question.id);
             }
+            return newState;
+        }
+
+        case SET_QUESTIONS: {
+            const newState = structuredClone(initialState);
+            action.questions.forEach(question => {
+                newState.data[question.id] = structuredClone(question);
+                if (newState.allIds.indexOf(question.id) < 0) {
+                    newState.allIds.push(question.id)
+                }
+            })
+            return newState;
+        }
+
+        case DELETE_QUESTION: {
+            const newState = structuredClone(state);
+            if (newState.data[action.questionId]) {
+                delete newState.data[action.questionId];
+            }
+            if (newState.allIds.indexOf(action.questionId > -1)) {
+                newState.allIds.splice(newState.allIds.indexOf(action.questionId > -1), 1);
+            }
+            return newState;
+        }
+
+        case SAVE_QUESTION: {
+            const newState = structuredClone(state);
+            if (newState.data[action.questionId]) {
+                newState.data[action.questionId].user_save = true;
+            }
+            return newState;
+        }
+
+        case UNSAVE_QUESTION: {
+            const newState = structuredClone(state);
+            if (newState.data[action.questionId]) {
+                newState.data[action.questionId].user_save = false;
+            }
+            return newState;
+        }
 
         default:
             return state;
     }
 }
 
-export default questionReducer
+export default questionReducer;

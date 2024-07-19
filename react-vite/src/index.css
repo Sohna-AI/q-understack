@@ -16,7 +16,6 @@
         'Helvetica Neue',
         sans-serif;
     --font-color: rgba(255, 255, 2355, 0.87);
-    color-scheme: light dark;
     color: var(--font-color);
     background-color: #1F1F1F;
     font-family: var(--font-family);
@@ -41,13 +40,28 @@
     width: var(--group-card-width) + 200px;
 }
 
-@media (prefers-color-scheme: light) {
-    :root {
-        color: black;
-        background-color: #ffffff;
-    }
+.flex {
+    display: flex;
+}
 
-    button {
-        color: rgba(255, 255, 255, 0.87);
-    }
+.column {
+    flex-direction: column;
+}
+
+.no-margin {
+    margin: 0;
+}
+
+.gap-15 {
+    gap: 15px;
+}
+
+.button {
+    background-color: var(--button-color);
+    color: var(--font-color);
+}
+
+.button:hover {
+    background-color: var(--button-color-hover);
+    cursor: pointer;
 }

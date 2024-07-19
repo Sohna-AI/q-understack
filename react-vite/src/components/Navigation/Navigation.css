@@ -19,6 +19,11 @@
     cursor: pointer;
 }
 
+#logo>img {
+    width: 70px;
+    height: 50px;
+}
+
 #search_bar {
     height: 30px;
     width: 30vw;
@@ -32,13 +37,14 @@
 }
 
 #profile_button {
+    color: var(--font-color);
     font-size: 20px;
     background-color: var(--button-color);
     display: flex;
     align-items: center;
     gap: 5px;
     border: none;
-    border-radius: .25rem;
+    border-radius: 0.25rem;
     padding: 5px 10px;
     cursor: pointer;
 }
@@ -58,7 +64,7 @@
 }
 
 .profile-dropdown {
-    background-color: #1F1F1F;
+    background-color: #1f1f1f;
     display: flex;
     flex-direction: column;
     position: absolute;
@@ -74,7 +80,7 @@
 #logout_button {
     background-color: var(--button-color);
     border: none;
-    border-radius: .25rem;
+    border-radius: 0.25rem;
     cursor: pointer;
 }
 
@@ -88,10 +94,4 @@
 
 .modal_menu_item:hover {
     color: var(--link-color);
-}
-
-@media (prefers-color-scheme: light) {
-    .profile-dropdown {
-        background-color: #ffffff;
-    }
 }

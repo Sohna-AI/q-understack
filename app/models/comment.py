@@ -51,6 +51,7 @@ class Comment(db.Model):
         return {
             'id': self.id,
             'user_id': self.user_id,
+            'author': self.user.to_dict(),
             'type_id': self.type_id,
             'type': self.type,
             'comment': self.comment,

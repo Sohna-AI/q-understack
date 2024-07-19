@@ -192,10 +192,7 @@ user_questions = [
 def seed_questions():
     for info in user_questions:
         username, questions = info.values()
-        # print('username', username)
-        # print('questions', questions)
         user = User.query.filter(User.username == username).first()
-        # print('----', user)
 
         for questionInfo in questions:
             question = Question(
