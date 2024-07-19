@@ -68,17 +68,3 @@ input {
     text-underline-offset: 2px;
     cursor: pointer;
 }
-
-@media (prefers-color-scheme: light) {
-    .login-signup-form {
-        background-color: white;
-    }
-
-    input {
-        background-color: #ffffff;
-    }
-
-    .login-signup-form>button {
-        color: white;
-    }
-}

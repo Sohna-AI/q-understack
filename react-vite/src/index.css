@@ -16,7 +16,6 @@
         'Helvetica Neue',
         sans-serif;
     --font-color: rgba(255, 255, 2355, 0.87);
-    color-scheme: light dark;
     color: var(--font-color);
     background-color: #1F1F1F;
     font-family: var(--font-family);
@@ -64,15 +63,4 @@
 .button:hover {
     background-color: var(--button-color-hover);
     cursor: pointer;
-}
-
-@media (prefers-color-scheme: light) {
-    :root {
-        color: black;
-        background-color: #ffffff;
-    }
-
-    button {
-        color: rgba(255, 255, 255, 0.87);
-    }
 }
