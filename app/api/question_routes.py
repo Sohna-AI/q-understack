@@ -80,11 +80,11 @@ def create_question():
 
         db.session.add(new_question)
         db.session.commit()
-        return new_question.to_dict(), 201
+        return new_question.to_dict_details(), 201
     return form.errors, 400
 
 
-@question_routes.route('/<int:question_id>', methods=['PATCH', 'PUT'])
+@question_routes.route('/<int:question_id>', methods=['PUT'])
 @login_required
 def update_question(question_id):
     """

@@ -54,7 +54,7 @@ export default function QuestionDetailPage() {
     });
   }, [dispatch, questionId]);
 
-  useEffect(() => { }, [question]);
+  // useEffect(() => { }, [question]);
 
   const handlePostAnswer = () => {
     const data = { text: answerInput };

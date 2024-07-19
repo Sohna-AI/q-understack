@@ -7,7 +7,7 @@ from app.forms.create_answer_form import AnswerForm
 
 answer_routes = Blueprint('answers', __name__)
 
-@answer_routes.route('/<int:answer_id>', methods=['PATCH', 'PUT'])
+@answer_routes.route('/<int:answer_id>', methods=['PUT'])
 @login_required
 def edit_answer(answer_id):
     """

@@ -7,7 +7,7 @@ import './QuestionForm.css';
 
 export default function QuestionForm({ edit }) {
     const editId = useParams()['questionId'];
-    const questions = useSelector(questionActions.selectQuestions).data[editId];
+    const questions = useSelector(questionActions.selectQuestions);
     const [expectations, setExpectations] = useState('');
     const [isCreated, setIsCreated] = useState(false);
     const [tagInput, setTagInput] = useState('');
@@ -22,6 +22,7 @@ export default function QuestionForm({ edit }) {
     useEffect(() => {
         if (edit) {
             dispatch(thunkGetQuestionDetailsById(+editId)).then((data) => {
+                console.log(data)
                 const tags = [];
                 for (let tag of data.tags) {
                     tags.push(tag.tag_name)
@@ -36,7 +37,8 @@ export default function QuestionForm({ edit }) {
 
     useEffect(() => {
         if (isCreated && !edit) {
-            const id = questions.data[questions.allIds[questions.allIds.length - 1]].id
+            console.log("++++++++++++++++", questions)
+            const id = questions?.data[questions.allIds[questions.allIds.length - 1]].id
             navigate(`/questions/${id}`)
         } else if (isCreated) {
             navigate(`/questions/${editId}`)
@@ -78,6 +80,7 @@ export default function QuestionForm({ edit }) {
             await dispatch(thunkUpdateQuestion(JSON.stringify(data), editId))
                 .then(() => setIsCreated(true))
         } else {
+            console.log('hi')
             await dispatch(thunkCreateQuestion(JSON.stringify(data)))
                 .then(() => setIsCreated(true))
         }
