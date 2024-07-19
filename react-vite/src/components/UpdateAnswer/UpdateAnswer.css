@@ -1,0 +1,12 @@
+.main-container {
+    padding: 10px;
+    gap: 10px;
+}
+
+input {
+    color: var(--font-color);
+}
+
+button {
+    cursor: pointer;
+}

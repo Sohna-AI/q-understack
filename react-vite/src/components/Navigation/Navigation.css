@@ -37,6 +37,7 @@
 }
 
 #profile_button {
+    color: var(--font-color);
     font-size: 20px;
     background-color: var(--button-color);
     display: flex;

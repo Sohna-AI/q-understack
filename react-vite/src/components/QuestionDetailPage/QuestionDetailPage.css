@@ -20,6 +20,10 @@
     cursor: pointer;
 }
 
+.landing-page-login-button {
+    color: var(--font-color);
+}
+
 #title__container>button:hover {
     background-color: var(--button-color-hover);
 }
@@ -184,4 +188,9 @@
     transform: scaleX(1);
     left: 0px;
     transform-origin: right;
+}
+
+textarea {
+    color: var(--font-color);
+    background-color: #080808;
 }

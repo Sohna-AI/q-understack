@@ -2,6 +2,7 @@ import { thunkDeleteAnswer, thunkEditAnswer } from "../../utils/store";
 import { useModal } from "../../context/Modal";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
+import './UpdateAnswer.css';
 
 export default function UpdateAnswerModal({ answer }) {
     const [textInput, setTextInput] = useState(answer.text);
@@ -26,7 +27,7 @@ export default function UpdateAnswerModal({ answer }) {
         }
     };
 
-    return (<div className="flex column">
+    return (<div className="flex column main-container">
         <h1>Update your answer</h1>
         <label>Text</label>
         <input type="text"

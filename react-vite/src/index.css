@@ -58,6 +58,7 @@
 
 .button {
     background-color: var(--button-color);
+    color: var(--font-color);
 }
 
 .button:hover {
