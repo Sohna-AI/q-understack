@@ -73,13 +73,12 @@ const separateData = (data) => async (dispatch) => {
   if (data.questions) separateQuestions(data.questions);
   if (data.answers) separateAnswers(data.answers);
   if (data.saves?.length) separatedData.saves = structuredClone(data.saves);
-  if (separatedData.questions.length > 0)
-    await dispatch(questionActions.setQuestions(separatedData.questions));
-  if (separatedData.answers.length > 0) await dispatch(answerActions.setAnswers(separatedData.answers));
-  if (separatedData.comments.length > 0) await dispatch(commentActions.setComments(separatedData.comments));
-  if (separatedData.users.length > 0) await dispatch(userActions.setUsers(separatedData.users));
-  if (separatedData.saves.length > 0) await dispatch(saveActions.setSaves(separatedData.saves));
-  if (separatedData.tags.length > 0) await dispatch(tagActions.setTags(separatedData.tags));
+  if (separatedData.questions) dispatch(questionActions.setQuestions(separatedData.questions));
+  if (separatedData.answers) dispatch(answerActions.setAnswers(separatedData.answers));
+  if (separatedData.comments.length > 0) dispatch(commentActions.setComments(separatedData.comments));
+  if (separatedData.users.length > 0) dispatch(userActions.setUsers(separatedData.users));
+  if (separatedData.saves) dispatch(saveActions.setSaves(separatedData.saves));
+  if (separatedData.tags.length > 0) dispatch(tagActions.setTags(separatedData.tags));
 };
 
 export const thunkGetAllQuestions = () => async (dispatch) => {
