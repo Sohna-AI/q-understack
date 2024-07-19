@@ -26,6 +26,7 @@ import {
   FaRegBookmark,
 } from 'react-icons/fa';
 import UpdateAnswerModal from '../UpdateAnswer/UpdateAnswer';
+import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
 
 export default function QuestionDetailPage() {
   const { questionId } = useParams();
@@ -79,9 +80,12 @@ export default function QuestionDetailPage() {
               {/* TODO fix date format */}
               <p>Asked {date}</p>
             </div>
-            <NavLink to="/questions/new">
-              <button>Ask Question</button>
-            </NavLink>
+            {sessionUser && <NavLink to="/questions/new">
+              <button className="landing-page-login-button">Ask a Question</button>
+            </NavLink>}
+            {!sessionUser && <button className="landing-page-login-button">
+              <OpenModalMenuItem itemText="Ask a Question" modalComponent={<LoginFormModal />} />
+            </button>}
           </div>
           <div id="main-content">
             <div id="vote-area">
