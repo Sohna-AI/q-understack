@@ -97,7 +97,6 @@ def update_question(question_id):
         return {'errors': {'message': 'Too many tags'}}, 500
 
     for tag in question.tags:
-        print(tag.tag_name)
         if not tag.tag_name in tags:
             question.tags.remove(tag)
     new_tags = []
