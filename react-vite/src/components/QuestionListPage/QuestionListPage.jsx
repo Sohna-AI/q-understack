@@ -47,18 +47,19 @@ function QuestionListPage({ homePage }) {
                     <>
                         <div>
                             {
-                                questions.allIds?.map((qId) => {
+                                questions.allIds?.map((questionId) => {
+                                    const question = questions.data[questionId]
                                     return (
                                         <QuestionCard
-                                            key={qId}
-                                            id={qId}
-                                            title={questions.data[qId].title}
-                                            details={questions.data[qId].details}
-                                            tags={questions.data[qId].tags.map((tagId) => tags.data[tagId])}
-                                            num_votes={questions.data[qId].num_votes}
-                                            numAnswers={questions.data[qId].num_answers}
-                                            author={users.data[questions.data[qId].user_id].username}
-                                            userId={questions.data[qId].user_id}
+                                            key={questionId}
+                                            id={questionId}
+                                            title={question.title}
+                                            details={question.details}
+                                            tags={question.tags.map((tagId) => tags.data[tagId])}
+                                            num_votes={question.num_votes}
+                                            numAnswers={question.num_answers}
+                                            author={users.data[question.user_id].username}
+                                            userId={question.user_id}
                                             homePage={homePage}
                                         />
                                     )
