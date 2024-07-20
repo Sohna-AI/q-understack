@@ -23,7 +23,7 @@ function Navigation() {
                     <input type="search" name="search_bar" id="search_bar" placeholder="Feature coming soon..." />
                 </div>
                 <div id="home_profile_links">
-                    <NavLink to="/">Home</NavLink>
+                    {/* <NavLink to="/">Home</NavLink> */}
                     <ProfileButton />
                 </div>
             </div>
