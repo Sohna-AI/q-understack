@@ -31,7 +31,7 @@ const SavesPage = () => {
     }
   }, [dispatch, sessionUser]);
 
-  useEffect(() => {}, [answers]);
+  useEffect(() => { }, [answers]);
 
   return (
     <div>
@@ -66,13 +66,13 @@ const SavesPage = () => {
                             </div>
                             <p
                               className={
-                                questions.data[saves.data.questions[id].question]?.answers > 0
+                                questions.data[saves.data.questions[id].question]?.answers.length > 0
                                   ? 'saved-question-answered'
                                   : ''
                               }
                             >
-                              {questions.data[saves.data.questions[id].question]?.answers}{' '}
-                              {questions.data[saves.data.questions[id].question]?.answers === 1
+                              {questions.data[saves.data.questions[id].question]?.answers.length}{' '}
+                              {questions.data[saves.data.questions[id].question]?.answers.length === 1
                                 ? 'Answer'
                                 : 'Answers'}
                             </p>
@@ -93,7 +93,7 @@ const SavesPage = () => {
                         </div>
                         <div className="saved-question-title-tag-container">
                           <NavLink
-                            to={`/questions/${questions.data[saves.data.questions[id].question]?.id}`}
+                            to={`/questions/${saves.data.questions[id].question}`}
                             className="saved-question-title"
                           >
                             {questions.data[saves.data.questions[id].question]?.title}
@@ -187,9 +187,8 @@ const SavesPage = () => {
                                 <div>
                                   <div className="question-marker">Question:</div>
                                   <NavLink
-                                    to={`/questions/${
-                                      answers.data[saves.data.answers[id].answer]?.question_id
-                                    }`}
+                                    to={`/questions/${saves.data.answers[id].answer
+                                      }`}
                                     className="saved-answer-question-title"
                                   >
                                     {answers.data[saves.data.answers[id].answer]?.question.title}
@@ -206,14 +205,14 @@ const SavesPage = () => {
                     })}
                   </div>
                 ) : (
-                  <p className="saved-answer-container saved-question-container">No Saved answers</p>
+                  <p className="saved-answer-container saved-question-container">No Saved answers.</p>
                 )}
               </>
             )}
           </div>
         </>
       )}
-      {!isLoaded && <div style={{ height: '100vh' }} className="saved-question-container" />}
+      {!isLoaded && <div className="saved-question-container">Loading...</div>}
     </div>
   );
 };

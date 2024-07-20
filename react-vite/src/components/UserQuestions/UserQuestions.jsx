@@ -125,12 +125,12 @@ const UserQuestions = () => {
                 })}
               </div>
             ) : (
-              <p>You have not asked any question</p>
+              <p className="user-question-container">You have not asked any question.</p>
             )}
           </div>
         </>
       )}
-      {!isLoaded && <div style={{ height: '100vh' }} className="user-question-container" />}
+      {!isLoaded && <div className="user-question-container">Loading...</div>}
     </div>
   );
 };
