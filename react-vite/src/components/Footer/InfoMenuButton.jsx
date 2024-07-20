@@ -28,7 +28,7 @@ function InfoMenuButton({ text, data }) {
         <>
             <button onClick={toggleMenu}>{text}</button>
             {showMenu && (
-                <div className={`${text}-link-container`}>
+                <div id={`${text}-link-container`}>
                     {data?.map((developer) => {
                         return (
                             <div key={`key${developer.name}`}>
