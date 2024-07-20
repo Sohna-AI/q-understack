@@ -31,11 +31,11 @@ function InfoMenuButton({ text, data }) {
                 <div className={`${text}-link-container`}>
                     {data?.map((developer) => {
                         return (
-                            <>
+                            <div key={`key${developer.name}`}>
                                 <NavLink to={developer.link}>
                                     <p>{developer.name}</p>
                                 </NavLink>
-                            </>
+                            </div>
                         )
                     })
                     }
