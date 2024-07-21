@@ -3,6 +3,8 @@ import {
   thunkGetQuestionDetailsById,
   thunkSaveQuestion,
   thunkUnsaveQuestion,
+  thunkSaveAnswer,
+  thunkUnsaveAnswer,
 } from '../../utils/store';
 import * as questionActions from '../../redux/questions';
 import * as commentActions from '../../redux/comments';
@@ -50,11 +52,13 @@ export default function QuestionDetailPage() {
   const date = new Date(question?.created_at).toLocaleDateString(undefined, options);
 
   useEffect(() => {
-    dispatch(thunkGetQuestionDetailsById(questionId))
-      .then(() => {
-        setIsLoaded(true);
-      });
-  }, [dispatch, questionId]);
+    if (!isLoaded) {
+      dispatch(thunkGetQuestionDetailsById(questionId))
+        .then(() => {
+          setIsLoaded(true);
+        });
+    }
+  }, [isLoaded, dispatch, questionId]);
 
   useEffect(() => {
     if (isLoaded && !question) {
@@ -68,18 +72,26 @@ export default function QuestionDetailPage() {
     setAnswerInput('');
   };
 
-  const handleSave = () => {
-    dispatch(thunkSaveQuestion(questionId));
+  const handleQuestionSave = async () => {
+    dispatch(thunkSaveQuestion(questionId))
   };
 
-  const handleUnsave = () => {
-    dispatch(thunkUnsaveQuestion(questionId));
+  const handleQuestionUnsave = async () => {
+    dispatch(thunkUnsaveQuestion(questionId))
+  };
+
+  const handleAnswerSave = async (questionId, answerId) => {
+    dispatch(thunkSaveAnswer(questionId, answerId))
+  };
+
+  const handleAnswerUnsave = async (questionId, answerId) => {
+    dispatch(thunkUnsaveAnswer(questionId, answerId))
   };
 
   return (
     <div id="main-area">
-      {question && <>
-        {isLoaded && (
+      {isLoaded && <>
+        {question &&
           <>
             <div id="title__container">
               <div id="title-date__container">
@@ -100,9 +112,9 @@ export default function QuestionDetailPage() {
                 <p>{question.num_votes}</p>
                 {question.user_vote === false ? <FaArrowAltCircleDown /> : <FaRegArrowAltCircleDown />}
                 {question.user_save ? (
-                  <FaBookmark onClick={handleUnsave} />
+                  <FaBookmark onClick={handleQuestionUnsave} />
                 ) : (
-                  <FaRegBookmark onClick={handleSave} />
+                  <FaRegBookmark onClick={handleQuestionSave} />
                 )}
               </div>
               <div id="question-details__container">
@@ -121,7 +133,7 @@ export default function QuestionDetailPage() {
                   <p>{user?.username}</p>
                 </div>
                 <div className="question-comments__container">
-                  {question.comments.map((commentId) => {
+                  {question.comments?.map((commentId) => {
                     {
                       /* TODO add time since to comments*/
                     }
@@ -141,12 +153,17 @@ export default function QuestionDetailPage() {
               </h2>
             )}
             <div className="answers__container">
-              {question.answers.map((answerId) => {
+              {question.answers?.map((answerId) => {
                 if (answers.data[answerId]) {
                   const answer = answers.data[answerId];
                   return (
                     <div className="answer__container" key={`answer-${answerId}`}>
-                      <div>
+                      <div className='flex gap-15'>
+                        {answer.user_save ? (
+                          <FaBookmark onClick={() => handleAnswerUnsave(question.id, answer.id)} />
+                        ) : (
+                          <FaRegBookmark onClick={() => handleAnswerSave(question.id, answer.id)} />
+                        )}
                         <p>
                           {answer.text} - {answer.user.username}
                         </p>
@@ -195,7 +212,7 @@ export default function QuestionDetailPage() {
               )}
             </div>
           </>
-        )}
+        }
       </>}
       {!isLoaded && <div style={{ height: '100vw' }} id="question-card__container"></div>}
     </div>
