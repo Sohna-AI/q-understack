@@ -73,7 +73,6 @@ export default function QuestionDetailPage() {
   };
 
   const handleQuestionSave = async () => {
-    setIsLoaded(false);
     dispatch(thunkSaveQuestion(questionId))
   };
 
@@ -83,7 +82,6 @@ export default function QuestionDetailPage() {
   };
 
   const handleAnswerSave = async (id) => {
-    setIsLoaded(false);
     dispatch(thunkSaveAnswer(id))
   };
 
@@ -95,7 +93,7 @@ export default function QuestionDetailPage() {
   return (
     <div id="main-area">
       {isLoaded && <>
-        {question && (
+        {question &&
           <>
             <div id="title__container">
               <div id="title-date__container">
@@ -216,7 +214,7 @@ export default function QuestionDetailPage() {
               )}
             </div>
           </>
-        )}
+        }
       </>}
       {!isLoaded && <div style={{ height: '100vw' }} id="question-card__container"></div>}
     </div>

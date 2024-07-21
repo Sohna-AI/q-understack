@@ -31,7 +31,7 @@ const SavesPage = () => {
     }
   }, [dispatch, sessionUser]);
 
-  useEffect(() => { }, [answers]);
+  useEffect(() => { }, [questions, answers]);
 
   return (
     <div>
@@ -46,126 +46,45 @@ const SavesPage = () => {
                 </h3>
                 <div id="saved-questions__container">
                   {saves.allIds.questions.map((id) => {
-                    return (
-                      <div className="saved-question-container" key={id}>
-                        <div className="saved-question-vote-answer-unsave-container">
-                          <div className="saved-question-vote-answer-container">
-                            <div
-                              className={
-                                questions.data[saves.data.questions[id].question]?.num_votes <= 0
-                                  ? 'saved-question-vote-negative'
-                                  : 'saved-question-vote-positive'
-                              }
-                            >
-                              <span style={{ paddingRight: '3px' }}>
-                                {questions.data[saves.data.questions[id].question]?.num_votes}
-                              </span>
-                              {questions.data[saves.data.questions[id].question]?.num_votes <= 1
-                                ? 'vote'
-                                : 'votes'}
-                            </div>
-                            <p
-                              className={
-                                questions.data[saves.data.questions[id].question]?.answers.length > 0
-                                  ? 'saved-question-answered'
-                                  : ''
-                              }
-                            >
-                              {questions.data[saves.data.questions[id].question]?.answers.length}{' '}
-                              {questions.data[saves.data.questions[id].question]?.answers.length === 1
-                                ? 'Answer'
-                                : 'Answers'}
-                            </p>
-                          </div>
-                          <div>
-                            <OpenModalButton
-                              modalComponent={
-                                <UnsaveQuestionModal
-                                  questionId={questions.data[saves.data.questions[id].question]?.id}
-                                />
-                              }
-                            >
-                              <svg viewBox="0 0 384 512" height="1em" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M0 48C0 21.5 21.5 0 48 0l0 48V441.4l130.1-92.9c8.3-6 19.6-6 27.9 0L336 441.4V48H48V0H336c26.5 0 48 21.5 48 48V488c0 9-5 17.2-13 21.3s-17.6 3.4-24.9-1.8L192 397.5 37.9 507.5c-7.3 5.2-16.9 5.9-24.9 1.8S0 497 0 488V48z"></path>
-                              </svg>
-                            </OpenModalButton>
-                          </div>
-                        </div>
-                        <div className="saved-question-title-tag-container">
-                          <NavLink
-                            to={`/questions/${saves.data.questions[id].question}`}
-                            className="saved-question-title"
-                          >
-                            {questions.data[saves.data.questions[id].question]?.title}
-                          </NavLink>
-                          <div className="saved-question-tag-author-container">
-                            <div className="saved-question-tag-container">
-                              {questions.data[saves.data.questions[id].question]?.tags.map((id) => (
-                                <p className="saved-question-tag" key={id}>
-                                  {tags.data[id].tag_name}
-                                </p>
-                              ))}
-                            </div>
-                            <div className="saved-question-author">
-                              {
-                                users.data[questions.data[saves.data.questions[id].question]?.user_id]?.username
-                              }
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            ) : (
-              <p className="saved-question-container">No Saved questions</p>
-            )}
-            {isLoaded && (
-              <>
-                {saves.allIds.answers.length > 0 ? (
-                  <div>
-                    <h3 className="saved-answer-counter">
-                      {saves.allIds.answers.length} saved{' '}
-                      {saves.allIds.answers.length === 1 ? 'answer' : 'answers'}
-                    </h3>
-                    {saves.allIds.answers.map((id) => {
+                    if (questions.data[saves.data.questions[id].question]) {
+                      const question = questions.data[saves.data.questions[id].question]
+                      console.log(question)
                       return (
-                        <div className="saved-answer-container" key={id}>
-                          <div className="saved-answer-vote-answer-unsave-container">
-                            <div className="saved-answer-vote-answer-container">
+                        <div className="saved-question-container" key={`save:${id}`}>
+                          <div className="saved-question-vote-answer-unsave-container">
+                            <div className="saved-question-vote-answer-container">
                               <div
                                 className={
-                                  answers.data[saves.data.answers[id].answer]?.num_votes <= 0
-                                    ? 'saved-answer-vote-negative'
-                                    : 'saved-answer-vote-positive'
+                                  question.num_votes <= 0
+                                    ? 'saved-question-vote-negative'
+                                    : 'saved-question-vote-positive'
                                 }
                               >
                                 <span style={{ paddingRight: '3px' }}>
-                                  {answers.data[saves.data.answers[id].answer]?.num_votes}
+                                  {question.num_votes}
                                 </span>
-                                {answers.data[saves.data.answers[id].answer]?.num_votes <= 1
+                                {question.num_votes <= 1
                                   ? 'vote'
                                   : 'votes'}
                               </div>
                               <p
                                 className={
-                                  answers.data[saves.data.answers[id].answer]?.comments > 0
-                                    ? 'saved-answer-commented'
+                                  questions.data[question.id].num_answers > 0
+                                    ? 'saved-question-answered'
                                     : ''
                                 }
                               >
-                                {answers.data[saves.data.answers[id].answer]?.comments}{' '}
-                                {answers.data[saves.data.answers[id].answer]?.comments === 1
-                                  ? 'Comment'
-                                  : 'Comments'}
+                                {questions.data[question.id].num_answers}{' '}
+                                {questions.data[question.id].num_answers === 1
+                                  ? 'Answer'
+                                  : 'Answers'}
                               </p>
                             </div>
                             <div>
                               <OpenModalButton
                                 modalComponent={
-                                  <DeleteAnswerModal
-                                    answerId={answers.data[saves.data.answers[id].answer]?.id}
+                                  <UnsaveQuestionModal
+                                    questionId={question.id}
                                   />
                                 }
                               >
@@ -175,40 +94,131 @@ const SavesPage = () => {
                               </OpenModalButton>
                             </div>
                           </div>
-                          <div className="saved-answer-title-tag-container">
+                          <div className="saved-question-title-tag-container">
                             <NavLink
-                              to={`/answers/${answers.data[saves.data.answers[id].answer]?.id}`}
-                              className="saved-answer-title"
+                              to={`/questions/${question.id}`}
+                              className="saved-question-title"
                             >
-                              {answers.data[saves.data.answers[id].answer]?.text}
+                              {question?.title}
                             </NavLink>
-                            <div className="saved-answer-title-author-container">
-                              <div className="saved-answer-question-title-container">
-                                <div>
-                                  <div className="question-marker">Question:</div>
-                                  <NavLink
-                                    to={`/questions/${saves.data.answers[id].answer
-                                      }`}
-                                    className="saved-answer-question-title"
-                                  >
-                                    {answers.data[saves.data.answers[id].answer]?.question.title}
-                                  </NavLink>
-                                </div>
-                                <div className="saved-answer-author">
-                                  <div>{answers.data[saves.data.answers[id].answer]?.user.username}</div>
-                                </div>
+                            <div className="saved-question-tag-author-container">
+                              <div className="saved-question-tag-container">
+                                {question.tags.map((id) => (
+                                  <p className="saved-question-tag" key={`tag:${id}`}>
+                                    {tags.data[id].tag_name}
+                                  </p>
+                                ))}
+                              </div>
+                              <div className="saved-question-author">
+                                {
+                                  users.data[question.user_id]?.username
+                                }
                               </div>
                             </div>
                           </div>
                         </div>
                       );
-                    })}
+                    }
+                  })}
+                </div>
+              </div>
+            ) : (
+              <p className="saved-question-container">No Saved questions</p>
+            )}
+            {isLoaded &&
+              <>
+                {answers && saves.allIds.answers.length > 0 ? (
+                  <div>
+                    <h3 className="saved-answer-counter">
+                      {saves.allIds.answers.length} saved{' '}
+                      {saves.allIds.answers.length === 1 ? 'answer' : 'answers'}
+                    </h3>
+                    <div className='flex column gap-10'>
+
+                      {saves.allIds.answers?.map((id) => {
+                        if (answers.data[saves.data.answers[id].answer]) {
+                          const answer = answers.data[saves.data.answers[id].answer]
+                          console.log(answer)
+                          return (
+                            <div className="saved-answer-container" key={id}>
+                              <div className="saved-answer-vote-answer-unsave-container">
+                                <div className="saved-answer-vote-answer-container">
+                                  <div
+                                    className={
+                                      answer.num_votes <= 0
+                                        ? 'saved-answer-vote-negative'
+                                        : 'saved-answer-vote-positive'
+                                    }
+                                  >
+                                    <span style={{ paddingRight: '3px' }}>
+                                      {answer.num_votes}
+                                    </span>
+                                    {answer.num_votes <= 1
+                                      ? 'vote'
+                                      : 'votes'}
+                                  </div>
+                                  <p
+                                    className={
+                                      answer.comments > 0
+                                        ? 'saved-answer-commented'
+                                        : ''
+                                    }
+                                  >
+                                    {answer.comments}{' '}
+                                    {answer.comments === 1
+                                      ? 'Comment'
+                                      : 'Comments'}
+                                  </p>
+                                </div>
+                                <div>
+                                  <OpenModalButton
+                                    modalComponent={
+                                      <DeleteAnswerModal
+                                        answerId={answer.id}
+                                      />
+                                    }
+                                  >
+                                    <svg viewBox="0 0 384 512" height="1em" xmlns="http://www.w3.org/2000/svg">
+                                      <path d="M0 48C0 21.5 21.5 0 48 0l0 48V441.4l130.1-92.9c8.3-6 19.6-6 27.9 0L336 441.4V48H48V0H336c26.5 0 48 21.5 48 48V488c0 9-5 17.2-13 21.3s-17.6 3.4-24.9-1.8L192 397.5 37.9 507.5c-7.3 5.2-16.9 5.9-24.9 1.8S0 497 0 488V48z"></path>
+                                    </svg>
+                                  </OpenModalButton>
+                                </div>
+                              </div>
+                              <div className="saved-answer-title-tag-container">
+                                <NavLink
+                                  to={`/answers/${answer.id}`}
+                                  className="saved-answer-title"
+                                >
+                                  {answer.text}
+                                </NavLink>
+                                <div className="saved-answer-title-author-container">
+                                  <div className="saved-answer-question-title-container">
+                                    <div>
+                                      <div className="question-marker">Question:</div>
+                                      <NavLink
+                                        to={`/questions/${answer.question_id}`}
+                                        className="saved-answer-question-title"
+                                      >
+                                        {questions.data[answer.question_id]?.title}
+                                      </NavLink>
+                                    </div>
+                                    <div className="saved-answer-author">
+                                      <div>{answer.user.username}</div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          );
+                        }
+                      })}
+                    </div>
                   </div>
                 ) : (
                   <p className="saved-answer-container saved-question-container">No Saved answers.</p>
                 )}
               </>
-            )}
+            }
           </div>
         </>
       )}

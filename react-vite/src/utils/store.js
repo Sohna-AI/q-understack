@@ -26,6 +26,9 @@ const separateData = (data) => async (dispatch) => {
   const separateAnswers = (answers) => {
     answers.forEach((answer) => {
       const newAnswer = structuredClone(answer);
+      if (newAnswer.question) {
+        separateQuestions([newAnswer.question])
+      }
       if (ids.answer.indexOf(newAnswer.id) < 0) {
         if (newAnswer.author) {
           separateAuthor(newAnswer.author);
@@ -173,7 +176,8 @@ export const thunkGetSaves = () => async (dispatch) => {
   const response = await fetch('/api/saves');
   if (response.ok) {
     const data = await response.json();
-    return await dispatch(separateData(data));
+    dispatch(separateData(data));
+    return data;
   } else if (response.status < 500) {
     const errorMessages = await response.json();
     return errorMessages;
@@ -201,7 +205,7 @@ export const thunkUnsaveQuestion = (questionId) => async (dispatch) => {
     method: 'DELETE',
   });
   if (response.ok) {
-    await dispatch(thunkGetSaves());
+    dispatch(thunkGetQuestionDetailsById());
   } else if (response.status < 500) {
     const errorMessages = await response.json();
     return errorMessages;
@@ -231,7 +235,7 @@ export const thunkUnsaveAnswer = (answerId) => async (dispatch) => {
   });
 
   if (response.ok) {
-    await dispatch(thunkGetSaves());
+    await dispatch(thunkGetQuestionDetailsById());
   } else if (response.status < 500) {
     const errorMessages = await response.json();
     return errorMessages;

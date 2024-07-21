@@ -56,6 +56,10 @@
     gap: 15px;
 }
 
+.gap-10 {
+    gap: 10px;
+}
+
 .button {
     background-color: var(--button-color);
     color: var(--font-color);
