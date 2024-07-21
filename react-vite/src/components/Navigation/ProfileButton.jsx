@@ -53,6 +53,7 @@ function ProfileButton() {
                         <>
                             <li>{user.username}</li>
                             <li>{user.email}</li>
+                            <li><p className="dropdown-links" onClick={() => navigate('/user/questions')}>Your questions</p></li>
                             <li>
                                 <button id="logout_button" onClick={logout}>Log Out</button>
                             </li>

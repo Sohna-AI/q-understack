@@ -53,9 +53,13 @@ export default function Footer() {
                     <p onClick={() => window.alert('Comming soon!')}>About</p>
                     <p onClick={() => window.alert('Comming soon!')}>Contact Us</p>
                 </div>
-                <div id='social_links' className='flex'>
-                    <InfoMenuButton text="GitHub" data={gitData} ></InfoMenuButton>
-                    <InfoMenuButton text="Linkedin" data={linkData} ></InfoMenuButton>
+                <div id='social_links' className='flex gap-15'>
+                    <div className='flex column'>
+                        <InfoMenuButton text="GitHub" data={gitData} ></InfoMenuButton>
+                    </div>
+                    <div className='flex column'>
+                        <InfoMenuButton text="Linkedin" data={linkData} ></InfoMenuButton>
+                    </div>
                 </div>
             </div>
         </footer>

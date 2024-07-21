@@ -27,9 +27,9 @@
     -webkit-text-size-adjust: 100%;
 }
 
-.split {
+/* .split {
     border-bottom: 1px solid var(--border-color);
-}
+} */
 
 /** Keeps Footer at bottom of page regardless of content
 **  without adding unnecessary height */
@@ -37,7 +37,11 @@
     display: flex;
     justify-content: center;
     min-height: calc(100vh - 360px);
-    width: var(--group-card-width) + 200px;
+    max-height: 100%;
+    width: var(--group-card-width);
+    position: relative;
+    left: 28vw;
+    border-left: 1px solid var(--border-color);
 }
 
 .flex {

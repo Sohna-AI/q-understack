@@ -19,8 +19,8 @@ export default function Layout() {
         <>
             <ModalProvider>
                 <Navigation />
+                <Sidebar />
                 <div id="main__container">
-                    <Sidebar />
                     {isLoaded && <Outlet />}
                     <Modal />
                 </div>
