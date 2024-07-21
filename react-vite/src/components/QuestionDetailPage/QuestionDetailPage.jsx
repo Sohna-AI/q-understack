@@ -77,17 +77,15 @@ export default function QuestionDetailPage() {
   };
 
   const handleQuestionUnsave = async () => {
-    setIsLoaded(false);
     dispatch(thunkUnsaveQuestion(questionId))
   };
 
-  const handleAnswerSave = async (id) => {
-    dispatch(thunkSaveAnswer(id))
+  const handleAnswerSave = async (questionId, answerId) => {
+    dispatch(thunkSaveAnswer(questionId, answerId))
   };
 
-  const handleAnswerUnsave = async (id) => {
-    setIsLoaded(false);
-    dispatch(thunkUnsaveAnswer(id))
+  const handleAnswerUnsave = async (questionId, answerId) => {
+    dispatch(thunkUnsaveAnswer(questionId, answerId))
   };
 
   return (
@@ -135,7 +133,7 @@ export default function QuestionDetailPage() {
                   <p>{user?.username}</p>
                 </div>
                 <div className="question-comments__container">
-                  {question.comments.map((commentId) => {
+                  {question.comments?.map((commentId) => {
                     {
                       /* TODO add time since to comments*/
                     }
@@ -155,16 +153,16 @@ export default function QuestionDetailPage() {
               </h2>
             )}
             <div className="answers__container">
-              {question.answers.map((answerId) => {
+              {question.answers?.map((answerId) => {
                 if (answers.data[answerId]) {
                   const answer = answers.data[answerId];
                   return (
                     <div className="answer__container" key={`answer-${answerId}`}>
                       <div className='flex gap-15'>
                         {answer.user_save ? (
-                          <FaBookmark onClick={() => handleAnswerUnsave(answer.id)} />
+                          <FaBookmark onClick={() => handleAnswerUnsave(question.id, answer.id)} />
                         ) : (
-                          <FaRegBookmark onClick={() => handleAnswerSave(answer.id)} />
+                          <FaRegBookmark onClick={() => handleAnswerSave(question.id, answer.id)} />
                         )}
                         <p>
                           {answer.text} - {answer.user.username}
