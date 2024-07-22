@@ -28,21 +28,26 @@ export default function UpdateAnswerModal({ answer }) {
     };
 
     return (<div className="flex column main-container">
-        <h1>Update your answer</h1>
-        <label>Text</label>
-        <input type="text"
+        <h2>Update your answer</h2>
+        <textarea type="text"
+            id="update-answer-textarea"
             value={textInput}
             onChange={(e) => setTextInput(e.target.value)}
         />
-        <button onClick={handleSave}>Save</button>
-        {!confirm && <button onClick={handleDelete}>Delete</button>}
-        {confirm &&
-            <div className="flex">
-                <p>Are you sure?</p>
-                <button onClick={handleDelete}>Yes</button>
-                <button onClick={() => setConfirm(false)}>No</button>
-            </div>
-        }
+        <div id="update-answer-buttons" className="flex gap-15">
+            {!confirm && <>
+                <button className="button" onClick={handleSave}>Save</button>
+                <button className="button red" onClick={handleDelete}>Delete</button>
+            </>
+            }
+            {confirm &&
+                <div id="confirmation-container" className="flex gap-10 no-margin">
+                    <p className="no-margin">Are you sure?</p>
+                    <button className="button" onClick={handleDelete}>Yes</button>
+                    <button className="button red" onClick={() => setConfirm(false)}>No</button>
+                </div>
+            }
+        </div>
     </div>
     )
 }

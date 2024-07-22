@@ -1,13 +1,17 @@
 #sidebar {
-    border-right: 1px solid var(--border-color);
-    padding-top: 100px;
-    width: 100px;
+    box-sizing: border-box;
+    padding-top: 120px;
+    width: 8vw;
+    min-height: calc(100%);
+    position: fixed;
+    top: 0px;
+    left: 20vw;
+    z-index: 1;
 }
 
 #sidebar #sidebar__main-links {
     display: flex;
     flex-direction: column;
-    /* gap: 10px; */
     margin-bottom: 30px;
 }
 

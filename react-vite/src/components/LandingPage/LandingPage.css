@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 40px;
 }
 
 .landing-page-buttons-container {
@@ -18,24 +19,26 @@
   gap: 10px;
 }
 
-.landing-page-login-button,
-.landing-page-signup-button,
-.landing-page-questions-button {
+button.landing-page-login-button,
+button.landing-page-signup-button,
+button.landing-page-questions-button {
   font-size: 20px;
   background-color: var(--button-color);
   border: none;
   padding: 5px 10px;
   border-radius: 0.25rem;
   cursor: pointer;
+  color: var(--font-color);
 }
 
-.landing-page-login-button:hover,
-.landing-page-signup-button:hover,
-.landing-page-questions-button:hover {
+button.landing-page-login-button-container:hover,
+button.landing-page-signup-button-container:hover,
+button.landing-page-questions-button-container:hover {
   background-color: var(--button-color-hover);
+  color: var(--font-color);
 }
 
-.landing-page-login-button > li,
-.landing-page-signup-button > li {
+.landing-page-login-button>li,
+.landing-page-signup-button>li {
   list-style: none;
 }

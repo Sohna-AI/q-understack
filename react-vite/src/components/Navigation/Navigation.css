@@ -1,12 +1,17 @@
 #navbar {
     display: flex;
-    /* border-bottom: 1px solid var(--border-color); */
+    position: fixed;
+    top: 0;
+    z-index: 1;
+    background-color: #1F1F1F;
     justify-content: space-between;
     align-items: center;
-    width: 90vw;
+    width: 100vw;
     margin: 0 auto;
     margin-bottom: 5px;
-    margin-top: 5px;
+    padding: 5px 5vw;
+    border-bottom: 1px solid var(--border-color);
+    box-sizing: border-box;
 }
 
 #logo_about_links {
@@ -70,7 +75,7 @@
     position: absolute;
     border: 1px solid var(--border-color);
     border-top: none;
-    top: 46px;
+    top: 80px;
     right: 5vw;
     list-style-type: none;
     padding: 10px;
@@ -79,6 +84,7 @@
 
 #logout_button {
     background-color: var(--button-color);
+    color: var(--font-color);
     border: none;
     border-radius: 0.25rem;
     cursor: pointer;
@@ -93,5 +99,13 @@
 }
 
 .modal_menu_item:hover {
+    color: var(--link-color);
+}
+
+.dropdown-links {
+    cursor: pointer;
+}
+
+.dropdown-links:hover {
     color: var(--link-color);
 }

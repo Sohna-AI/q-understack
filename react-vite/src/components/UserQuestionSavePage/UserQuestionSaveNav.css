@@ -1,3 +1,8 @@
+#user-saves-questions-container {
+    margin: 0 0 40px 40px;
+    box-sizing: border-box;
+}
+
 .user-save-questions-nav-links-container {
     display: flex;
     gap: 20px;

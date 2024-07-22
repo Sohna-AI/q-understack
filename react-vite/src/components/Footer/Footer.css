@@ -1,7 +1,8 @@
 footer {
     border-top: 1px solid var(--border-color);
     height: 200px;
-    margin-top: 100px;
+    z-index: 2;
+    position: relative;
 }
 
 footer>div {
@@ -36,8 +37,19 @@ footer #social_links button {
     cursor: pointer;
     padding: 10px 20px;
     margin: 10px;
+    width: 104px;
 }
 
 footer #social_links button:hover {
     background-color: var(--button-color-hover);
+}
+
+footer #social_links a {
+    text-decoration: none;
+    color: var(--font-color);
+    cursor: pointer;
+}
+
+footer #social_links a:hover {
+    color: var(--link-color);
 }

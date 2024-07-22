@@ -66,7 +66,7 @@ function questionReducer(state = structuredClone(initialState), action) {
                 delete newState.data[action.questionId];
             }
             if (newState.allIds.indexOf(action.questionId > -1)) {
-                newState.allIds.splice(newState.allIds.indexOf(action.questionId > -1), 1);
+                newState.allIds.splice(newState.allIds.indexOf(action.questionId), 1);
             }
             return newState;
         }
