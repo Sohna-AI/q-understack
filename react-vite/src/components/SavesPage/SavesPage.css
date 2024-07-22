@@ -40,7 +40,8 @@
     gap: 10px;
 }
 
-.saved-question-title:hover {
+.saved-question-title:hover,
+.saved-answer-title:hover {
     color: var(--link-color);
 }
 
