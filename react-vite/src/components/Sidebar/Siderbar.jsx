@@ -11,11 +11,11 @@ export default function Sidebar() {
     return (
         <div id="sidebar">
             <div id="sidebar__main-links">
-                <NavLink to="/">
+                <NavLink to="/" onClick={() => window.scroll(0, 0)}>
                     <FaHome style={{ fontSize: 16 }} />
                     Home
                 </NavLink>
-                <NavLink to="/questions">
+                <NavLink to="/questions" onClick={() => window.scroll(0, 0)}>
                     <FaQuestionCircle style={{ fontSize: 16 }} />
                     Questions
                 </NavLink>
@@ -24,7 +24,7 @@ export default function Sidebar() {
                 </NavLink>
             </div>
             <div id="sidebar__sub-links">
-                <NavLink to="/user/saves">
+                <NavLink to="/user/saves" onClick={() => window.scroll(0, 0)}>
                     <FaBookmark style={{ fontSize: 16 }} /> Saves
                 </NavLink>
             </div>
