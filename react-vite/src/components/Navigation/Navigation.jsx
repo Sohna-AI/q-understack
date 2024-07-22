@@ -10,11 +10,16 @@ function Navigation() {
         return alert('Coming Soon!');
     };
 
+    const handleClick = () => {
+        window.scroll(0, 0);
+        navigate('/');
+    }
+
     return (
         <>
             <div id="navbar">
                 <div id="logo_about_links">
-                    <p id="logo" onClick={() => navigate('/')}>
+                    <p id="logo" onClick={handleClick}>
                         <img src="/q-understack-logo.png" alt="" />
                     </p>
                     <NavLink onClick={onFutureFeatureClick} to="/about">About</NavLink>

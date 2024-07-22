@@ -157,13 +157,13 @@ const SavesPage = () => {
                                   </div>
                                   <p
                                     className={
-                                      answer.comments > 0
+                                      answer.comments.length > 0
                                         ? 'saved-answer-commented'
                                         : ''
                                     }
                                   >
-                                    {answer.comments}{' '}
-                                    {answer.comments === 1
+                                    {answer.comments.length}{' '}
+                                    {answer.comments.length === 1
                                       ? 'Comment'
                                       : 'Comments'}
                                   </p>
@@ -185,7 +185,8 @@ const SavesPage = () => {
                               </div>
                               <div className="saved-answer-title-tag-container">
                                 <NavLink
-                                  to={`/answers/${answer.id}`}
+                                  onClick={() => window.scroll(0, 0)}
+                                  to={`/questions/${answer.question_id}`}
                                   className="saved-answer-title"
                                 >
                                   {answer.text}
@@ -195,6 +196,7 @@ const SavesPage = () => {
                                     <div>
                                       <div className="question-marker">Question:</div>
                                       <NavLink
+                                        onClick={() => window.scroll(0, 0)}
                                         to={`/questions/${answer.question_id}`}
                                         className="saved-answer-question-title"
                                       >
