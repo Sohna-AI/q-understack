@@ -34,7 +34,7 @@ const SavesPage = () => {
   useEffect(() => { }, [questions, answers]);
 
   return (
-    <div>
+    <div id='saves-page-container'>
       {isLoaded && (
         <>
           <div>
@@ -48,7 +48,6 @@ const SavesPage = () => {
                   {saves.allIds.questions.map((id) => {
                     if (questions.data[saves.data.questions[id].question]) {
                       const question = questions.data[saves.data.questions[id].question]
-                      console.log(question)
                       return (
                         <div className="saved-question-container" key={`save:${id}`}>
                           <div className="saved-question-vote-answer-unsave-container">
@@ -138,7 +137,6 @@ const SavesPage = () => {
                       {saves.allIds.answers?.map((id) => {
                         if (answers.data[saves.data.answers[id].answer]) {
                           const answer = answers.data[saves.data.answers[id].answer]
-                          console.log(answer)
                           return (
                             <div className="saved-answer-container" key={id}>
                               <div className="saved-answer-vote-answer-unsave-container">

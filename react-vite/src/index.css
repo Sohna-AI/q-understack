@@ -27,10 +27,6 @@
     -webkit-text-size-adjust: 100%;
 }
 
-/* .split {
-    border-bottom: 1px solid var(--border-color);
-} */
-
 /** Keeps Footer at bottom of page regardless of content
 **  without adding unnecessary height */
 #main__container {
@@ -40,9 +36,15 @@
     max-height: 100%;
     width: var(--group-card-width);
     position: relative;
+    margin-top: 97px;
     left: 28vw;
     border-left: 1px solid var(--border-color);
 }
+
+/* #main__container>:first-child {
+    padding-left: 40px;
+    box-sizing: border-box;
+} */
 
 .flex {
     display: flex;
@@ -72,4 +74,20 @@
 .button:hover {
     background-color: var(--button-color-hover);
     cursor: pointer;
+}
+
+.color {
+    color: var(--font-color);
+}
+
+.color:hover {
+    color: var(--font-color)
+}
+
+.red {
+    background-color: red;
+}
+
+.red:hover {
+    background-color: rgb(194, 0, 0);
 }

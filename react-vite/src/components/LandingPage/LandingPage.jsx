@@ -17,20 +17,20 @@ export default function LandingPage() {
             <img src="/q-understack-main-logo.png" alt="" className="landing-page-main-logo" />
           </div>
           <div className="landing-page-buttons-container">
-            <div className="landing-page-questions-button-container">
+            <div className="landing-page-questions-button-container button">
               <NavLink to="/questions">
-                <button className="landing-page-questions-button">View all questions</button>
+                <button className="landing-page-questions-button button">View all questions</button>
               </NavLink>
             </div>
             <div className="landing-page-login-button-container">
               <span>Already have an account?</span>
-              <button className="landing-page-login-button">
+              <button className="landing-page-login-button button">
                 <OpenModalMenuItem itemText="Log In" modalComponent={<LoginFormModal />} />
               </button>
             </div>
             <div className="landing-page-signup-button-container">
               <span>Don&apos;t have an account?</span>
-              <button className="landing-page-signup-button">
+              <button className="landing-page-signup-button button">
                 <OpenModalMenuItem itemText="Sign Up" modalComponent={<SignupFormModal />} />
               </button>
             </div>

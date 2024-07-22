@@ -32,6 +32,7 @@ export default function QuestionDetailPage() {
   const tags = useSelector(tagActions.selectTags).data;
   const [answerInput, setAnswerInput] = useState('');
   const [isLoaded, setIsLoaded] = useState(false);
+  const [errors, setErrors] = useState({})
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -58,35 +59,46 @@ export default function QuestionDetailPage() {
     }
   }, [isLoaded, question, navigate]);
 
-  const handlePostAnswer = () => {
+  const handlePostAnswer = async () => {
+    setErrors({});
     const data = { text: answerInput };
-    dispatch(thunkPostAnswer(JSON.stringify(data), questionId));
+    const res = await dispatch(thunkPostAnswer(JSON.stringify(data), questionId));
+    if (res.text) setErrors(res);
     setAnswerInput('');
   };
 
   const handleQuestionSave = async () => {
+    setErrors({});
     if (sessionUser) {
-      dispatch(thunkSaveQuestion(questionId))
+      dispatch(thunkSaveQuestion(questionId));
     }
   };
 
   const handleQuestionUnsave = async () => {
+    setErrors({});
     if (sessionUser) {
-      dispatch(thunkUnsaveQuestion(questionId))
+      dispatch(thunkUnsaveQuestion(questionId));
     }
   };
 
   const handleAnswerSave = async (questionId, answerId) => {
+    setErrors({});
     if (sessionUser) {
-      dispatch(thunkSaveAnswer(questionId, answerId))
+      dispatch(thunkSaveAnswer(questionId, answerId));
     }
   };
 
   const handleAnswerUnsave = async (questionId, answerId) => {
+    setErrors({});
     if (sessionUser) {
-      dispatch(thunkUnsaveAnswer(questionId, answerId))
+      dispatch(thunkUnsaveAnswer(questionId, answerId));
     }
   };
+
+  const handleChange = (e) => {
+    setErrors({});
+    setAnswerInput(e.target.value);
+  }
 
   return (
     <div id="main-area">
@@ -203,10 +215,12 @@ export default function QuestionDetailPage() {
               <textarea
                 name="answer"
                 value={answerInput}
-                onChange={(e) => setAnswerInput(e.target.value)}
+                onChange={(e) => handleChange(e)}
+                onClick={() => setErrors({})}
                 placeholder=" Add your answer here"
                 cols={50}
               />
+              {errors.text && <p className='errors'>{errors.text}</p>}
               {sessionUser && <button onClick={handlePostAnswer}>Post Your Answer</button>}
               {!sessionUser && (
                 <span>

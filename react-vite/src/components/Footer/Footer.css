@@ -1,7 +1,8 @@
 footer {
     border-top: 1px solid var(--border-color);
     height: 200px;
-    margin-top: 10px;
+    z-index: 2;
+    position: relative;
 }
 
 footer>div {

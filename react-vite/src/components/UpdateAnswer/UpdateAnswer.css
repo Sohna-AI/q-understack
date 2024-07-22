@@ -11,3 +11,16 @@ input {
 button {
     cursor: pointer;
 }
+
+#confirmation-container {
+    align-items: center;
+}
+
+#update-answer-buttons {
+    justify-content: end;
+}
+
+#update-answer-textarea {
+    height: 200px;
+    width: 390px;
+}
