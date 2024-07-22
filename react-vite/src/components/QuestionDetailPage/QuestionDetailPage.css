@@ -1,5 +1,6 @@
 #main-area {
     width: var(--group-card-width);
+    margin-bottom: 40px;
 }
 
 #title__container {
