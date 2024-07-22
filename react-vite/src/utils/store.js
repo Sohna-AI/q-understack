@@ -205,13 +205,14 @@ export const thunkSaveQuestion = (questionId) => async (dispatch) => {
   }
 };
 
-export const thunkUnsaveQuestion = (questionId) => async (dispatch) => {
+export const thunkUnsaveQuestion = (questionId, details) => async (dispatch) => {
   const response = await fetch(`/api/questions/${questionId}/save`, {
     method: 'DELETE',
   });
   if (response.ok) {
     const data = await response.json()
-    dispatch(thunkGetQuestionDetailsById(questionId));
+    if (details) dispatch(thunkGetQuestionDetailsById(questionId));
+    else dispatch(thunkGetSaves());
     return data;
   } else if (response.status < 500) {
     const errorMessages = await response.json();
@@ -238,14 +239,15 @@ export const thunkSaveAnswer = (questionId, answerId) => async (dispatch) => {
   }
 };
 
-export const thunkUnsaveAnswer = (questionId, answerId) => async (dispatch) => {
+export const thunkUnsaveAnswer = (questionId, answerId, details) => async (dispatch) => {
   const response = await fetch(`/api/answers/${answerId}/save`, {
     method: 'DELETE',
   });
 
   if (response.ok) {
     const data = await response.json()
-    dispatch(thunkGetQuestionDetailsById(questionId));
+    if (details) dispatch(thunkGetQuestionDetailsById(questionId));
+    else dispatch(thunkGetSaves());
     return data;
   } else if (response.status < 500) {
     const errorMessages = await response.json();

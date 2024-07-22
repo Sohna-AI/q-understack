@@ -3,12 +3,12 @@ import { useModal } from '../../context/Modal';
 import { thunkUnsaveAnswer } from '../../utils/store';
 import './DeleteAnswerModal.css';
 
-const DeleteAnswerModal = ({ answerId, navigateOnDelete, detailsPage }) => {
+const DeleteAnswerModal = ({ questionId, answerId, navigateOnDelete, detailsPage }) => {
   const { closeModal } = useModal();
   const dispatch = useDispatch();
 
   const handleUnsave = () => {
-    dispatch(thunkUnsaveAnswer(answerId, true));
+    dispatch(thunkUnsaveAnswer(questionId, answerId));
     closeModal();
     if (detailsPage) {
       return navigateOnDelete;

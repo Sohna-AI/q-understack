@@ -77,7 +77,7 @@ export default function QuestionDetailPage() {
   const handleQuestionUnsave = async () => {
     setErrors({});
     if (sessionUser) {
-      dispatch(thunkUnsaveQuestion(questionId));
+      dispatch(thunkUnsaveQuestion(questionId, true));
     }
   };
 
@@ -91,7 +91,7 @@ export default function QuestionDetailPage() {
   const handleAnswerUnsave = async (questionId, answerId) => {
     setErrors({});
     if (sessionUser) {
-      dispatch(thunkUnsaveAnswer(questionId, answerId));
+      dispatch(thunkUnsaveAnswer(questionId, answerId, true));
     }
   };
 

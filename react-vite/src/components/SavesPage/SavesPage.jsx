@@ -173,6 +173,7 @@ const SavesPage = () => {
                                     modalComponent={
                                       <DeleteAnswerModal
                                         answerId={answer.id}
+                                        questionId={answer.question_id}
                                       />
                                     }
                                   >

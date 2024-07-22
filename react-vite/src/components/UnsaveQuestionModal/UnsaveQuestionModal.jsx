@@ -8,7 +8,7 @@ const UnsaveQuestionModal = ({ questionId, navigateOnDelete, detailsPage }) => {
   const dispatch = useDispatch();
 
   const handleUnsave = () => {
-    dispatch(thunkUnsaveQuestion(questionId, true));
+    dispatch(thunkUnsaveQuestion(questionId));
     closeModal();
     if (detailsPage) {
       return navigateOnDelete;
