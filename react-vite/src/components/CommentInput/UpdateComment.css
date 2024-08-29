@@ -1,0 +1,26 @@
+.main-container {
+    position: relative;
+    padding: 10px;
+    gap: 10px;
+}
+
+input {
+    color: var(--font-color);
+}
+
+button {
+    cursor: pointer;
+}
+
+#confirmation-container {
+    align-items: center;
+}
+
+#update-comment-buttons {
+    justify-content: end;
+}
+
+#update-comment-textarea {
+    height: 100px;
+    width: 390px;
+}

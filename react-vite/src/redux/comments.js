@@ -54,7 +54,7 @@ function commentReducer(state = initialState, action) {
                 delete newState.data[action.commentId];
             }
             if (newState.allIds.indexOf(action.commentId > -1)) {
-                newState.allIds.splice(newState.allIds.indexOf(action.commentId > -1), 1);
+                newState.allIds.splice(newState.allIds.indexOf(action.commentId), 1);
             }
             return newState;
         }

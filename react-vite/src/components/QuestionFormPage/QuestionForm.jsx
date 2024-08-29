@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import './QuestionForm.css';
+import RenderMarkdown from '../RenderMarkdown';
 
 export default function QuestionForm({ edit }) {
     const editId = useParams()['questionId'];
@@ -83,6 +84,38 @@ export default function QuestionForm({ edit }) {
         }
     };
 
+    const handleKeyPress = (e, bool) => {
+        setErrors({});
+        if (e.key === 'Tab') {
+            e.preventDefault();
+            const start = e.target.selectionStart;
+            const end = e.target.selectionEnd;
+            if (bool) {
+                setDetails(details.substring(0, start) + '    ' + details.substring(end));
+            }
+            else {
+                setExpectations(expectations.substring(0, start) + '    ' + expectations.substring(end));
+            }
+            setTimeout(() => {
+                e.target.selectionStart = e.target.selectionEnd = start + 4;
+            }, 0)
+        }
+        if (e.key === '{') {
+            e.preventDefault();
+            const start = e.target.selectionStart;
+            const end = e.target.selectionEnd;
+            if (bool) {
+                setDetails(details.substring(0, start) + '{}' + details.substring(end));
+            }
+            else {
+                setExpectations(expectations.substring(0, start) + '{}' + expectations.substring(end));
+            }
+            setTimeout(() => {
+                e.target.selectionStart = e.target.selectionEnd = start + 1;
+            }, 0)
+        }
+    }
+
     return (
         <div id="question-form-page" className="flex column">
             <div>
@@ -102,20 +135,28 @@ export default function QuestionForm({ edit }) {
                 </div>
                 <div className="flex column gap-15">
                     <label>What are the details of your problem?</label>
+                    {details.length > 0 && <div className='pad10 border'>
+                        <RenderMarkdown text={details} />
+                    </div>}
                     <textarea
-                        className="question-textarea"
+                        className="question-textarea pad10"
                         value={details}
                         onChange={(e) => setDetails(e.target.value)}
+                        onKeyDown={(e) => handleKeyPress(e, true)}
                         required
                     />
                     {errors.details && <p className="errors">{errors.details}</p>}
                 </div>
                 <div className="flex column gap-15">
                     <label>What did you try? What were you expecting?</label>
+                    {expectations.length > 0 && <div className='pad10 border'>
+                        <RenderMarkdown text={expectations} />
+                    </div>}
                     <textarea
-                        className="question-textarea"
+                        className="question-textarea pad10"
                         value={expectations}
                         onChange={(e) => setExpectations(e.target.value)}
+                        onKeyDown={(e) => handleKeyPress(e, false)}
                         required
                     />
                     {errors.expectations && <p className="errors">{errors.expectations}</p>}

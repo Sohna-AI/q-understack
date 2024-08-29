@@ -6,6 +6,28 @@ from app.forms.create_comment_form import CommentForm
 
 comment_routes = Blueprint('comments', __name__)
 
+@comment_routes.route('/', methods=['POST'])
+@login_required
+def create_comment():
+    """
+    Create a comment for a answer by id
+    """
+    form = CommentForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        new_comment = Comment(
+            user_id = current_user.id,
+            type_id=form.typeId.data,
+            type=form.type.data,
+            comment=form.comment.data,
+            created_at=datetime.now(),
+            updated_at=datetime.now()
+        )
+        db.session.add(new_comment)
+        db.session.commit()
+        return new_comment.to_dict(), 201
+    return form.errors, 400
+
 @comment_routes.route('/<int:comment_id>', methods=['PUT'])
 @login_required
 def edit_comment(comment_id):
