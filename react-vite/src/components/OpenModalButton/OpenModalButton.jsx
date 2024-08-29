@@ -20,7 +20,7 @@ function OpenModalButton({
   return (
     <>
       {(!editAnswer && buttonText) && (
-        <button className="modal_button" onClick={onClick}>
+        <button className="modal_button button" onClick={onClick}>
           {buttonText}
         </button>
       )}

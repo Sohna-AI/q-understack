@@ -257,21 +257,6 @@ export const thunkUnsaveAnswer = (questionId, answerId, details) => async (dispa
   }
 };
 
-export const thunkDeleteComment = (commentId) => async (dispatch) => {
-  const response = await fetch(`/api/comments/${commentId}`, {
-    method: 'DELETE',
-  });
-
-  if (response.ok) {
-    await dispatch(commentActions.deleteComment(commentId));
-  } else if (response.status < 500) {
-    const errorMessages = await response.json();
-    return errorMessages;
-  } else {
-    return { server: 'Something went wrong. Please try again' };
-  }
-};
-
 export const thunkPostAnswer = (answerData, questionId) => async (dispatch) => {
   const response = await fetch(`/api/questions/${questionId}/answers`, {
     method: 'POST',
@@ -310,6 +295,55 @@ export const thunkDeleteAnswer = (answerId, questionId) => async (dispatch) => {
   });
   if (response.ok) {
     dispatch(thunkGetQuestionDetailsById(questionId));
+  } else if (response.status < 500) {
+    const errorMessages = await response.json();
+    return errorMessages;
+  } else {
+    return { server: 'Something went wrong. Please try again' };
+  }
+};
+
+export const thunkPostComment = (commentData, questionId) => async (dispatch) => {
+  const response = await fetch(`/api/comments/`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: commentData,
+  });
+  if (response.ok) {
+    return dispatch(thunkGetQuestionDetailsById(questionId));
+  } else if (response.status < 500) {
+    const errorMessages = await response.json();
+    return errorMessages;
+  } else {
+    return { server: 'Something went wrong. Please try again' };
+  }
+};
+
+export const thunkEditComment = (commentData, commentId, questionId) => async (dispatch) => {
+  const response = await fetch(`/api/comments/${commentId}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: commentData,
+  });
+  if (response.ok) {
+    return dispatch(thunkGetQuestionDetailsById(questionId));
+  } else if (response.status < 500) {
+    const errorMessages = await response.json();
+    return errorMessages;
+  } else {
+    return { server: 'Something went wrong. Please try again' };
+  }
+};
+
+
+export const thunkDeleteComment = (commentId, questionId) => async (dispatch) => {
+  const response = await fetch(`/api/comments/${commentId}`, {
+    method: 'DELETE',
+  });
+
+  if (response.ok) {
+    await dispatch(commentActions.deleteComment(commentId));
+    return dispatch(thunkGetQuestionDetailsById(questionId));
   } else if (response.status < 500) {
     const errorMessages = await response.json();
     return errorMessages;
