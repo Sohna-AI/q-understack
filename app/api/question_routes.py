@@ -8,15 +8,21 @@ from app.forms.create_comment_form import CommentForm
 
 question_routes = Blueprint('questions', __name__)
 
-# TODO add pagination and limits
-# TODO research / utilize Pagination object (SQLAlchemy)
 @question_routes.route('')
 def questions():
     """
     Query for all questions and returns them in a list of question dictionaries
     """
-    questions = Question.query.all()
-    return {'questions': [question.to_dict_list_page() for question in questions]}
+    page = request.args.get('page', 1, type=int)
+    per_page = request.args.get('per_page', 10, type=int)
+    
+    questions = Question.query.paginate(page=page, per_page=per_page, error_out=False)
+    return {
+        'questions': [question.to_dict_list_page() for question in questions],
+        'total': questions.total,
+        'pages': questions.pages,
+        'current_page': questions.page
+    }
 
 
 @question_routes.route('/current')
