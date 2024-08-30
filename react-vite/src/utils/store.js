@@ -84,8 +84,8 @@ const separateData = (data) => async (dispatch) => {
     if (separatedData.tags.length > 0) dispatch(tagActions.setTags(separatedData.tags));
 };
 
-export const thunkGetAllQuestions = (page, perPage) => async (dispatch) => {
-    const response = await fetch(`/api/questions?page=${page}&per_page=${perPage}`);
+export const thunkGetAllQuestions = (page, perPage, searchValue) => async (dispatch) => {
+    const response = await fetch(`/api/questions?page=${page}&per_page=${perPage}&search_value=${searchValue}`);
     if (response.ok) {
         const data = await response.json();
         dispatch(separateData(data));

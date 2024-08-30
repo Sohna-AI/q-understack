@@ -4,14 +4,15 @@ import * as questionActions from '../../redux/questions';
 import { useDispatch, useSelector } from "react-redux";
 import * as userActions from '../../redux/users';
 import * as tagActions from '../../redux/tags';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import LoginFormModal from "../LoginFormModal";
 import { useEffect, useState } from "react";
 import QuestionCard from "./QuestionCard";
 import './QuestionListPage.css';
-import { FaCaretLeft, FaCaretRight, FaCaretSquareLeft, FaRegCaretSquareLeft } from "react-icons/fa";
+import { FaCaretLeft, FaCaretRight } from "react-icons/fa";
 
 function QuestionListPage({ homePage }) {
+    const searchValue = useOutletContext();
     const questions = useSelector(questionActions.selectQuestions);
     const sessionUser = useSelector((state) => state.session.user);
     const users = useSelector(userActions.selectUsers);
@@ -31,13 +32,13 @@ function QuestionListPage({ homePage }) {
     const navigate = useNavigate();
 
     useEffect(() => {
-        dispatch(thunkGetAllQuestions(page, perPage))
+        dispatch(thunkGetAllQuestions(page, perPage, searchValue))
             .then((data) => {
                 setTotalQuestions(data.total);
                 setTotalPages(data.pages);
                 setIsLoaded(true);
             });
-    }, [dispatch, setIsLoaded, page, perPage])
+    }, [dispatch, setIsLoaded, page, perPage, searchValue])
 
     // * Saves page and perPage to session / local storage whenever they change
     useEffect(() => {

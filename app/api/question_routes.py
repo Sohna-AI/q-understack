@@ -5,6 +5,7 @@ from app.models import Question, db, Save, Answer, Tag, Comment, Follow
 from app.forms.create_question_form import QuestionForm
 from app.forms.create_answer_form import AnswerForm
 from app.forms.create_comment_form import CommentForm
+from sqlalchemy import or_
 
 question_routes = Blueprint('questions', __name__)
 
@@ -15,8 +16,10 @@ def questions():
     """
     page = request.args.get('page', 1, type=int)
     per_page = request.args.get('per_page', 10, type=int)
+    search_value = request.args.get('search_value', '', type=str)
     
-    questions = Question.query.paginate(page=page, per_page=per_page, error_out=False)
+    questions = Question.query.filter(Question.title.ilike(f"%{search_value}%")) \
+        .paginate(page=page, per_page=per_page, error_out=False)
     return {
         'questions': [question.to_dict_list_page() for question in questions],
         'total': questions.total,
