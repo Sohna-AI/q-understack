@@ -82,6 +82,12 @@
     cursor: pointer;
 }
 
+#perPage {
+    border-radius: .25rem;
+    padding: 2px;
+    margin-right: 10px;
+}
+
 #pagination {
     margin-left: 20px;
     margin-top: 20px;
@@ -97,6 +103,7 @@
 #pagination>div>button {
     border: none;
     border-radius: .25rem;
+    cursor: pointer;
     padding: 4px 8px;
     display: flex;
     align-items: center;

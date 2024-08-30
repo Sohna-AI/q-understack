@@ -48,8 +48,8 @@ function QuestionListPage({ homePage }) {
     const handlePerPageChange = (e) => {
         setPage(1)
         setPerPage(e.target.value);
-        // TODO refine logic for when not to refresh, came up with at 1am smh
-        if (perPage > e.target.value || totalApps > e.target.value) {
+        // TODO refine logic for when not to refresh
+        if (perPage > e.target.value || totalQuestions > e.target.value) {
             setIsLoaded(false);
         }
     }
@@ -81,6 +81,16 @@ function QuestionListPage({ homePage }) {
             <div id="question-list__header">
                 <h1>{homePage ? 'Top Questions' : 'All Questions'}</h1>
                 <div>
+                    <select
+                        id="perPage"
+                        value={perPage}
+                        onChange={handlePerPageChange}
+                    >
+                        <option value={10}>10 per page</option>
+                        <option value={20}>20 per page</option>
+                        <option value={50}>50 per page</option>
+                        <option value={100}>100 per page</option>
+                    </select>
                     {sessionUser && <button onClick={handleClick}>Ask a Question</button>}
                     {!sessionUser && <button className="landing-page-login-button">
                         <OpenModalMenuItem itemText="Ask a Question" modalComponent={<LoginFormModal />} />
