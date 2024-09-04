@@ -6,6 +6,7 @@ from .api.answer_routes import answer_routes
 from .api.user_routes import user_routes
 from .api.auth_routes import auth_routes
 from .api.save_routes import save_routes
+from .api.vote_routes import vote_routes
 from flask_login import LoginManager
 from flask_migrate import Migrate
 from .seeds import seed_commands
@@ -33,6 +34,7 @@ app.config.from_object(Config)
 app.register_blueprint(question_routes, url_prefix='/api/questions')
 app.register_blueprint(answer_routes, url_prefix='/api/answers')
 app.register_blueprint(comment_routes, url_prefix='/api/comments')
+app.register_blueprint(vote_routes, url_prefix='/api/votes')
 app.register_blueprint(user_routes, url_prefix='/api/users')
 app.register_blueprint(save_routes, url_prefix='/api/saves')
 app.register_blueprint(auth_routes, url_prefix='/api/auth')
