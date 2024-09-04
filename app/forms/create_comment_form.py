@@ -6,4 +6,4 @@ from wtforms.validators import DataRequired, Length
 class CommentForm(FlaskForm):
     type = StringField('Type')
     typeId  = IntegerField('TypeId')
-    comment = TextAreaField('Comment', validators=[DataRequired(), Length(max=1500)])
+    comment = TextAreaField('Comment', validators=[DataRequired(message='Comment field cannot be empty'), Length(max=1500, message='Comment cannot be longer than 1500 characters')])
