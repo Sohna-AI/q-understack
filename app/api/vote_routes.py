@@ -7,19 +7,26 @@ vote_routes = Blueprint('votes', __name__)
 
 @vote_routes.route('/questions/<int:type_id>', methods=['GET'])
 def get_question_votes(type_id):
-    
+    """
+    Get all votes on questions
+    """
     votes = UpDownVote.query.filter_by(type_id=type_id, type='question')
     return [vote.to_dict() for vote in votes]
 
 @vote_routes.route('/answers/<int:type_id>', methods=['GET'])
 def get_answer_votes(type_id):
-    
+    """
+    Get all votes on answers
+    """
     votes = UpDownVote.query.filter_by(type_id=type_id, type='answer')
     return [vote.to_dict() for vote in votes]
 
 @vote_routes.route('/', methods=['POST'])
 @login_required
 def vote(): 
+    """
+    Vote on a question
+    """
     data = request.get_json()
     
     vote_type = data.get('type')
