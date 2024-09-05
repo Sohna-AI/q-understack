@@ -41,6 +41,10 @@
     border-left: 1px solid var(--border-color);
 }
 
+button {
+    color: var(--font-color);
+}
+
 /* #main__container>:first-child {
     padding-left: 40px;
     box-sizing: border-box;
