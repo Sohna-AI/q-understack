@@ -33,6 +33,10 @@
     align-items: center;
 }
 
+.question-card:last-of-type {
+    border-bottom: 1px solid var(--border-color);
+}
+
 .question-card .votes-answers__container {
     display: flex;
     flex-direction: column;
@@ -76,4 +80,32 @@
 .title-tags__container h2:hover {
     color: var(--link-color);
     cursor: pointer;
+}
+
+#perPage {
+    border-radius: .25rem;
+    padding: 2px;
+    margin-right: 10px;
+}
+
+#pagination {
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+#pagination>div {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+#pagination>div>button {
+    border: none;
+    border-radius: .25rem;
+    cursor: pointer;
+    padding: 4px 8px;
+    display: flex;
+    align-items: center;
+    gap: 2px;
 }

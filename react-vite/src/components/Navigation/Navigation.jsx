@@ -1,8 +1,9 @@
 import { NavLink, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import ProfileButton from './ProfileButton';
 import './Navigation.css';
 
-function Navigation() {
+function Navigation({ searchValue, setSearchValue }) {
     const navigate = useNavigate();
 
     const onFutureFeatureClick = (e) => {
@@ -25,7 +26,14 @@ function Navigation() {
                     <NavLink onClick={onFutureFeatureClick} to="/about">About</NavLink>
                 </div>
                 <div>
-                    <input type="search" name="search_bar" id="search_bar" placeholder="Feature coming soon..." />
+                    <input
+                        type="search"
+                        name="search_bar"
+                        id="search_bar"
+                        placeholder="Search for questions"
+                        value={searchValue}
+                        onChange={(e) => setSearchValue(e.target.value)}
+                    />
                 </div>
                 <div id="home_profile_links">
                     <ProfileButton />

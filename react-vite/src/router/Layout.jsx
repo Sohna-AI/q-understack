@@ -10,6 +10,7 @@ import Footer from "../components/Footer/Footer";
 
 export default function Layout() {
     const dispatch = useDispatch();
+    const [searchValue, setSearchValue] = useState('');
     const [isLoaded, setIsLoaded] = useState(false);
     useEffect(() => {
         dispatch(thunkAuthenticate()).then(() => setIsLoaded(true));
@@ -18,10 +19,10 @@ export default function Layout() {
     return (
         <>
             <ModalProvider>
-                <Navigation />
+                <Navigation searchValue={searchValue} setSearchValue={setSearchValue} />
                 <Sidebar />
                 <div id="main__container">
-                    {isLoaded && <Outlet />}
+                    {isLoaded && <Outlet context={searchValue} />}
                     <Modal />
                 </div>
                 <Footer />

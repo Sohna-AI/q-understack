@@ -41,6 +41,10 @@
     border-left: 1px solid var(--border-color);
 }
 
+button {
+    color: var(--font-color);
+}
+
 /* #main__container>:first-child {
     padding-left: 40px;
     box-sizing: border-box;
@@ -90,4 +94,45 @@
 
 .red:hover {
     background-color: rgb(194, 0, 0);
+}
+
+.acenter {
+    align-items: center;
+}
+
+.astart {
+    align-items: start;
+}
+
+.aselfend {
+    align-self: end;
+}
+
+.mleft100 {
+    margin-left: 100px;
+}
+
+.mtop15 {
+    margin-top: 15px;
+}
+
+.btop {
+    padding: 0 0 0 20px;
+    border-top: #5c5959 1px solid;
+}
+
+.between {
+    justify-content: space-between;
+}
+
+.pad20 {
+    padding: 20px;
+}
+
+.pad10 {
+    padding: 10px;
+}
+
+.border {
+    border: var(--border-color) 1px solid;
 }

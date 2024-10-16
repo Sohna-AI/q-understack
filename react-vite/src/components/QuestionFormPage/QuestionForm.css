@@ -45,3 +45,10 @@
     border-radius: 6px;
     border: 1px solid var(--border-color);
 }
+
+.question-title-error,
+.question-detail-error,
+.question-expectation-error {
+    display: flex;
+    justify-content: space-between;
+}
